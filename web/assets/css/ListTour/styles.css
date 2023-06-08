@@ -1,0 +1,374 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 5, 2023, 1:45:57 AM
+    Author     : thuyk
+*/
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
+*{
+    font-family: "Manrope", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #f5f5f5;
+}
+a, button, .btn {
+    font-family: 'Manrope', sans-serif !important;
+    font-weight: 500; 
+}
+.btn {
+    border-radius: 30px;
+    height: 42px;
+    padding: 0 25px;
+    line-height: 42px; 
+}
+.btn-default {
+    background-color: #008579;
+    color: white;
+    font-weight: bold; 
+}
+h1 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700; 
+}
+h2 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+}
+h3 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700; 
+}
+h4 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700; 
+}
+h5 {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700; 
+}
+.green-color {
+    color: #008579; 
+}
+.pink-color {
+    color: #e12d36; 
+}
+  
+.screen-overlay {
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .7; 
+}
+.category-header {
+    background: url(https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fbg-cate.jpg?alt=media&token=ac753111-cf28-4ec6-beae-da92b0b6c05d&_gl=1*batoxz*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NTgwNzc3NC40LjEuMTY4NTgwODY5MS4wLjAuMA..) no-repeat center;
+    background-size: cover;
+    height: 320px;
+    position: relative;
+    background-color: #aaa; 
+}
+.category-header * {
+    color: white; 
+}
+.category-title {
+    font-size: 45px;
+    text-transform: uppercase;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%); 
+}
+.breadcrumb {
+    background-color: transparent;
+    padding: 30px 0; 
+}
+.breadcrumb-item:before {
+    opacity: .4; 
+}
+.breadcrumb-item a:hover, .breadcrumb-item a:focus {
+    color: #1ec6b6;
+    text-decoration: none; 
+}
+.breadcrumb-item.active, .breadcrumb-item a, .breadcrumb-item {
+    color: #444;
+    font-size: 14px;
+    line-height: normal; 
+}
+.breadcrumb-item.active {
+    font-weight: 700; 
+}
+.breadcrumb-item.active:before {
+    font-weight: 400; 
+}
+
+.meta-description {
+    margin-bottom: 50px; 
+}
+.meta-description .meta-container {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    padding: 25px 40px;
+    position: relative;
+    padding-left: 50px; 
+}
+/* .meta-description .meta-container:after {
+    content: '\f10d';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 48px;
+    opacity: .06;
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 18px; 
+} */
+.meta-description .meta-container p {
+    font-size: 17px;
+    font-family: 'Manrope', sans-serif;
+    color: #444;
+    line-height: 1.7; 
+    text-align: justify;
+    font-style: italic;
+}
+.meta-description .meta-container .btn-readmore {
+    color: #fe4850;
+    font-size: 14px; 
+}
+.meta-description .meta-container .btn-readmore i {
+    margin-left: 10px; 
+}
+  
+.lazy-container {
+    display: block;
+    position: relative;
+    height: 0; 
+}
+
+.lazy-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+}
+.main {
+    background-color: #f5f5f5; 
+}
+  
+.category-service {
+    padding-bottom: 30px; 
+}
+.category-service .pages {
+    padding-top: 0; 
+}
+  
+.service-list [class*="col-"], .rest-list [class*="col-"], .tour-list [class*="col-"] {
+    margin-bottom: 40px;
+}
+.tour-item {
+    border-radius: 10px;
+    background-color: #fff; 
+}
+.tour-item .lazy-container {
+    padding-bottom: 67.5%; 
+}
+.tour-item .thumb {
+    position: relative;
+    margin: 0; 
+}
+.tour-item .thumb img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; 
+    /* object-fit: contain; */
+    object-position: center;
+}
+.tour-item .thumb a {
+    /* display: block; */
+    position: relative;
+    overflow: hidden; 
+}
+.tour-item .thumb a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: -webkit-linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.35));
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.35)); 
+}
+.tour-item .thumb a:hover:before {
+    background-image: -webkit-linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.55));
+    background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.55)); 
+}
+.tour-item .sale {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: #fe4850;
+    display: block;
+    position: absolute;
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 55px;
+    bottom: -20px;
+    right: 20px;
+    font-family: "Manrope", sans-serif;
+    font-weight: 500; 
+}
+.tour-item .content {
+    /* border: 1px solid #ececec; */
+    border-top: none;
+    padding: 25px 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: 100vh;
+    max-height: 240px; 
+}
+.tour-item .content .tour-name, .tour-item .content .place, .tour-item .content .price, .tour-item .content .other {
+    padding: 0 20px; 
+}
+.tour-item .content span {
+    font-size: 14px; 
+}
+.tour-item .content p, .tour-item .content span {
+    color: #444;
+    font-family: "Manrope", sans-serif; 
+}
+.tour-item .content .tour-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #444;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 6px;
+    line-height: normal; 
+}
+.tour-item .content .tour-name:hover, .tour-item .content .tour-name:focus {
+    color: #1ec6b6;
+    text-decoration: none; 
+}
+.tour-item .content .place {
+    margin-bottom: 15px; 
+}
+.tour-item .content .place .fas {
+    color: #1ec6b6;
+    margin-right: 10px;
+    float: left;
+    display: block;
+    margin-top: 3px; 
+}
+.tour-item .content .place .text {
+    overflow: hidden;
+    display: block; 
+}
+.tour-item .content .price {
+    padding-top: 15px;
+    border-top: 1px solid #ececec; 
+}
+.tour-item .content .price .old-price {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 0; 
+}
+.tour-item .content .price .new-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: #007b6b;
+    margin-top: -7px;
+    margin-bottom: 5px; 
+}
+.tour-item .content .other:after {
+    content: '';
+    clear: both;
+    display: table; 
+}
+.tour-item .content .other .timer, .tour-item .content .other .rating {
+    width: 50%;
+    display: block;
+    color: #888;
+    margin-bottom: 0;
+    float: left; 
+}
+.tour-item .content .other .timer {
+    font-size: 12px;
+    margin-top: 4px; 
+}
+.tour-item .content .other .rating {
+    font-size: 15px;
+    font-weight: 700;
+    text-align: right;
+    color: #555;
+}
+.tour-item .content .other .rating i {
+    color: #fb720d;
+    font-size: 14px;
+    position: relative;
+    top: -1px; 
+}
+.tour-item .content .other .rating .counter {
+    font-size: 11px;
+    color: #666;
+    font-weight: 400; 
+} 
+.pages {
+    padding: 30px 0; 
+}
+  
+.pagination .page-item {
+    margin-left: 6px;
+    margin-right: 6px;
+    line-height: 38px; 
+}
+.pagination .page-item a, .pagination .page-item span {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #eee;
+    color: #555;
+    text-align: center;
+    line-height: 38px;
+    display: block;
+    font-size: 15px; 
+}
+.pagination .page-item a i {
+    font-size: 16px; 
+}
+.pagination .page-item a:hover {
+    color: #333;
+    background-color: #e0e0e0; 
+}
+.pagination .page-item a:hover, .pagination .page-item a:focus {
+    text-decoration: none; 
+}
+.pagination .page-item.active a, .pagination .page-item.active span {
+    color: white;
+    background-color: #1ec6b6;
+    -moz-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.35); 
+}
+.pagination .page-item.active a:hover, .pagination .page-item.active a:focus {
+    color: white;
+    background-color: #1ec6b6; 
+}
+  

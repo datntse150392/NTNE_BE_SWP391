@@ -1,0 +1,135 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 5, 2023, 7:26:33 AM
+    Author     : thuyk
+*/
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
+
+html {}
+
+* {
+    font-family: "Manrope", sans-serif;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.breadcrumb-item.active, .breadcrumb-item a, .breadcrumb-item {
+    font-size: 14px;
+    line-height: normal;
+}
+
+a, button, .btn {
+    font-weight: 500;
+}
+
+.category-header {
+    box-sizing: border-box;
+    height: 320px;
+    position: relative;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FLi%C3%AAn%20h%E1%BB%87%2Fbg-cate.jpg?alt=media&token=426b9956-863a-4956-9db4-a552b55433d2&_gl=1*10fbkam*_ga*ODIxNzI4MDkuMTY4NDA3OTMxMQ..*_ga_CW55HF8NVT*MTY4NTg3NjY3NC4xMC4xLjE2ODU4NzY3OTMuMC4wLjA.");
+    background-position: 50% 50%;
+    background-size: cover;
+    line-height: 24px;
+    text-align: left;
+}
+
+.category-title {
+    color: white;
+    font-size: 45px;
+    text-transform: uppercase;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.breadcrumb {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 2;
+    text-align: left;
+}
+
+.breadcrumb a {
+    color: #444;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: #1ec6b6;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: black !important;
+    font-weight: 700;
+}
+
+.text-center {
+    text-align: center !important;
+    color:#212529;
+    font-weight:500;
+    margin:0px 0px 16px;
+    text-align:center;
+}
+
+.btn-pink {
+    background-color: #e12d36;
+    color: white;
+}
+
+.btn {
+    background-color: #db252d;
+    border-color:#000000;
+    border-style:solid;
+    border-radius: 5rem !important;
+    border-width:1.33333px;
+    height: 42px;
+    line-height: 2!important;
+    text-decoration: none;
+    color:#ffffff;
+    display:inline-block;
+    font-weight:500;
+    text-align:center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #da000b;
+    border-color:#000000;
+    border-style:solid;
+    border-radius: 5rem !important;
+    border-width:1.33333px;
+    height: 42px;
+    line-height: 2;
+    color:#ffffff;
+    display:inline-block;
+    text-align:center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+.pink-color {
+    color:#e12d36;
+    display:inline;
+    line-height:24px;
+    text-align:left;
+}
+
+.btn-submit {
+    min-width: 160px;
+    margin-top: 15px;
+}
