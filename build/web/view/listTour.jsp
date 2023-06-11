@@ -13,9 +13,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-        <link rel="stylesheet" href="../assets/css/bootstrap.css">
-        <link rel="stylesheet" href="../assets/css/ListTour/header_footer.css">
-        <link rel="stylesheet" href="../assets/css/ListTour/styles.css">
+<!--        <link rel="stylesheet" href="../assets/css/bootstrap.css">-->
+        <link rel="stylesheet" href="<c:url value="assets/css/ListTour/header_footer.css"/>">
+        <link rel="stylesheet" href="/assets/css/ListTour/styles.css">
         <title>Tổng Hợp Tour Du Lịch Nha Trang 1 Ngày HOT Nhất Hiện Nay</title>
     </head>
     <body>
@@ -222,7 +222,7 @@
                         </div>
                     </div>
 
-                    <div class="pages">
+<!--                    <div class="pages">
                         <nav class="pager-container">
                             <ul class="pagination justify-content-center">
                                 <li class="page-item active"><span>1</span></li>
@@ -230,7 +230,7 @@
                                 <li class="page-item"><a href="#" rel="next"><i class="fas fa-angle-right"></i></a></li>
                             </ul>
                         </nav>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </section>

@@ -13,17 +13,21 @@ public class Tour {
 
     private int id;
     private String name;
-    private boolean availability;
-    private String image;
+    private float priceAdult;
+    private float priceChild;
+    private String thumbnail;
+    private String location;
 
     public Tour() {
     }
 
-    public Tour(int id, String name, boolean availability, String image) {
+    public Tour(int id, String name, float priceAdult, float priceChild, String thumbnail, String location) {
         this.id = id;
         this.name = name;
-        this.availability = availability;
-        this.image = image;
+        this.priceAdult = priceAdult;
+        this.priceChild = priceChild;
+        this.thumbnail = thumbnail;
+        this.location = location;
     }
 
     public int getId() {
@@ -42,20 +46,40 @@ public class Tour {
         this.name = name;
     }
 
-    public boolean isAvailability() {
-        return availability;
+    public float getPriceAdult() {
+        return priceAdult;
     }
 
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
+    public void setPriceAdult(float priceAdult) {
+        this.priceAdult = priceAdult;
     }
 
-    public String getImage() {
-        return image;
+    public float getPriceChild() {
+        return priceChild;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setPriceChild(float priceChild) {
+        this.priceChild = priceChild;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Tour{" + "id=" + id + ", name=" + name + ", priceAdult=" + priceAdult + ", priceChild=" + priceChild + ", thumbnail=" + thumbnail + ", location=" + location + '}';
+    }
 }

@@ -5,9 +5,14 @@
  */
 package dal;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,25 +29,40 @@ public class TourDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            
+
             Tour tour = new Tour();
             while (rs.next()) {
                 tour.setId(rs.getInt(1));
                 tour.setName(rs.getString(2));
-                tour.setAvailability(rs.getBoolean(3));
-                tour.setImage(rs.getString(4));
+                tour.setPriceAdult(rs.getFloat(3));
+                tour.setPriceChild(rs.getFloat(4));
+                tour.setThumbnail(rs.getString(5));
+                tour.setLocation(rs.getString(6));
                 return tour;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
     
-    public static void main(String[] args) {
-        TourDAO tourDAO = new TourDAO();
-        Tour tour = tourDAO.getTour_by_TourID(5);
-        System.out.println(tour.getName());
+    //Lấy danh sách Tour
+    public Map<Integer, Tour> getList() throws SQLException {
+        String sql = "SELECT * FROM [dbo].[Tour]";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        Map<Integer, Tour> maps = new HashMap<>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            float priceAdult = rs.getFloat("priceAdult");
+            float priceChild = rs.getFloat("priceChild");
+            String thumbnail = rs.getString("thumbnail");
+            String location = rs.getString("location");
+            Tour tour = new Tour(id, name, priceAdult, priceChild, thumbnail, location);
+            maps.put(id, tour);
+        }
+        return maps;
     }
 }

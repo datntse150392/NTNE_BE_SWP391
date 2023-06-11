@@ -16,8 +16,8 @@ $(document).ready(function () {
     margin: 16,
     nav: true,
     navText: [
-      "<i class='fa fa-angle-left   owl__nav-icon'>",
-      "<i class='fa fa-angle-right  owl__nav-icon'>",
+      "<i class='fa fa-angle-left   owl-nav-icon'>",
+      "<i class='fa fa-angle-right  owl-nav-icon'>",
     ],
     responsive: {
       0: {
@@ -64,8 +64,8 @@ $(document).ready(function () {
     margin: 16,
     nav: true,
     navText: [
-      "<i class='fa fa-angle-left   owl__nav-icon'>",
-      "<i class='fa fa-angle-right  owl__nav-icon'>",
+      "<i class='fa fa-angle-left   owl-nav-icon'>",
+      "<i class='fa fa-angle-right  owl-nav-icon'>",
     ],
     responsive: {
       0: {
@@ -92,8 +92,8 @@ $(document).ready(function () {
     margin: 16,
     nav: true,
     navText: [
-      "<i class='fa fa-angle-left   owl__nav-icon'>",
-      "<i class='fa fa-angle-right  owl__nav-icon'>",
+      "<i class='fa fa-angle-left   owl-nav-icon'>",
+      "<i class='fa fa-angle-right  owl-nav-icon'>",
     ],
     responsive: {
       0: {
@@ -120,8 +120,8 @@ $(document).ready(function () {
     margin: 16,
     nav: true,
     navText: [
-      "<i class='fa fa-angle-left   owl__nav-icon'>",
-      "<i class='fa fa-angle-right  owl__nav-icon'>",
+      "<i class='fa fa-angle-left   owl-nav-icon'>",
+      "<i class='fa fa-angle-right  owl-nav-icon'>",
     ],
     responsive: {
       0: {

@@ -11,17 +11,17 @@ package dal;
  */
 public class Image {
     private int id;
-    private String name, link_address;
-    private int package_id;
+    private String name, img_url;
+    private int tour_id;
 
     public Image() {
     }
 
-    public Image(int id, String name, String link_address, int package_id) {
+    public Image(int id, String name, String img_url, int tour_id) {
         this.id = id;
         this.name = name;
-        this.link_address = link_address;
-        this.package_id = package_id;
+        this.img_url = img_url;
+        this.tour_id = tour_id;
     }
 
     public int getId() {
@@ -40,20 +40,24 @@ public class Image {
         this.name = name;
     }
 
-    public String getLink_address() {
-        return link_address;
+    public String getImg_url() {
+        return img_url;
     }
 
-    public void setLink_address(String link_address) {
-        this.link_address = link_address;
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 
-    public int getPackage_id() {
-        return package_id;
+    public int getTour_id() {
+        return tour_id;
     }
 
-    public void setPackage_id(int package_id) {
-        this.package_id = package_id;
+    public void setTour_id(int tour_id) {
+        this.tour_id = tour_id;
     }
-            
+
+    @Override
+    public String toString() {
+        return "Image{" + "id=" + id + ", name=" + name + ", img_url=" + img_url + ", tour_id=" + tour_id + '}';
+    }   
 }

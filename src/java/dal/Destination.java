@@ -11,17 +11,14 @@ package dal;
  */
 public class Destination {
     private int id;
-    private String duration, description;
-    private int package_id;
+    private String name;
 
     public Destination() {
     }
 
-    public Destination(int id, String duration, String description, int package_id) {
+    public Destination(int id, String name) {
         this.id = id;
-        this.duration = duration;
-        this.description = description;
-        this.package_id = package_id;
+        this.name = name;
     }
 
     
@@ -33,29 +30,16 @@ public class Destination {
         this.id = id;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getName() {
+        return name;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public String toString() {
+        return "Destination{" + "id=" + id + ", name=" + name + '}';
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getPackage_id() {
-        return package_id;
-    }
-
-    public void setPackage_id(int package_id) {
-        this.package_id = package_id;
-    }
-    
-    
 }
