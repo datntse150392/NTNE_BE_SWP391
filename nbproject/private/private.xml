@@ -3,19 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/DBContext.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/DestinationDAO.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/controller/ManageTourServlet.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/PackageDAO.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/controller/FrontController.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/TourDAO.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/web/assets/js/DetailTour/detailTour.js</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/web/view/detailTour.jsp</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/web/assets/css/DetailTour/styles.css</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/Package.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/Image.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/Tour.java</file>
-            <file>file:/C:/FPT/S4/PRJ301/NetBeansProjects/SWP391_NTNE/src/java/dal/Destination.java</file>
+            <file>file:/D:/Java/NTNECompany/NTNE_BE_SWP391/src/java/controller/AccountController.java</file>
+            <file>file:/D:/Java/NTNECompany/NTNE_BE_SWP391/src/java/dal/AccountDAO.java</file>
+            <file>file:/D:/Java/NTNECompany/NTNE_BE_SWP391/web/Home.jsp</file>
+            <file>file:/D:/Java/NTNECompany/NTNE_BE_SWP391/src/java/dal/Admin_Account.java</file>
+            <file>file:/D:/Java/NTNECompany/NTNE_BE_SWP391/web/view/Login.jsp</file>
         </group>
     </open-files>
 </project-private>
