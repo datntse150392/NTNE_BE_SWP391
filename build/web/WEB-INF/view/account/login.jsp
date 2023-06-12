@@ -1,64 +1,82 @@
 <%-- 
-    Document   : login
-    Created on : Jun 5, 2023, 1:29:42 AM
-    Author     : thuyk
+    Document   : Login
+    Created on : Jun 11, 2023, 11:36:36 AM
+    Author     : baoit
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/Login/styles.css">
-    <!-- 
-    - google font link
-  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Markazi+Text:wght@500&family=Rokkitt:wght@100&display=swap"
-        rel="stylesheet">
-    <title>Đăng nhập tài khoản</title>
-</head>
+        <!--<link rel="stylesheet" href="assets/css/LoginPageCSS/bootstrap.css">-->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+        <link href="<c:url value="/CSSMAIN/contentLayout/login_layout/layout.css" />" rel="stylesheet" type="text/css"/>  
 
-<body>
-    <section>
-        <div class="form-box">
-            <div class="form-value">
-                <form action="#" method="post" id="form-login">
-                    <h2>Đăng nhập</h2>
-                    <div class="inputbox">
-                        <input type="text" name="username" value="" rules="required">
-                        <label for="">Tên đăng nhập</label>
-                        <span class="form-message"></span>
+        <title>Login Page</title>  
+    </head>
+    <body>
+        <section class="main">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="wrapper-login">
+                        <div class="login-header">
+                            <div class="login-header-detail">
+                                <h5>Chào mừng Quý khách đến với</h5>
+                                <h1>Nha Trang Nature Elite</h1>
+                            </div>
+
+                        </div>
+                        <div class="login-body">
+
+                            <div class="login-option">
+
+                                <button class="login-button"><a href="#" >Đăng nhập</a></button>    
+                                <button class="register-button"><a href="#" >Đăng kí</a></button>    
+
+                            </div>
+                            <div class="login-form">
+                                <div class="login-form-header">
+                                    <form action="login_handler.do" method="post">
+                                        <div class="login-form-user">
+                                            <label for="username">
+                                                Số điện thoại hoặc email <br>
+                                                <input id="username" type="text" name="username" placeholder="Tài khoản" value="${username}"> 
+                                            </label>
+                                        </div>
+                                        <div class="login-form-password">
+                                            <label for="password">
+                                                Mật khẩu
+                                                <br>
+                                                <input type="password" id="passowrd" name="password" placeholder="Mật khẩu" value="${password}">
+                                            </label>
+                                        </div>
+                                        <button class="press-login" type="submit">Đăng nhập</button>
+                                    </form>
+                                    ${message}
+                                </div>
+                                <div class="form-divider">Hoặc</div>
+
+                            </div>
+
+                        </div>
+                        <div class="add-on">
+
+                            <div class="btn-google" readonly="readonly"><a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=http://localhost:8080/SWP391_NTNE/account/login.do&response_type=code&scope=email&access_type=offline"><i class="fa-brands fa-google"></i> Tiếp
+                                    tục với Google</a></div>
+                        </div>
                     </div>
-                    <div class="inputbox">
-                        <input type="password" name="password" value="" rules="required|min:6">
-                        <label for="">Mật khẩu</label>
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="forget">
-                        <label for=""><input type="checkbox" required>Ghi nhớ mật khẩu</label>
-                    </div>
-                    <button type="submit">Đăng nhập</button>
-                    <div class="register">
-                        <p>Không có tài khoản <a href="<c:url value="/view/register.jsp"/>">đăng kí ngay</a></p>
-                    </div>
-                    <div class="homepage">
-                        <a href="../index.jsp">Trang chủ</a>
-                    </div>
-                </form>
+
+                </div>
             </div>
-        </div>
-    </section>
-    <script src="../assets/js/Login/login.js"></script>
-    <script>
-        login('#form-login');
-    </script>
-</body>
 
+        </section>
+        <!--<script src="./js/sliders/jquery.min.js"></script>-->
+        <!--<script src="./js/sliders/bootstrap.js"></script>-->
+        <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous"></script>
+    </body>
 </html>
