@@ -58,7 +58,9 @@ public class AccountController extends HttpServlet {
                 
                 //Dùng code của google để retrieve autho key
                 String accessCode = getToken(code);
-               
+                System.out.println("----------------------TEST-----------------");
+                System.out.println(code);
+                System.out.println(accessCode);
                 //Lấy được user dựa trên autho key 
                 UserGoogle ug = getUserInfo(accessCode);
                 System.out.println(ug);

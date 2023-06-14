@@ -5,6 +5,7 @@
  */
 package dal;
 
+import models.Destination;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

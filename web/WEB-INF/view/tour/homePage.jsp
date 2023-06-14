@@ -9,11 +9,12 @@
 <%@ page session="false" %>
 <!DOCTYPE html>
 <html>
-    
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">         
@@ -22,7 +23,14 @@
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/ListTour/styles.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/ListTour/header_footer.css"/>" rel="stylesheet" type="text/css">
-
+        
+        
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
+        
         <title>Nha Trang Nature Elite</title>
     </head>
     
@@ -68,6 +76,10 @@
                         <div class="content-slider">
                             <div class="owl-carousel" id="content-slider">
                                 
+                                <!---------------------------------->
+                                <!--LẤY THÔNG TIN ĐỊA ĐIỂM NỔI BẬT-->
+                                <!---------------------------------->
+                                
                                 <c:if test="${list != null}">
                                     <c:forEach var="tour" items="${list}" varStatus="counter">
                                         <div class="item content-slider-item">
@@ -79,6 +91,9 @@
                                             </a>
                                         </div>
                                     </c:forEach>
+                                </c:if>
+                                <c:if test="${list == null}">
+                                    <h1>LIST IS NULL</h1>
                                 </c:if>
                                 
                             </div>
@@ -110,9 +125,9 @@
                 </div> -->
                 <!-- End: Promotion -->
 
-<!--                    -----------------------------------------------------------
-                                           HIỂN THỊ TOUR NỔI BẬT
-                        ------------------------------------------------------------->
+<!--                    <!---------------------------------->
+                        <!--LẤY THÔNG TIN TOUR NỔI BẬT-->
+                        <!---------------------------------->
                 <!-- Start: Suggest -->
                 <div class="content-container">
                     <div class="content-suggest">
@@ -124,7 +139,8 @@
                                 <c:if test="${list != null}">
                                     <c:forEach var="tour" items="${list}" varStatus="counter">
                                         <div class="item">
-                                            <a href="" class="content-suggest-item-link"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                            <!--Router to detail Tour-->
+                                            <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getValue().getId()}"/>" class="content-suggest-item-link"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
                                                 <div class="content-suggest-item">
                                                     <p class="content-suggest-heading">${tour.getValue().getName()}</p>
                                                     <p class="content-suggest-description">
@@ -136,7 +152,6 @@
                                         </div>
                                     </c:forEach>
                                 </c:if>
-                                
                             </div>
                         </div>
                     </div>

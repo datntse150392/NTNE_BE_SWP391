@@ -5,9 +5,12 @@
  */
 package dal;
 
+import models.Image;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +32,7 @@ public class ImageDAO {
             while (rs.next()) {
                 image.setId(rs.getInt(1));
                 image.setName(rs.getString(2));
-                image.setImg_url(rs.getString(3));
+                image.setImgUrl(rs.getString(3));
                 image.setTour_id(rs.getInt(1));
                 return image;
             }
@@ -40,11 +43,30 @@ public class ImageDAO {
         return null;
     }
     
+    //Lấy danh sách Image by TourID
+    public Map<Integer, Image> getImage_by_TourItemID(int tourId) throws SQLException {
+        DBContext db = new DBContext();
+        String sql = "SELECT * FROM [dbo].[Image] as img,[dbo].[Tour] as tour where tour.id = img.tour_id and tour.id = ?";
+        PreparedStatement ps = db.connection.prepareStatement(sql);
+        ps.setInt(1, tourId);
+        ResultSet rs = ps.executeQuery();
+        Map<Integer, Image> maps = new HashMap<>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name  = rs.getString("name");
+            String url  = rs.getString("img_url");
+            int tour_id = rs.getInt("tour_id");
+            Image image = new Image(id, name, url, tour_id);
+            maps.put(id, image);
+        }
+        return maps;
+    }
+    
     public static void main(String[] args) {
         ImageDAO imageDAO = new ImageDAO();
         Image image = imageDAO.getImage_by_ImageID(1);
         System.out.println("ID: " + image.getId() + " | NAME: "
                 + image.getName() + " | URL: "
-                + image.getImg_url());
+                + image.getImgUrl());
     }
 }
