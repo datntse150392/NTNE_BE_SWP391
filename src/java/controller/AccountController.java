@@ -101,7 +101,8 @@ public class AccountController extends HttpServlet {
             response.addCookie(p);
 
             session.setAttribute("person", person);
-            response.sendRedirect(request.getContextPath() + "/Home.jsp");
+            request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+            //response.sendRedirect(request.getContextPath() + "/Home.jsp");
         } else if (admin != null) {
             //Gọi cookie để lưu username va password vào cookie 
             Cookie u = new Cookie("username", username);

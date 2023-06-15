@@ -91,7 +91,7 @@
 
 .header-logo-mobile-svg:hover,
 .header-logo-pc-svg:hover {
-  fill: var(--tomato-color);
+  fill: var(-tomato-color);
   transition: 0.2s ease-in;
 }
 
@@ -171,13 +171,13 @@
 }
 
 .search-suggest-item:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   background: #fdf6f0;
   transition: 0.3s linear;
 }
 
 .search-suggest-item.active {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   background: #fdf6f0;
 }
 
@@ -353,7 +353,7 @@
 }
 
 .content-welcome-link:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.3s linear;
 }
 
@@ -479,7 +479,7 @@
 }
 
 .content-suggest-heading:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.3s linear;
 }
 
@@ -636,7 +636,7 @@
   padding: 10px;
 }
 
-.download-app--app {
+.download-app-app {
   height: 100%;
   display: flex;
   align-items: center;
@@ -700,7 +700,7 @@
 }
 
 .contact-content-link:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.2s linear;
 }
 /*  */
@@ -724,7 +724,7 @@
 }
 
 .footer-content-link:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.2s linear;
 }
 
