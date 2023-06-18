@@ -19,11 +19,13 @@ public class User_Account {
     private String address;
     private String role;
     private int accumulatedScore;
+    private boolean isActive;
+    private String linkImg;
 
     public User_Account() {
     }
 
-    public User_Account(int id, String name, String email, String password, int totalTour, String phone, String address, String role, int accumulatedScore) {
+    public User_Account(int id, String name, String email, int totalTour, String password, String phone, String address, String role, int accumulatedScore, boolean isActive, String linkImg) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -33,6 +35,8 @@ public class User_Account {
         this.address = address;
         this.role = role;
         this.accumulatedScore = accumulatedScore;
+        this.isActive = isActive;
+        this.linkImg = linkImg;
     }
     
     public int getId() {
@@ -106,6 +110,24 @@ public class User_Account {
     public void setAccumulatedScore(int accumulatedScore) {
         this.accumulatedScore = accumulatedScore;
     }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public String getLinkImg() {
+        return linkImg;
+    }
+
+    public void setLinkImg(String linkImg) {
+        this.linkImg = linkImg;
+    }
+    
+    
 
     @Override
     public String toString() {

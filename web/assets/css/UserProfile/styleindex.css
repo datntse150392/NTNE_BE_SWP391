@@ -36,7 +36,7 @@ body {
 
 .info-image img {
     border-radius: 50%;
-
+    width: 100%;
 }
 
 .info_details {
@@ -166,7 +166,7 @@ li {
 .wrapper-right {
     border: 0.5px solid #d5d5d5;
     border-radius: 14px;
-    padding: 24px;
+    padding: 19px;
 }
 
 .column-right {

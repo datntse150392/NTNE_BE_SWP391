@@ -34,7 +34,9 @@ public class Admin_Account extends DBContext{
                 String address = rs.getString("address");
                 String role = rs.getString("role");
                 int accumulatedScore = rs.getInt("accumulatedScore");
-                User_Account p1 = new User_Account(AccId, name, email, pwd, totalTour, phone, address, role, accumulatedScore);
+                boolean isActive = rs.getBoolean("isActive");
+                String img = rs.getString("linkImg");
+                User_Account p1 = new User_Account(AccId, name, email, totalTour, pwd, phone, address, role, accumulatedScore, isActive, img);
                 return p1;
             }
            

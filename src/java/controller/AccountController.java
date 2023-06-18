@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.User;
 import models.User_Account;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
@@ -53,17 +52,16 @@ public class AccountController extends HttpServlet {
                 login_handler(request, response);
                 break;
             case "login_google":
-                //Lấy code của user để gửi lên google
-                String code = request.getParameter("code");
-                
-                //Dùng code của google để retrieve autho key
-                String accessCode = getToken(code);
-                System.out.println("----------------------TEST-----------------");
-                System.out.println(code);
-                System.out.println(accessCode);
-                //Lấy được user dựa trên autho key 
-                UserGoogle ug = getUserInfo(accessCode);
-                System.out.println(ug);
+                loginGoogleHandler(request, response);
+                break;
+            case "displayUserProfile":
+                displayUserProfile(request, response);
+                break;
+            case "changePassword":
+                changePassword(request, response);
+                break;
+            case "changePasswordHandler":
+                changePasswordHandler(request, response);
                 break;
         }
 
@@ -85,6 +83,7 @@ public class AccountController extends HttpServlet {
         //get_UserName_PassWord để lấy đối tượng user va admin
         User_Account person = userAcc.get_UserName_PassWord(username, password);
         User_Account admin = adminAcc.get_UserName_PassWord(username, password);
+        //UserGoogle usGG = 
 
         //Nếu p1 khác null thì lưu p1 vào session
         if (person != null) {
@@ -125,6 +124,34 @@ public class AccountController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
         }
 
+    }
+    
+    protected void loginGoogleHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+        try{
+            String code = request.getParameter("code");
+            String accessToken = getToken(code);
+            UserGoogle user = getUserInfo(accessToken);
+            String email = user.getEmail();
+            AccountDAO accDAO = new AccountDAO();
+            boolean check = accDAO.getAccountByEmail(email);
+            HttpSession session = request.getSession();
+            if(check){
+                User_Account person = accDAO.getAccountInfoByEmail(email);
+                session.setAttribute("person", person);
+                request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+            } else {
+                accDAO.insertAccount(user.getName(), user.getEmail(), "******", "", "", "", 0, user.getPicture());
+                User_Account person = accDAO.getAccountInfoByEmail(email);
+                session.setAttribute("person", person);
+                request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+            }
+            Cookie e = new Cookie("email", email);
+            e.setMaxAge(60);
+            response.addCookie(e);
+        }catch(IOException e){
+            
+        }
+        
     }
 
     protected void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -171,8 +198,60 @@ public class AccountController extends HttpServlet {
         String response = Request.Get(link).execute().returnContent().asString();
         //Đổi Json của google thành kiểu UserGoogle
         UserGoogle googlePojo = new Gson().fromJson(response, UserGoogle.class);
-
+        System.out.println("user: "+googlePojo.toString());
         return googlePojo;
+    }
+    
+    protected void displayUserProfile(HttpServletRequest request, HttpServletResponse response){
+        try{
+            HttpSession session = request.getSession();
+            User_Account user = (User_Account) session.getAttribute("person");
+            request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+        }catch(IOException | ServletException e){
+            
+        }
+    }
+    
+    protected void changePassword(HttpServletRequest request, HttpServletResponse response){
+        try{
+            HttpSession session = request.getSession();
+            User_Account user = (User_Account) session.getAttribute("person");
+            request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+        }catch(IOException | ServletException e){
+        }
+    }
+    
+    protected void changePasswordHandler(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession();
+            User_Account user = (User_Account) session.getAttribute("person");
+            AccountDAO accDAO = new AccountDAO();
+            if (user != null) {
+                String oldPassword = request.getParameter("oldPassword");
+                boolean checkOldPsw = accDAO.checkOldPassword(user.getId(), oldPassword);
+                if (checkOldPsw) {
+                    String newPassword = request.getParameter("newPassword");
+                    String newPasswordRetype = request.getParameter("newPasswordRetype");
+                    if (newPassword.equals(newPasswordRetype) && !newPassword.equals(oldPassword)) {
+                        boolean checkNewPsw = accDAO.updateAccountPassword(user.getId(), newPassword);
+                        if (checkNewPsw) {
+                            request.setAttribute("MSG_SUCCESS", "Change password successfully!");
+                            request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                            request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                        }
+                    } else {
+                        request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                        request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                    request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                }
+            }
+        } catch (IOException | ServletException e) {
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

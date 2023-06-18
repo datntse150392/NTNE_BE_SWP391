@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.User;
 import models.User_Account;
 //import static org.apache.tomcat.jni.User.username;
 
@@ -38,7 +37,9 @@ public class AccountDAO extends DBContext{
                 String address = rs.getString("address");
                 String role = rs.getString("role");
                 int accumulatedScore = rs.getInt("accumulatedScore");
-                User_Account p1 = new User_Account(AccId, name, email, pwd, totalTour, phone, address, role, accumulatedScore);
+                boolean isActive = rs.getBoolean("isActive");
+                String img = rs.getString("linkImg");
+                User_Account p1 = new User_Account(AccId, name, email, totalTour, pwd, phone, address, role, accumulatedScore, isActive, img);
                 return p1;
             }
             
@@ -65,5 +66,103 @@ public class AccountDAO extends DBContext{
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return def;
+    }
+    
+    public boolean checkOldPassword(int accID, String oldPassword){
+        boolean check = false;
+        try{
+            String sql = "SELECT Password FROM Account WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, accID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                String accPsw = rs.getString("password");
+                if(accPsw.equalsIgnoreCase(oldPassword)){
+                    check = true;
+                }
+                System.out.println("MK cũ: "+accPsw);
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+    
+    public boolean updateAccountPassword(int accId, String newPassword){
+        boolean check = false;
+        try{
+            String sql = "UPDATE Account Set password = ? WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, newPassword);
+            ps.setInt(2, accId);
+            check = ps.executeUpdate() > 0;
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return check;
+    }
+    
+    public User_Account getAccountInfoByEmail(String email){
+        try{
+            String sql = "SELECT * FROM ACCOUNT WHERE EMAIL = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int AccId = rs.getInt("id");
+                String name = rs.getString("name");
+                String Email = rs.getString("email");
+                String pwd = rs.getString("password");
+                int totalTour = getAccountTotalTour(AccId);
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String role = rs.getString("role");
+                int accumulatedScore = rs.getInt("accumulatedScore");
+                boolean isActive = rs.getBoolean("isActive");
+                String img = rs.getString("linkImg");
+                User_Account p1 = new User_Account(AccId, name, Email, totalTour, pwd, phone, address, role, accumulatedScore, isActive, img);
+                return p1;
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public boolean getAccountByEmail(String email){
+        boolean check = false;
+        try{
+            String sql = "SELECT * FROM ACCOUNT WHERE EMAIL = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                check = true;
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+    
+    public boolean insertAccount(String newName, String newEmail, String newPassword, String newPhone, String newAddress, String newRole, int accumulatedScore, String linkImg){
+        boolean check = false;
+        try{
+            String sql = "INSERT INTO Account (name, email, password, phone, address, role, accumulatedScore, linkImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, newName);
+            ps.setString(2, newEmail);
+            ps.setString(3, newPassword);
+            ps.setString(4, newPhone);
+            ps.setString(5, newAddress);
+            ps.setString(6, newRole);
+            ps.setInt(7, accumulatedScore);
+            ps.setString(8, linkImg);
+            check = ps.executeUpdate() > 0;
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
     }
 }
