@@ -21,8 +21,6 @@
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/styles.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/header_footer.css"/>" rel="stylesheet" type="text/css">
         
         
         <!--Import JS Slider -->
@@ -80,22 +78,20 @@
                                 <!--LẤY THÔNG TIN ĐỊA ĐIỂM NỔI BẬT-->
                                 <!---------------------------------->
                                 
-                                <c:if test="${list != null}">
-                                    <c:forEach var="tour" items="${list}" varStatus="counter">
+                                <c:if test="${listTour != null}">
+                                    <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item content-slider-item">
                                             <a href="<c:url value="#"/>"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
                                                 <div class="content-slider-name">
-                                                    <h3 class="content-slider-heading">${tour.getValue().getName()}</h3>
-                                                    <p class="content-slider-description">Đã có <strong>X</strong> lượt khách</p>
+                                                    <h3 class="content-slider-heading">${tour.getValue().getName()}</h3>   
                                                 </div>
                                             </a>
                                         </div>
                                     </c:forEach>
                                 </c:if>
-                                <c:if test="${list == null}">
+                                <c:if test="${listTour == null}">
                                     <h1>LIST IS NULL</h1>
                                 </c:if>
-                                
                             </div>
                         </div>
                         <!-- End: Content Slider -->
@@ -136,11 +132,14 @@
                         <div class="content-slider">
                             <div class="owl-carousel" id="suggest-slider">
                                 
-                                <c:if test="${list != null}">
-                                    <c:forEach var="tour" items="${list}" varStatus="counter">
+                                <c:if test="${listTour != null}">
+                                    <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item">
                                             <!--Router to detail Tour-->
-                                            <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getValue().getId()}"/>" class="content-suggest-item-link"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                            <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getValue().getId()}&tripID=0"/>" class="content-suggest-item-link">
+                                                <div class="contentImage">
+                                                    <img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                                </div>
                                                 <div class="content-suggest-item">
                                                     <p class="content-suggest-heading">${tour.getValue().getName()}</p>
                                                     <p class="content-suggest-description">

@@ -36,7 +36,7 @@
             <div class="container">
                 <div class="header"></div>
                 <div class="content">
-                    <h1 class="header-title" style="font-size: 40px; color: red">${tour.getName()}</h1>
+                    <h1 class="header-title" style="font-size: 40px; color: red">${trip.getName()}</h1>
                     <span
                         >"Đặt ngay tour du lịch để khám phá những điểm đến tuyệt vời và tạo
                         ra những kỷ niệm không thể quên."</span
@@ -58,9 +58,23 @@
                             </c:forEach>
                         </c:if>
                     </div>
+                    <div class="departTime">
+                        <h2>Ngày bắt đầu đi</h2>
+                    </div>
+                    
+                    <!--CHỌN TRIP THEO NGÀY-->
+                    <div class="selectOption">
+                        <select>
+                            <c:forEach var="tripItem" items="${tripList}">
+                                <option value="<c:url value="/tour/detailTour.do?tourID=${tripItem.getTour_id()}&tripID=${tripItem.getId()}"/>">${tripItem.getDepart_time()}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                     <div class="time-line">
                         <h2>Lịch trình di chuyển</h2>
                     </div>
+                    
+                    <!--HIỂN THỊ TOURITEM || TIMELINE-->
                     <ul class="destination">
                         <c:if test="${itemList != null}">
                             <c:forEach var="item" items="${itemList}" varStatus="counter">
@@ -84,8 +98,9 @@
                             </p>
                             <div class="tourpackage-body">
                                 <div class="tourpackage-body-detail">
-                                    <h3 class="tourpackage-body-detail-title">${tour.getName()} [ Gói cơ bản ] <fmt:formatNumber value="${tour.getPriceAdult()}" pattern="###,### VNĐ" /></h3>
                                     
+                                    <!--HIỂN THỊ GIÁ CƠ BẢN CỦA TRIP-->
+                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [ Gói cơ bản ] <fmt:formatNumber value="${trip.getPriceAdult()}" pattern="###,### VNĐ" /></h3>
                                     <form action="#">
                                         <!-- form handle button book tourpackages -->
                                         <button class="btn-booking-tour"">
@@ -96,7 +111,9 @@
                             </div>
                             <div class="tourpackage-body">
                                 <div class="tourpackage-body-detail">
-                                    <h3 class="tourpackage-body-detail-title">${tour.getName()} [ Gói VIP ] ??? VNĐ</h3>
+                                    
+                                    <!--HIỂN THỊ GIÁ VIP CỦA TRIP-->
+                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [ Gói VIP ] ??? VNĐ</h3>
                                     <form action="#">
                                         <!-- form handle button book tourpackages -->
                                         <button class="btn-booking-tour">

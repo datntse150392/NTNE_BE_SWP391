@@ -72,9 +72,11 @@
 }
 
 .header-container {
-  display: flex;
+  display: grid;
   align-items: center;
   height: 100%;
+  grid-template-columns: 20% 40% 40%;
+  justify-content: center;
 }
 
 .header-logo-pc-svg {
@@ -96,12 +98,10 @@
 }
 
 .header-search {
-  margin-right: 250px;
   flex: 1;
   height: 48px;
   display: flex;
   align-items: center;
-  margin-left: 16px;
   border-radius: 5px;
   box-shadow: 1px 1px 4px rgb(0 0 0 / 20%);
   position: relative;
@@ -118,18 +118,17 @@
 
 .header-search-icon {
   position: absolute;
-  top: 2px;
   color: #423f3e;
   height: 100%;
-  width: 36px;
+  width: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .header-search-input {
-  padding-left: 36px;
-  padding-right: 10px;
+  padding-left: 3rem;
+  padding-right: 0;
   height: 100%;
   width: 100%;
   font-weight: 600;
@@ -235,7 +234,7 @@
 } */
 
 .header-search-submit {
-  margin-right: 6px;
+  padding-right: 0.5rem;
 }
 
 .header-search-submit-btn {
@@ -252,29 +251,32 @@
 
 /*  */
 .header-nav {
-  flex: 1;
+  width: 100%;
 }
 
 .header-nav-list {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-around;
   margin-bottom: 0;
 }
 
 .header-nav-item {
   list-style: none;
   position: relative;
-  padding: 12px;
 }
 
 .header-nav-link {
-  padding: 10px 15px;
   color: black;
-  font-size: 14px;
+  font-size: medium;
   font-weight: 500;
 }
 
+.header-nav-link p {
+    font-size: medium;
+    text-align: center;
+}
 .header-nav-item a:hover {
   text-decoration: none;
   color: tomato;
@@ -330,6 +332,10 @@
   font-size: 16.5px;
 }
 
+.contentImage {
+   
+}
+
 .content-container {
   margin-top: 45px;
 }
@@ -357,14 +363,18 @@
   transition: 0.3s linear;
 }
 
+.contentImage {
+    height: 10rem;
+}
+
 .content-slider-item {
   height: 300px;
   position: relative;
 }
 
 .content-slider-img {
-  width: 100%;
   height: 100%;
+  width: 100%;
   border-radius: 3px;
   object-fit: cover;
 }
@@ -425,12 +435,14 @@
   color: #fff;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: flex-end;
 }
 
 .content-slider-heading {
-  font-size: 25px;
+  font-size: medium;
   font-weight: bold;
-  padding-left: 16px;
+  padding-left: 1rem;
   padding-top: 90%;
 }
 .content-slider-description {

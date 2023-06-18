@@ -1,12 +1,3 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Jun 5, 2023, 7:26:33 AM
-    Author     : thuyk
-*/
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
 
 html {}
@@ -85,8 +76,8 @@ a, button, .btn {
     color: white;
 }
 
-.btn {
-    background-color: #db252d;
+.btn{
+    background-color: #ff6347;
     border-color:#000000;
     border-style:solid;
     border-radius: 5rem !important;
@@ -121,7 +112,6 @@ a, button, .btn {
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-
 .pink-color {
     color:#e12d36;
     display:inline;
@@ -132,4 +122,5 @@ a, button, .btn {
 .btn-submit {
     min-width: 160px;
     margin-top: 15px;
+    background: #ff6347;
 }

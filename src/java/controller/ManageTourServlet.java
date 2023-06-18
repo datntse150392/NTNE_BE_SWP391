@@ -10,8 +10,6 @@ import dal.DestinationDAO;
 import dal.ImageDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,11 +23,14 @@ import models.Tour;
 import dal.TourDAO;
 import models.TourItem;
 import dal.TourItemDAO;
+import dal.TripDAO;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import models.Image;
+import models.Trip;
 
 /**
  *
@@ -63,8 +64,7 @@ public class ManageTourServlet extends HttpServlet {
                 getHomePage(request, response);
                 break;
             }
-            case "listTour": {
-                //Lấy chi tiết 1 Tour
+            case "list": {
                 getList(request, response);
                 break;
             }
@@ -77,6 +77,15 @@ public class ManageTourServlet extends HttpServlet {
             case "destinationList": {
                 //Lấy danh sách tour 
                 getDestinationList(request, response);
+                break;
+            }
+            //---------------CÁC VIEW KHÁC---------------
+            case "about": {
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                break;
+            }
+            case "contact": {
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 break;
             }
             default: {
@@ -94,19 +103,19 @@ public class ManageTourServlet extends HttpServlet {
             response.setContentType("text/html; charset=UTF-8");
             HttpSession session = request.getSession();
             //Khai báo biến
-            TourDAO pf = new TourDAO();
-            DestinationDAO pl = new DestinationDAO();
-            TourItemDAO pa = new TourItemDAO();
+            TourDAO tourDAO = new TourDAO();
             //Thực hiện lấy danh sách
-            Map<Integer, Tour> Maplist = pf.getList();
-            Map<Integer, TourItem> MapItemlist = pa.getTourItemList();
-            //Lưu danh sách vào Attribute
-            request.setAttribute("list", Maplist);
+            Map<Integer, Tour> Maplist = tourDAO.getList();
             
-            String tourListJson = new Gson().toJson(Maplist);
-            session.setAttribute("searchList", tourListJson);
-//            session.setAttribute("searchList", Maplist);
-            request.setAttribute("itemList", MapItemlist);            
+            //Lưu danh sách vào Attribute
+            request.setAttribute("listTour", Maplist);
+            System.out.println("Check suggestionList is valid: " + Config.isValidList);
+            if (!Config.isValidList) {
+               System.out.println("Create SearchList");
+               String tourListJson = new Gson().toJson(Maplist);
+               session.setAttribute("searchList", tourListJson);
+               Config.setIsValidList(true);
+            }
             
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (SQLException ex) {
@@ -121,27 +130,71 @@ public class ManageTourServlet extends HttpServlet {
     //1.[READ] - Đọc danh sách tất cả Tour (Hash function)
     protected void getList(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
-            TourDAO pf = new TourDAO();
-            System.out.println("----------------GETLIST----------------");
-            Map<Integer, Tour> Maplist = pf.getList();
-            for (Map.Entry<Integer, Tour> x : Maplist.entrySet()) {
-                System.out.println(x.getKey());
-                System.out.println(x.getValue().getName());
-                System.out.println(x.getValue().getPriceAdult());
-                System.out.println(x.getValue().getPriceChild());
-                System.out.println(x.getValue().getThumbnail());
-                System.out.println(x.getValue().getLocation());
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        System.out.println("----------------GETLIST----------------");
+        //Tạo và lấy biến
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        List<Trip> tripList = null;
+        TripDAO tripDAO = new TripDAO();
+        String search = request.getParameter("search");
+        if (search == null) { search = ""; }
+        String sort = (String) request.getParameter("sort_option");
+        String indexPage = request.getParameter("index");
+        if (sort == null) { sort = "normal"; }
+        if (indexPage == null) { indexPage = "1"; }
+        int index = Integer.parseInt(indexPage);
+        
+        System.out.println("INDEX: " +indexPage);
+        System.out.println("SORT_PRICE: " +sort);
+        String date = request.getParameter("date");
+        //ĐIỀU KIỆN NGÀY KHỞI HÀNH VÀ KHÔNG CÓ NGÀY KHỞI HÀNH
+        if (date == null) {date = "";}
+        if (date.equals("")) {
+            //Sort theo giá tiền
+            if (sort.equals("asc")) {
+                tripList = tripDAO.sortPriceAcending(search, index);
+            } else if (sort.equals("desc")) {
+                tripList = tripDAO.sortPriceDescending(search, index);
+            } else if (sort.equals("normal")) {
+                tripList = tripDAO.pagingStuff(search, index);
             }
-            request.setAttribute("listTour", Maplist);
-            System.out.println("----------------LIST----------------");
-            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
-        } catch (SQLException ex) {
-            System.out.println("----------------EXCEPTION----------------");
-            log("ListTourController_SQLException: " + ex.getMessage());
+            //Đếm tổng số trang cần có
+            int count = tripDAO.countWithCondition(search);
+            count = count / 6;
+            if (count % 2 != 0) {
+                count++;
+            }
+            request.setAttribute("date", date);
+            request.setAttribute("listTrip", tripList);
+            request.setAttribute("count", count);
+            request.setAttribute("sort_option", sort);
+            request.setAttribute("search", search);
+            request.setAttribute("index", indexPage);
+        } else {
+            //Sort theo giá tiền có NGÀY KHỞI HÀNH
+            if (sort.equals("asc")) {
+                tripList = tripDAO.sortPriceAcendingDepart(date,search,index);
+            } else if (sort.equals("desc")) {
+                tripList = tripDAO.sortPriceDescendingDepart(date,search,index);
+            } else if (sort.equals("normal")) {
+                tripList = tripDAO.pagingStuffDepart(date,search,index);
+            }
+            //Đếm tổng số trang cần có
+            int count = tripDAO.countWithConditionDepart(date,search);
+            count = count / 6;
+            if (count % 2 != 0) {
+                count++;
+            }
+            request.setAttribute("date", date);
+            request.setAttribute("listTrip", tripList);
+            request.setAttribute("count", count);
+            request.setAttribute("sort_option", sort);
+            request.setAttribute("search", search);
+            request.setAttribute("index", indexPage);
         }
+        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
     
     //2.[READ] - Đọc thông tin chi tiết 1 Tour by ID
@@ -153,14 +206,22 @@ public class ManageTourServlet extends HttpServlet {
             
             System.out.println("----------------GET DETAIL TOUR----------------");
             int tourID = Integer.parseInt(request.getParameter("tourID"));
+            int tripID = Integer.parseInt(request.getParameter("tripID"));
             TourItemDAO itemDAO = new TourItemDAO();
             ImageDAO imageDAO = new ImageDAO();
-            TourDAO tourDAO = new TourDAO();
-            Tour tour = new Tour();
-            
-            tour = tourDAO.getTour_by_TourID(tourID);
+            TripDAO tripDAO = new TripDAO();
+            if (tripID != 0) {
+                Trip trip = tripDAO.getTrip_by_TripID_TourID(tourID, tripID);
+                request.setAttribute("trip", trip);
+            } else if (tripID == 0) {
+                System.out.println("TEST TRIP = 0");
+                Trip trip = tripDAO.getTrip_by_TourID(tourID).get(0);
+                request.setAttribute("trip", trip);
+            }
+            List<Trip> tripList = tripDAO.getTrip_by_TourID(tourID);
             Map<Integer, Image> Imagelist = imageDAO.getImage_by_TourItemID(tourID);
             Map<Integer, TourItem> Maplist = itemDAO.getListItem_by_TourItemID(tourID);
+            
             for (Map.Entry<Integer, TourItem> x : Maplist.entrySet()) {
                 System.out.print("ID: " + x.getValue().getId() + " | ");
                 System.out.print("TOUR_ID: " + x.getValue().getTour_id() + " | ");
@@ -169,9 +230,8 @@ public class ManageTourServlet extends HttpServlet {
                 System.out.print("SCRIPT: " + x.getValue().getScript() + " | ");
                 System.out.println("");
             }
-            
-            request.setAttribute("tour", tour);
-            request.setAttribute("imageList", Imagelist);
+            request.setAttribute("tripList", tripList);
+            request.setAttribute("imageList", Imagelist);            
             request.setAttribute("itemList", Maplist);
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (SQLException ex) {
