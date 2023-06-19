@@ -1,0 +1,165 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 5, 2023, 8:07:11 AM
+    Author     : thuyk
+*/
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
+
+* {
+  font-family: "Manrope", sans-serif;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.contact-info,
+.booking-detail,
+.passenger-list {
+  border-color: #d5d5d5;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.heading {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid #d5d5d5;
+}
+
+.tieude {
+  color: #fd5056;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.label {
+  line-height: 24px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  color: #9a9a9a;
+}
+
+.info {
+  color: #2d4271;
+  line-height: 24px;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.image {
+  text-align: center;
+}
+
+.image img {
+  width: 50%;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 0.5rem;
+}
+
+.textPrimary {
+  line-height: 24px;
+  font-weight: 700;
+  color: #fd5056;
+}
+
+.group-checkout {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #d5d5d5;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.product {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e7e7e7;
+  padding-bottom: 20px;
+}
+
+.product-image {
+  width: 100px;
+}
+
+.product-content {
+  width: calc(100% - 100px);
+  padding-left: 13px;
+}
+
+.titleLeft {
+  padding: 0;
+  font-size: small;
+}
+
+.detail {
+  padding: 0;
+  font-size: small;
+}
+
+.text-end {
+  align-self: center;
+  padding: 0;
+  text-align: right;
+  font-size: small;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 19px;
+  color: #2d4271;
+}
+
+.col-4 {
+  color: #2d4271;
+  line-height: 24px;
+  font-weight: 700 !important;
+  max-width: 100%;
+  flex: 0 0 auto;
+  width: 33.33333%;
+}
+
+.image .wrapper {
+  width: 100%;
+  height: auto;
+}
+
+.passenger-list {
+  margin-bottom: 1.5rem !important;
+  padding: 1.5rem !important;
+  background: #fff;
+  border: 0.5px solid #d5d5d5;
+  border-radius: 10px;
+}
+
+.table .booking-table {
+  font-weight: 400;
+  width: 100%;
+  margin-bottom: 1rem;
+  vertical-align: top;
+  border-color: #dee2e6;
+}
+
+.d-none {
+  max-width: 100%;
+  width: 100%;
+  font-weight: 700 !important;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  padding: 0.5rem 0.5rem;
+  border-bottom-width: 1px;
+}
