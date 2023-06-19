@@ -25,7 +25,6 @@
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
 
-
         <!--Import JS Slider -->
         <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
@@ -82,7 +81,7 @@
                                 </a>
                             </li>
                             <li class="header-nav-item">
-                                <a class="header-nav-link" href="<c:url value="/account/login.do"/>">
+                                <a class="header-nav-link" href="<c:url value="/account/Login.do"/>">
                                     <p>Đăng nhập</p>
                                 </a>
                             </li>
@@ -92,31 +91,6 @@
                 </div>
             </div>
         </div>
-                                    
-                                    
-                                    
-                                    <ul class="header-nav-list">
-                                        <li class="header-nav-item">
-                                            <a class="header-nav-link" href="/SWP391_NTNE/tour/about.do">
-                                                <p>Giới thiệu</p>
-                                            </a>
-                                        </li>
-                                        <li class="header-nav-item">
-                                            <a class="header-nav-link" href="/SWP391_NTNE/tour/list.do">
-                                                <p>Tour</p>
-                                            </a>
-                                        </li>
-                                        <li class="header-nav-item">
-                                            <a class="header-nav-link" href="/SWP391_NTNE/tour/contact.do">
-                                                <p>Liên hệ</p>
-                                            </a>
-                                        </li>
-                                        <li class="header-nav-item">
-                                            <a class="header-nav-link" href="/SWP391_NTNE/account/login.do">
-                                                <p>Đăng nhập</p>
-                                            </a>
-                                        </li>
-                                    </ul>
         <!-- End: Header -->
         <script>
     //        var exists = false;

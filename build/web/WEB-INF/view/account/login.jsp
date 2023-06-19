@@ -12,10 +12,21 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous"></script>
 
-        <!--<link rel="stylesheet" href="assets/css/LoginPageCSS/bootstrap.css">-->
+        <!--IMPORT CSS-->
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/Login/layout.css"/>" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-        <link href="<c:url value="/CSSMAIN/contentLayout/login_layout/layout.css" />" rel="stylesheet" type="text/css"/>  
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Markazi+Text:wght@500&family=Rokkitt:wght@100&display=swap" rel="stylesheet">
+
+        <!--IMPORT JS-->
+        <script src="<c:url value="/assets/js/Homepage/sliders/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/Homepage/sliders/bootstrap.js"/>" type="text/javascript"></script>
+        <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/Login/login.js"/>" type="text/javascript"></script>
+
+
 
         <title>Login Page</title>  
     </head>
@@ -44,29 +55,28 @@
                                     <form action="login_handler.do" method="post">
                                         <div class="login-form-user">
                                             <label for="username">
-                                                Số điện thoại hoặc email <br>
-                                                <input id="username" type="text" name="username" placeholder="Tài khoản" value="${username}"> 
+                                                Email <br>
+                                                <input id="username" type="text" name="username" placeholder="Tài khoản" value="${username}" required=""> 
                                             </label>
                                         </div>
                                         <div class="login-form-password">
                                             <label for="password">
                                                 Mật khẩu
                                                 <br>
-                                                <input type="password" id="passowrd" name="password" placeholder="Mật khẩu" value="${password}">
+                                                <input type="password" id="password" name="password" placeholder="Mật khẩu" value="${password}" required="">
                                             </label>
                                         </div>
+                                        <p style="color: red; text-align: left">${message}</p>
                                         <button class="press-login" type="submit">Đăng nhập</button>
                                     </form>
-                                    ${message}
+
                                 </div>
                                 <div class="form-divider">Hoặc</div>
-
                             </div>
-
                         </div>
                         <div class="add-on">
 
-                            <div class="btn-google" readonly="readonly"><a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=http://localhost:8080/SWP391_NTNE/account/login_google.do&response_type=code&scope=profile&access_type=offline"><i class="fa-brands fa-google"></i> Tiếp
+                            <div class="btn-google" readonly="readonly"><a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=http://localhost:8080/SWP391_NTNE/account/login_google.do&response_type=code&scope=email%20profile&access_type=offline"><i class="fa-brands fa-google"></i> Tiếp
                                     tục với Google</a></div>
                         </div>
                     </div>
@@ -75,8 +85,5 @@
             </div>
 
         </section>
-        <!--<script src="./js/sliders/jquery.min.js"></script>-->
-        <!--<script src="./js/sliders/bootstrap.js"></script>-->
-        <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous"></script>
     </body>
 </html>

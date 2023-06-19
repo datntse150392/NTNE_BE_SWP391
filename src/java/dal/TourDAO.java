@@ -6,6 +6,7 @@
 package dal;
 
 import models.Tour;
+import models.ListBooked;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,11 +23,13 @@ import java.util.logging.Logger;
  * @author thuyk
  */
 public class TourDAO extends DBContext {
-    
+
+    List<ListBooked> list = null;
+
     //Lấy danh sách tour với điều kiện availability = true
     public Map<Integer, Tour> getList() throws SQLException {
         DBContext db = new DBContext();
-        String sql = "SELECT * FROM [dbo].[Tour] as a, [dbo].[Trip] AS b WHERE a.id = b.tour_id AND b.availability = 0";
+        String sql = "SELECT * FROM [dbo].[Tour] as a, [dbo].[Trip] AS b WHERE a.id = b.tour_id AND b.availability = 1";
         PreparedStatement ps = db.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         Map<Integer, Tour> maps = new HashMap<>();
@@ -43,116 +46,118 @@ public class TourDAO extends DBContext {
         }
         return maps;
     }
-    
-//    //Phân trang + Search
-//    public List<Tour> pagingStuff(String search, int index) {
-//        List<Tour> list = null;
-//        try {
-//            list = new ArrayList();
-//            String sql = "SELECT * FROM [dbo].[Tour] as a WHERE a.name LIKE ? ORDER BY a.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
-//            PreparedStatement stm = connection.prepareStatement(sql);
-//            stm.setString(1, "%" + search + "%");
-//            stm.setInt(2, (index - 1) * 6);
-//            ResultSet rs = stm.executeQuery();
-//            while (rs.next()) {
-//                Tour tour = new Tour();
-//                tour.setId(rs.getInt("id"));
-//                tour.setName(rs.getString("name"));
-//                tour.setPriceAdult(rs.getFloat("priceAdult"));
-//                tour.setPriceChild(rs.getFloat("priceChild"));
-//                tour.setThumbnail(rs.getString("thumbnail"));
-//                tour.setLocation(rs.getString("location"));
-//                list.add(tour);
-//            }
-//            return list;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println(ex);
-//        }
-//        return null;
-//    }
-//
-//    //Phân trang + Sort tăng dần + Search
-//    public List<Tour> sortPriceAcending(String search, int index) {
-//        List<Tour> list = null;
-//        try {
-//            list = new ArrayList();
-//            String sql = "SELECT * FROM [dbo].[Tour] as a WHERE a.name LIKE ? \n"
-//                    + "  ORDER BY a.priceAdult ASC OFFSET ? \n"
-//                    + "  ROWS FETCH NEXT 6 ROWS ONLY";
-//            PreparedStatement stm = connection.prepareStatement(sql);
-//            stm.setString(1, "%" + search + "%");
-//            stm.setInt(2, (index - 1) * 6);
-//            ResultSet rs = stm.executeQuery();
-//            while (rs.next()) {
-//                Tour tour = new Tour();
-//                tour.setId(rs.getInt("id"));
-//                tour.setName(rs.getString("name"));
-//                tour.setPriceAdult(rs.getFloat("priceAdult"));
-//                tour.setPriceChild(rs.getFloat("priceChild"));
-//                tour.setThumbnail(rs.getString("thumbnail"));
-//                tour.setLocation(rs.getString("location"));
-//                list.add(tour);
-//            }
-//            return list;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println(ex);
-//        }
-//        return null;
-//    }
-//
-//    //Phân trang + Sort giảm dần + Search
-//    public List<Tour> sortPriceDescending(String search, int index) {
-//        List<Tour> list = null;
-//        try {
-//            list = new ArrayList();
-//            String sql = "SELECT * FROM [dbo].[Tour] as a WHERE a.name LIKE ? \n"
-//                    + "  ORDER BY a.priceAdult DESC OFFSET ? \n"
-//                    + "  ROWS FETCH NEXT 6 ROWS ONLY";
-//            PreparedStatement stm = connection.prepareStatement(sql);
-//            stm.setString(1, "%" + search + "%");
-//            stm.setInt(2, (index - 1) * 6);
-//            ResultSet rs = stm.executeQuery();
-//            while (rs.next()) {
-//                Tour tour = new Tour();
-//                tour.setId(rs.getInt("id"));
-//                tour.setName(rs.getString("name"));
-//                tour.setPriceAdult(rs.getFloat("priceAdult"));
-//                tour.setPriceChild(rs.getFloat("priceChild"));
-//                tour.setThumbnail(rs.getString("thumbnail"));
-//                tour.setLocation(rs.getString("location"));
-//                list.add(tour);
-//            }
-//            return list;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.println(ex);
-//        }
-//        return null;
-//    }
-//    
-//    public int countWithCondition(String search) {
-//        try {
-//            //Tạo đối tượng statement
-//            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM [dbo].[Tour] AS a WHERE a.name LIKE ?");
-//            ps.setString(1, "%" + search + "%");
-//            ResultSet rs = ps.executeQuery();
-//            if (rs.next()) {
-//                return rs.getInt(1);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return 0;
-//    }
-    
-//    public static void main(String[] args){
-//        try {
-//            TourDAO dao = new TourDAO();
-//            dao.getList();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+
+    //Lấy danh sách Booking by ID
+    public List<ListBooked> select(int index) {
+        //Tạo connection để kết nối vào DBMS
+        try {
+            String sql = "SELECT A.depart_time ,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while (rs.next()) {
+                ListBooked product = new ListBooked();
+                product.setDeparttime(rs.getDate("depart_time"));
+                product.setQuantityAdult(rs.getInt("quantityAdult"));
+                product.setQuantityChild(rs.getInt("quantityChild"));
+                product.setName(rs.getString("name"));
+                product.setTotalPrice(rs.getDouble("totalPrice"));
+                product.setTour_id(rs.getInt("Tour ID"));
+                product.setTrip_id(rs.getInt("Trip ID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setStatus(rs.getBoolean("status"));
+                list.add(product);
+            }
+            rs.close();
+            ps.close();
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<ListBooked> sortPriceMonth(int index) {
+        try {
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while (rs.next()) {
+                ListBooked product = new ListBooked();
+                product.setDeparttime(rs.getDate("depart_time"));
+                product.setQuantityAdult(rs.getInt("quantityAdult"));
+                product.setQuantityChild(rs.getInt("quantityChild"));
+                product.setName(rs.getString("name"));
+                product.setTotalPrice(rs.getDouble("totalPrice"));
+                product.setTour_id(rs.getInt("Tour ID"));
+                product.setTrip_id(rs.getInt("Trip ID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setStatus(rs.getBoolean("status"));
+                list.add(product);
+            }
+            rs.close();
+            ps.close();
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<ListBooked> sortPriceDay(int index) {
+        try {
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while (rs.next()) {
+                ListBooked product = new ListBooked();
+                product.setDeparttime(rs.getDate("depart_time"));
+                product.setQuantityAdult(rs.getInt("quantityAdult"));
+                product.setQuantityChild(rs.getInt("quantityChild"));
+                product.setName(rs.getString("name"));
+                product.setTotalPrice(rs.getDouble("totalPrice"));
+                product.setTour_id(rs.getInt("Tour ID"));
+                product.setTrip_id(rs.getInt("Trip ID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setStatus(rs.getBoolean("status"));
+                list.add(product);
+            }
+            rs.close();
+            ps.close();
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public int count() {
+        try {
+            //Tạo connection để kết nối vào DBMS
+
+            //Tạo đối tượng statement
+            PreparedStatement stm = connection.prepareStatement("select count(*) from TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id");
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+
+        }
+        return 0;
+    }
 }

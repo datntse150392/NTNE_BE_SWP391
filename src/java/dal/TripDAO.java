@@ -26,7 +26,7 @@ public class TripDAO {
     //Lấy danh sách Trip
     public Map<Integer, Trip> getList() throws SQLException {
         DBContext db = new DBContext();
-        String sql = "SELECT * FROM [dbo].[Trip] as a WHERE a.availability = 0";
+        String sql = "SELECT * FROM [dbo].[Trip] as a WHERE a.availability = 1";
         PreparedStatement ps = db.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         Map<Integer, Trip> maps = new HashMap<>();
@@ -120,7 +120,7 @@ public class TripDAO {
             DBContext db = new DBContext();
             list = new ArrayList();
             String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 0 \n"
+                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
                     + "  AND b.name LIKE ? \n"
                     + "  ORDER BY a.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement stm = db.connection.prepareStatement(sql);
@@ -140,6 +140,7 @@ public class TripDAO {
                 trip.setLocation(rs.getString("location"));
                 trip.setTour_id(rs.getInt("tour_id"));
                 list.add(trip);
+                System.out.println(trip);
             }
             return list;
         } catch (SQLException ex) {
@@ -156,7 +157,7 @@ public class TripDAO {
             DBContext db = new DBContext();
             list = new ArrayList();
             String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 0 \n"
+                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
                     + "  AND b.name LIKE ? \n"
                     + "  ORDER BY a.priceAdult ASC OFFSET ? \n"
                     + "  ROWS FETCH NEXT 6 ROWS ONLY";
@@ -193,7 +194,7 @@ public class TripDAO {
             DBContext db = new DBContext();
             list = new ArrayList();
             String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 0 \n"
+                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
                     + "  AND b.name LIKE ? \n"
                     + "  ORDER BY a.priceAdult DESC OFFSET ? \n"
                     + "  ROWS FETCH NEXT 6 ROWS ONLY";
@@ -230,7 +231,7 @@ public class TripDAO {
             //Tạo đối tượng statement
             String sql = "SELECT COUNT(*) FROM [dbo].[Trip] as a,[dbo].[Tour] as b \n"
                     + "  WHERE a.tour_id = b.id \n"
-                    + "  AND a.availability = 0 \n"
+                    + "  AND a.availability = 1 \n"
                     + "  AND b.name LIKE ? ";
             PreparedStatement ps = db.connection.prepareStatement(sql);
             ps.setString(1, "%" + search + "%");
@@ -258,7 +259,7 @@ public class TripDAO {
             DBContext db = new DBContext();
             list = new ArrayList();
             String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b \n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 0 \n"
+                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
                     + "  AND a.depart_time = ? \n"
                     + "  AND b.name LIKE ? \n"
                     + "  ORDER BY a.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
@@ -296,7 +297,7 @@ public class TripDAO {
             DBContext db = new DBContext();
             list = new ArrayList();
             String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 0 \n"
+                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
                     + "  AND a.depart_time = ? \n"
                     + "  AND b.name LIKE ? \n"
                     + "  ORDER BY a.priceAdult ASC OFFSET ? \n"
@@ -335,7 +336,7 @@ public class TripDAO {
             DBContext db = new DBContext();
             list = new ArrayList();
             String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 0 \n"
+                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
                     + "  AND a.depart_time = ? \n"
                     + "  AND b.name LIKE ? \n"
                     + "  ORDER BY a.priceAdult DESC OFFSET ? \n"
@@ -374,7 +375,7 @@ public class TripDAO {
             //Tạo đối tượng statement
             String sql = "SELECT COUNT(*) FROM [dbo].[Trip] as a,[dbo].[Tour] as b \n"
                     + "  WHERE a.tour_id = b.id \n"
-                    + "  AND a.availability = 0 \n"
+                    + "  AND a.availability = 1 \n"
                     + "  AND a.depart_time = ? \n"
                     + "  AND b.name LIKE ? ";
             PreparedStatement ps = db.connection.prepareStatement(sql);
@@ -391,10 +392,9 @@ public class TripDAO {
         return 0;
     }
     
-//    public static void main(String[] args) throws SQLException {
-//        TripDAO dao = new TripDAO();
-//        String date = "2023-06-30";
-//        dao.pagingStuff("", 1);
-//        dao.pagingStuffDepart(date, "", 1);
-//    }
+    public static void main(String[] args) throws SQLException {
+        TripDAO dao = new TripDAO();
+        String date = "2023-06-30";
+        dao.pagingStuff("", 1);
+    }
 }

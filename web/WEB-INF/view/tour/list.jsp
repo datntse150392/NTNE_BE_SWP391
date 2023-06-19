@@ -185,7 +185,7 @@
                                                 <input type="date" onChange="handleSelectDateTime()" value="${date}" id="dateInput" >
                                             </div>
                                         </div>
-s
+                                            
                                         <div class="btn-group mr-lg-2">
                                             <button id="displaySortOption" value="" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Sort By Price
