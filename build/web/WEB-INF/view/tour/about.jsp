@@ -21,6 +21,32 @@
         <title>Giới thiệu</title>
     </head>
     <body>
+        <header>
+            <div class="logo">
+                <a href="../index.jsp">
+                    <img
+                        src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Flogo.png?alt=media&token=2b706eb6-a8dd-488b-a807-bd03f3c56ad4&_gl=1*a9z870*_ga*MTU1OTk0NzM3OC4xNjgzNTA1MDE2*_ga_CW55HF8NVT*MTY4NTkwMjU0Ny4zNC4xLjE2ODU5MDI4NjQuMC4wLjA."
+                        alt="Trang chủ NhaTrangNatureElite"
+                        width="220"
+                        height="62"
+                        />
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <ul class="main-menu">
+                    <li class="menu-item"><a href="#">Giới thiệu</a></li>
+                    <li class="menu-item"><a href="#">Tour</a></li>
+                    <li class="menu-item"><a href="#">Blogs</a></li>
+                    <li class="menu-item"><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+            <div class="action">
+                <button class="login-btn">
+                    <a href="#">Đăng nhập</a>
+                </button>
+            </div>
+        </header>
+
         <div class="category-header">
             <h1 class="category-title">Về chúng tôi</h1>
         </div>
@@ -253,6 +279,101 @@
                 </div>
             </div>
         </section>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                        <div class="logo-footer">
+                            <a href="#">
+                                <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Flogo-footer.png?alt=media&token=1ea9b4e7-de5f-478b-b6ee-a20d605a265a&_gl=1*184dug9*_ga*MTU1OTk0NzM3OC4xNjgzNTA1MDE2*_ga_CW55HF8NVT*MTY4NTkwMjU0Ny4zNC4xLjE2ODU5MDI3MjEuMC4wLjA."
+                                    alt="Đây là logo"
+                                    width="175"
+                                    height="58"
+                                    />
+                            </a>
+                        </div>
+                        <p class="copyright">© 2023 NhaTrangNatureElite</p>
+                        <div class="socials">
+                            <a
+                                href="#"
+                                rel="noopener"
+                                class="social"
+                                target="_blank"
+                                aria-label="facebook"
+                                >
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a
+                                href="#"
+                                rel="noopener"
+                                class="social"
+                                target="_blank"
+                                aria-label="twitter"
+                                >
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a
+                                href="#"
+                                rel="noopener"
+                                class="social"
+                                target="_blank"
+                                aria-label="instagram"
+                                >
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                        <p class="title-col">Chính sách</p>
+                        <ul class="quick-links">
+                            <li>
+                                <a href="#">Điều khoản sử dụng</a>
+                            </li>
+                            <li>
+                                <a href="#">Chính sách bảo mật</a>
+                            </li>
+                            <li>
+                                <a href="#">Đặt cọc Online</a>
+                            </li>
+                            <li>
+                                <a href="#">Chính sách Hoàn - Hủy Tour</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                        <p class="title-col">Liên hệ chúng tôi</p>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                098.765.4321 - 091.234.5678
+                            </li>
+                            <li>
+                                <i class="fas fa-map-marker"></i>
+                                FPT University, Thủ Đức, TP.HCM
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                info@nhatrangnatureelite.com.vn
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="page-links">
+                    <ul>
+                        <li>
+                            <a href="../index.jsp">Về chúng tôi</a>
+                        </li>
+                        <li>
+                            <a href="#">Hướng Dẫn Thanh Toán</a>
+                        </li>
+                        <li>
+                            <a href="#">Liên hệ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
         <script src="../assets/js/Homepage/sliders/jquery.min.js"></script>
         <script src="../assets/js/Homepage/sliders/bootstrap.js"></script>
     </body>

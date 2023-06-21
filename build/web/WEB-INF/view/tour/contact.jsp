@@ -12,10 +12,11 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<c:url value="/assets/css/Contact/styles.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/assets/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
+        <title>History Booking Tour - Nha Trang Nature Elite</title>
+        <link rel="stylesheet" href="../assets/css/Contact/styles.css" />
+        <link rel="stylesheet" href="../assets/css/Contact/header_footer.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap.css" />
 
-        <title>Nha Trang Nature Elite</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
@@ -51,6 +52,18 @@
         <!-- Headline Image -->
         <div class="category-header"><h1 class="category-title">Liên hệ</h1></div>
         <section class="main">
+
+            <div class="container">
+                <nav aria-label="breadcrumb-wrapper">
+                    <ol class="breadcrumb" style="background-color: #fff">
+                        <li class="breadcrumb-item">
+                            <a href="../index.jsp">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Liên hệ</li>
+                    </ol>
+                </nav>
+            </div>
+
             <div class="contacts">
                 <div class="container">
                     <div class="row">
@@ -58,12 +71,12 @@
                             <p class="text-center">Bạn có bất cứ thắc mắc nào về chất lượng tour hoặc dịch vụ</p>
                             <p class="text-center">
                                 <a
-                                    href="#"
+                                    href="tel:0918.xxx.xxx"
                                     class="btn btn-radius btn-pink btn-booking">
                                     Gọi 0918.xxx.xxx
                                 </a>
                                 <a
-                                    href="#"
+                                    href="tel:0918.xxx.xxx"
                                     class="btn btn-radius btn-pink btn-booking">
                                     Gọi 0918.xxx.xxx
                                 </a>
@@ -173,6 +186,78 @@
                     </div>
                 </div>
             </div>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                            <div class="logo-footer">
+                                <a href="#">
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Flogo-footer.png?alt=media&token=1ea9b4e7-de5f-478b-b6ee-a20d605a265a&_gl=1*1fyyh6r*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NTgwNzc3NC40LjEuMTY4NTgwODA0NC4wLjAuMA.." alt="Đây là logo" width="175" height="58">
+                                </a>
+                            </div>
+                            <p class="copyright">© 2023 NhaTrangNatureElite</p>
+                            <div class="socials">
+                                <a href="#" rel="noopener" class="social" target="_blank" aria-label="facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" rel="noopener" class="social" target="_blank" aria-label="twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" rel="noopener" class="social" target="_blank" aria-label="instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                            <p class="title-col">Chính sách</p>
+                            <ul class="quick-links">
+                                <li>
+                                    <a href="#">Điều khoản sử dụng</a>
+                                </li>
+                                <li>
+                                    <a href="#">Chính sách bảo mật</a>
+                                </li>
+                                <li>
+                                    <a href="#">Đặt cọc Online</a>
+                                </li>
+                                <li>
+                                    <a href="#">Chính sách Hoàn - Hủy Tour</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                            <p class="title-col">Liên hệ chúng tôi</p>
+                            <ul class="contact-info">
+                                <li>
+                                    <i class="fas fa-phone"></i>
+                                    098.765.4321 - 091.234.5678
+                                </li>
+                                <li>
+                                    <i class="fas fa-map-marker"></i>
+                                    FPT University, Thủ Đức, TP.HCM
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope"></i>
+                                    info@nhatrangnatureelite.com.vn
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="page-links">
+                        <ul>
+                            <li>
+                                <a href="./about.html">Về chúng tôi</a>
+                            </li>
+                            <li>
+                                <a href="#">Hướng Dẫn Thanh Toán</a>
+                            </li>
+                            <li>
+                                <a href="#">Liên hệ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer>
         </section>
     </body>
 </html>
