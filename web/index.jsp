@@ -23,7 +23,7 @@
     
     <!-- Css Slider -->
     <link rel="stylesheet" href="./assets/css/HomePageCSS/homepage_new.css">
-    <title>Nha Trang Nature Elite</title>
+    <title>Nha Trang</title>
 </head>
 <body>
 <!-- Loader page -->
