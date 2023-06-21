@@ -80,11 +80,20 @@
                                     <p>Liên hệ</p>
                                 </a>
                             </li>
-                            <li class="header-nav-item">
-                                <a class="header-nav-link" href="<c:url value="/account/Login.do"/>">
-                                    <p>Đăng nhập</p>
-                                </a>
-                            </li>
+                            <c:if test="${person == null}">
+                                <li class="header-nav-item">
+                                    <a class="header-nav-link" href="<c:url value="/account/Login.do"/>">
+                                        <p>Đăng nhập</p>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${person != null}">
+                                <li class="header-nav-item">
+                                    <a class="header-nav-link" href="<c:url value="/account/logOut.do"/>">
+                                        <p>Đăng xuất</p>
+                                    </a>
+                                </li>
+                            </c:if>
                         </ul>
                     </div>
                     <!-- End: Nav PC -->
@@ -93,7 +102,7 @@
         </div>
         <!-- End: Header -->
         <script>
-    //        var exists = false;
+            //        var exists = false;
 
             //FUNCTION THÊM VÀO LIST SUGGESTION
             const list = [];
@@ -151,31 +160,31 @@
                 searchInput.addEventListener('input', handleSearchInput);
 
                 //HANDLE TẠO THẺ INPUT
-    //        function createInputWithValue(input) {
-    //            if(exists) {
-    //               var tourID = document.querySelector("#tourID");
-    //               tourID.remove();
-    //               exists = false;
-    //            }
-    //            var tourId;
-    //            console.log(input);
-    //            list.map(item => {
-    //                if (item.name.toLowerCase() == input.toLowerCase()) {
-    //                    console.log("ID: ", item.id, " Name: ", item.name);
-    //                    tourId = item.id;
-    //                }
-    //            })
-    //            // Create the input element
-    //            var input = document.createElement('input');
-    //            input.type = 'hidden';
-    //            input.value = tourId;
-    //            input.name = 'tourID';
-    //            input.id = 'tourID';
-    //            
-    //            var formSubmit = document.getElementById('formSubmit');
-    //                formSubmit.appendChild(input);
-    //                exists = true;
-    //            }
+                //        function createInputWithValue(input) {
+                //            if(exists) {
+                //               var tourID = document.querySelector("#tourID");
+                //               tourID.remove();
+                //               exists = false;
+                //            }
+                //            var tourId;
+                //            console.log(input);
+                //            list.map(item => {
+                //                if (item.name.toLowerCase() == input.toLowerCase()) {
+                //                    console.log("ID: ", item.id, " Name: ", item.name);
+                //                    tourId = item.id;
+                //                }
+                //            })
+                //            // Create the input element
+                //            var input = document.createElement('input');
+                //            input.type = 'hidden';
+                //            input.value = tourId;
+                //            input.name = 'tourID';
+                //            input.id = 'tourID';
+                //            
+                //            var formSubmit = document.getElementById('formSubmit');
+                //                formSubmit.appendChild(input);
+                //                exists = true;
+                //            }
             }
         </script>
     </body>

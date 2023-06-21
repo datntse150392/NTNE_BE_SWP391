@@ -23,6 +23,7 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Form;
 import models.Constants;
 import models.UserGoogle;
+import utils.SecurityUtils;
 
 /**
  *
@@ -46,7 +47,7 @@ public class AccountController extends HttpServlet {
         String action = (String) request.getAttribute("action");
         switch (action) {
             case "Login":
-                login(request, response);
+                Login(request, response);
                 break;
             case "login_handler":
                 login_handler(request, response);
@@ -54,14 +55,23 @@ public class AccountController extends HttpServlet {
             case "login_google":
                 loginGoogleHandler(request, response);
                 break;
-            case "displayUserProfile":
+            case "userprofile":
                 displayUserProfile(request, response);
                 break;
-            case "changepassword":
-                changepassword(request, response);
+            case "changePassword":
+                changePassword(request, response);
                 break;
             case "changePasswordHandler":
                 changePasswordHandler(request, response);
+                break;
+            case "logOut":
+                logOut(request, response);
+                break;
+            case "register":
+                register(request, response);
+                break;
+            case "registerHandler":
+                registerHandler(request, response);
                 break;
         }
 
@@ -69,9 +79,9 @@ public class AccountController extends HttpServlet {
 
     protected void login_handler(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         //Lấy username password từ trog login.jsp
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
+        String email = request.getParameter("email");
+        String password = SecurityUtils.hashMd5(request.getParameter("password"));
+        
         //Gọi session để lưu user vào session       
         HttpSession session = request.getSession();
 
@@ -81,30 +91,39 @@ public class AccountController extends HttpServlet {
         Admin_Account adminAcc = new Admin_Account();
 
         //get_UserName_PassWord để lấy đối tượng user va admin
-        User_Account person = userAcc.get_UserName_PassWord(username, password);
-        User_Account admin = adminAcc.get_UserName_PassWord(username, password);
+        User_Account person = userAcc.get_UserName_PassWord(email, password);
+        User_Account admin = adminAcc.get_UserName_PassWord(email, password);
         //UserGoogle usGG = 
 
         //Nếu p1 khác null thì lưu p1 vào session
         if (person != null) {
-            //Gọi cookie để lưu username va password vào cookie 
-            Cookie u = new Cookie("username", username);
-            Cookie p = new Cookie("password", password);
+            if (person.isIsActive()) {
+                //Gọi cookie để lưu username va password vào cookie 
+                Cookie u = new Cookie("email", email);
+                Cookie p = new Cookie("password", request.getParameter("password"));
+                
+                //set thoi gian cua cookie
+                u.setMaxAge(60);
+                p.setMaxAge(60);
 
-            //set thoi gian cua cookie
-            u.setMaxAge(60);
-            p.setMaxAge(60);
+                //Lưu cookie u và p lên trình duyệt
+                response.addCookie(u);
+                response.addCookie(p);
 
-            //Lưu cookie u và p lên trình duyệt
-            response.addCookie(u);
-            response.addCookie(p);
-
-            session.setAttribute("person", person);
-            request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
-            //response.sendRedirect(request.getContextPath() + "/Home.jsp");
+                session.setAttribute("person", person);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "userprofile");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                //response.sendRedirect(request.getContextPath() + "/Home.jsp");
+            } else {
+                request.setAttribute("MSG_ERROR", "This account has been blocked!");
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "Login");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            }
         } else if (admin != null) {
             //Gọi cookie để lưu username va password vào cookie 
-            Cookie u = new Cookie("username", username);
+            Cookie u = new Cookie("email", email);
             Cookie p = new Cookie("password", password);
 
             //set thoi gian cua cookie
@@ -121,7 +140,9 @@ public class AccountController extends HttpServlet {
             request.setAttribute("message", "Incorrect username or password");
 
 //           response.sendRedirect(request.getContextPath() + "/login.jsp");
-            request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "Login");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         }
 
     }
@@ -138,12 +159,18 @@ public class AccountController extends HttpServlet {
             if (check) {
                 User_Account person = accDAO.getAccountInfoByEmail(email);
                 session.setAttribute("person", person);
-                request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+                if (person.isIsActive()) {
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "userprofile");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                }
             } else {
-                accDAO.insertAccount(user.getName(), user.getEmail(), "******", "", "", "", 0, user.getPicture());
+                accDAO.insertAccount(user.getName(), user.getEmail(), "******", "", "", "US", 0, true, user.getPicture());
                 User_Account person = accDAO.getAccountInfoByEmail(email);
                 session.setAttribute("person", person);
-                request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "userprofile");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             }
             Cookie e = new Cookie("email", email);
             e.setMaxAge(60);
@@ -151,10 +178,9 @@ public class AccountController extends HttpServlet {
         } catch (IOException e) {
 
         }
-
     }
 
-    protected void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void Login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         //Ta sẽ get cookie từ request 
         //Vì là trên server có thể có nhiều cookies nên khi lấy dữ liệu
         //Ta phải lấy 1 mảng các cookies
@@ -163,16 +189,17 @@ public class AccountController extends HttpServlet {
         //Ta tìm từng cookies và so sánh chúng 
         //để tìm cái ta cần
         for (Cookie Cooky : Cookies) {
-            if (Cooky.getName().equals("username")) {
-                request.setAttribute("username", Cooky.getValue());
+            if (Cooky.getName().equals("email")) {
+                request.setAttribute("email", Cooky.getValue());
             }
             if (Cooky.getName().equals("password")) {
                 request.setAttribute("password", Cooky.getValue());
             }
         }
-        
-        System.out.println("CHUYỂN TRANG LOGIN");
-        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+
+//        request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
@@ -208,13 +235,13 @@ public class AccountController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             User_Account user = (User_Account) session.getAttribute("person");
-            request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (IOException | ServletException e) {
 
         }
     }
 
-    protected void changepassword(HttpServletRequest request, HttpServletResponse response) {
+    protected void changePassword(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession();
             User_Account user = (User_Account) session.getAttribute("person");
@@ -229,30 +256,112 @@ public class AccountController extends HttpServlet {
             User_Account user = (User_Account) session.getAttribute("person");
             AccountDAO accDAO = new AccountDAO();
             if (user != null) {
-                String oldPassword = request.getParameter("oldPassword");
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "changePassword");
+                String oldPassword = SecurityUtils.hashMd5(request.getParameter("oldPassword"));
                 boolean checkOldPsw = accDAO.checkOldPassword(user.getId(), oldPassword);
                 if (checkOldPsw) {
-                    String newPassword = request.getParameter("newPassword");
-                    String newPasswordRetype = request.getParameter("newPasswordRetype");
+                    String newPassword = SecurityUtils.hashMd5(request.getParameter("newPassword"));
+                    String newPasswordRetype = SecurityUtils.hashMd5(request.getParameter("newPasswordRetype"));
                     if (newPassword.equals(newPasswordRetype) && !newPassword.equals(oldPassword)) {
                         boolean checkNewPsw = accDAO.updateAccountPassword(user.getId(), newPassword);
                         if (checkNewPsw) {
                             request.setAttribute("MSG_SUCCESS", "Change password successfully!");
-                            request.getRequestDispatcher("/WEB-INF/view/account/changepassword.jsp").forward(request, response);
+                            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                         } else {
                             request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                            request.getRequestDispatcher("/WEB-INF/view/account/changepassword.jsp").forward(request, response);
+                            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                         }
                     } else {
                         request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                        request.getRequestDispatcher("/WEB-INF/view/account/changepassword.jsp").forward(request, response);
+                        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                     }
                 } else {
                     request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                    request.getRequestDispatcher("/WEB-INF/view/account/changepassword.jsp").forward(request, response);
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             }
         } catch (IOException | ServletException e) {
+        }
+    }
+
+    protected void logOut(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession(true);
+            if (session != null) {
+                session.invalidate();
+            }
+            Cookie[] cookies = request.getCookies();
+            if (cookies.length != 0) {
+                for (Cookie cooky : cookies) {
+                    if (cooky.getName().equals("email")) {
+                        cooky.setMaxAge(0);
+                        response.addCookie(cooky);
+                    }
+                }
+            }
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "Login");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        } catch (IOException | ServletException ex) {
+        }
+    }
+
+    protected void register(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession session = request.getSession();
+            User_Account acc = (User_Account) session.getAttribute("person");
+            if (acc == null) {
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            } else {
+                if (acc.getRole().equals("US")) {
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "userprofile");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                } else {
+                    request.getRequestDispatcher("").forward(request, response);
+                }
+            }
+        } catch (IOException | ServletException ex) {
+
+        }
+    }
+
+    protected void registerHandler(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String email = request.getParameter("email");
+
+            AccountDAO dao = new AccountDAO();
+            User_Account account = dao.getAccountInfoByEmail(email);
+            if (account != null) {
+                request.setAttribute("MSG_ERROR", "Email này đã được sử dụng bởi tài khoản khác. Vui lòng nhập lại email mới!");
+                request.setAttribute("email", email);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "register");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            } else {
+                String name = request.getParameter("fullname");
+                String phone = request.getParameter("phone");
+                String address = request.getParameter("address");
+                String password = SecurityUtils.hashMd5(request.getParameter("password"));
+                String re_password = SecurityUtils.hashMd5(request.getParameter("re_password"));
+                if (password.equals(re_password)) {
+                    boolean check = dao.insertAccount(name, email, password, phone, address, "US", 0, true, "https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2F%C4%90%C4%83ng%20nh%E1%BA%ADp%2Fuserimage.jpg?alt=media&token=6144393d-547a-4827-8356-e04867f1139e");
+                    if (check) {
+                        request.setAttribute("controller", "account");
+                        request.setAttribute("action", "Login");
+                        request.setAttribute("MSG_SUCCESS", "You have successfully registered an account!");
+                        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "register");
+                    request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                }
+            }
+        } catch (IOException | ServletException e) {
+
         }
     }
 

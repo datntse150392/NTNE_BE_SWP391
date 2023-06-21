@@ -72,7 +72,7 @@ a, button, .btn {
 }
 
 .btn-pink {
-    background-color: #e12d36;
+    background-color: #ff6347 !important;
     color: white;
 }
 
@@ -123,4 +123,8 @@ a, button, .btn {
     min-width: 160px;
     margin-top: 15px;
     background: #ff6347;
+}
+
+.btn-submit:hover{
+    background: #e12d36 !important;
 }

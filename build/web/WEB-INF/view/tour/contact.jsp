@@ -50,24 +50,12 @@
     <body>
         <!-- Headline Image -->
         <div class="category-header"><h1 class="category-title">Liên hệ</h1></div>
-        <section class="main">
+        <section class="main" style="margin-top: 2%;">
             <div class="contacts">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 offset-lg-3">
                             <p class="text-center">Bạn có bất cứ thắc mắc nào về chất lượng tour hoặc dịch vụ</p>
-                            <p class="text-center">
-                                <a
-                                    href="#"
-                                    class="btn btn-radius btn-pink btn-booking">
-                                    Gọi 0918.xxx.xxx
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn btn-radius btn-pink btn-booking">
-                                    Gọi 0918.xxx.xxx
-                                </a>
-                            </p>
 
                             <p class="text-center">
                                 Hoặc bạn hãy liên hệ ngay để bộ phận chăm sóc khách hàng tư vấn

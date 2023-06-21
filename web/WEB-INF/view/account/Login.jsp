@@ -13,18 +13,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous"></script>
-
-        <!--IMPORT CSS-->
-        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/Login/layout.css"/>" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Markazi+Text:wght@500&family=Rokkitt:wght@100&display=swap" rel="stylesheet">
 
-        <!--IMPORT JS-->
-        <script src="<c:url value="/assets/js/Homepage/sliders/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/Homepage/sliders/bootstrap.js"/>" type="text/javascript"></script>
-        <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/Login/login.js"/>" type="text/javascript"></script>
+        <link rel="stylesheet" href="../assets/css/Login/layout.css">
+        <link rel="stylesheet" href="../assets/css/header_footer.css">
+        <link rel="stylesheet" href="../assets/css/HomePageCSS/bootstrap1.css">
 
 
 
@@ -46,17 +39,17 @@
 
                             <div class="login-option">
 
-                                <button class="login-button"><a href="#" >Đăng nhập</a></button>    
-                                <button class="register-button"><a href="#" >Đăng kí</a></button>    
+                                <button class="login-button"><a href="<c:url value="/account/login.do"/>" >Đăng nhập</a></button>    
+                                <button class="register-button"><a href="<c:url value="/account/register.do"/>" >Đăng kí</a></button>    
 
                             </div>
                             <div class="login-form">
                                 <div class="login-form-header">
                                     <form action="login_handler.do" method="post">
                                         <div class="login-form-user">
-                                            <label for="username">
+                                            <label for="email">
                                                 Email <br>
-                                                <input id="username" type="text" name="username" placeholder="Tài khoản" value="${username}" required=""> 
+                                                <input id="email" type="email" name="email" placeholder="example@gmail.com" value="${email}" required=""> 
                                             </label>
                                         </div>
                                         <div class="login-form-password">
@@ -85,5 +78,9 @@
             </div>
 
         </section>
+        <script src="../assets/js/Homepage/sliders/jquery.min.js"></script>
+        <script src="../assets/js/Homepage/sliders/slider.js"></script>
+        <script src="../assets/js/Homepage/main.js"></script>
+
     </body>
 </html>

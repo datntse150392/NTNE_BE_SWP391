@@ -91,16 +91,16 @@
                     <!-- Start Box Booking  -->
                     <div class="booking-tour">
                         <div class="container">
-                            <h1>Các gói <b class="title">Tour</b></h1>
+                            <h1>Giá <b class="title">Tour</b></h1>
                             <p>
-                                Vui lòng chọn một trong các gói giá (nhấp vào
+                                Vui lòng chọn gói giá (nhấp vào
                                 <strong>“Chọn”</strong> để xem đầy đủ gói).
                             </p>
                             <div class="tourpackage-body">
                                 <div class="tourpackage-body-detail">
                                     
                                     <!--HIỂN THỊ GIÁ CƠ BẢN CỦA TRIP-->
-                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [ Gói cơ bản ] <fmt:formatNumber value="${trip.getPriceAdult()}" pattern="###,### VNĐ" /></h3>
+                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [NGƯỜI LỚN] <br></br> <fmt:formatNumber value="${trip.getPriceAdult()}" pattern="###,### VNĐ" /></h3>
                                     <form action="#">
                                         <!-- form handle button book tourpackages -->
                                         <button class="btn-booking-tour"">
@@ -113,7 +113,7 @@
                                 <div class="tourpackage-body-detail">
                                     
                                     <!--HIỂN THỊ GIÁ VIP CỦA TRIP-->
-                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [ Gói VIP ] ??? VNĐ</h3>
+                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [TRẺ EM] <br></br> <fmt:formatNumber value="${trip.getPriceChild()}" pattern="###,### VNĐ" /></h3>
                                     <form action="#">
                                         <!-- form handle button book tourpackages -->
                                         <button class="btn-booking-tour">
@@ -161,61 +161,6 @@
                                 </div>-->
                 <!-- End Booking Tour -->
             </div>
-
-            <!-- Start Feedback Box -->
-            <div class="box-feedback">
-                <h3 class="feedback-title">
-                    2 Khách trên Nha Trang Nature Elite chia sẻ về trải nghiệm của mình:
-                </h3>
-
-                <!-- Start FB content -->
-                <div class="feedback-content">
-                    <div class="feedback-content-avt">
-                        <img
-                            src="https://www.vinamilk.com.vn/sua-bot-nguoi-lon-vinamilk/wp-content/themes/suabotnguoilon/tpl/assets/img/profile/avt-default.jpg"
-                            alt=""
-                            width="50px"
-                            />
-                    </div>
-                    <div class="feedback-content-detail">
-                        <div class="feedback-content-detail-top">
-                            <h3>Nguyễn Thành Đạt</h3>
-                            <p>27/05/2023</p>
-                        </div>
-                        <div class="feedback-content-detail-bottom">
-                            <p>
-                                Hướng dẫn viên chuyên nghiệp, nhiệt tình hướng dẫn và hỗ trợ
-                                thông tin trong và ngoài tour. Điểm trừ là sắp xếp khách hơi lộn
-                                xộn, thay đổi hdv liên tục nhưng có thể thông cảm do quá đông.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="feedback-content">
-                    <div class="feedback-content-avt">
-                        <img
-                            src="https://www.vinamilk.com.vn/sua-bot-nguoi-lon-vinamilk/wp-content/themes/suabotnguoilon/tpl/assets/img/profile/avt-default.jpg"
-                            alt=""
-                            width="50px"
-                            />
-                    </div>
-                    <div class="feedback-content-detail">
-                        <div class="feedback-content-detail-top">
-                            <h3>Trí Bùi</h3>
-                            <p>26/05/2023</p>
-                        </div>
-                        <div class="feedback-content-detail-bottom">
-                            <p>
-                                Tour đi vui, đảo Hòn tằm đẹp, nhưng thời gian ngắn ở điểm này,
-                                cần thêm thời gian để khám phá. Bửa trưa cho vé Vip 3 đảo khá
-                                đơn giản, không để lại nhiều ấn tượng. Tạm ổn trong tầm giá.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- End FB content -->
-            </div>
-            <!-- End Feedback Box -->
         </div>
     </body>
 </html>
