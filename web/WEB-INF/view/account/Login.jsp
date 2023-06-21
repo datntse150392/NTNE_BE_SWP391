@@ -104,6 +104,7 @@
                     <!-- Start: Nav PC -->
                     <div class="header__nav">
                         <ul class="header__nav-list">
+                            
                             <li class="header__nav-item"><a href="" class="header__nav-link">Giới thiệu</a></li>
                             <li class="header__nav-item"><a href="" class="header__nav-link">Tour</a></li>
                             <li class="header__nav-item"><a href="" class="header__nav-link">Liên hệ</a></li>
@@ -130,17 +131,17 @@
 
                             <div class="login-option">
 
-                                <button class="login-button"><a href="#" >Đăng nhập</a></button>    
-                                <button class="register-button"><a href="#" >Đăng kí</a></button>    
+                                <button class="login-button"><a href="<c:url value="/account/login.do"/>" >Đăng nhập</a></button>    
+                                <button class="register-button"><a href="<c:url value="/account/register.do"/>" >Đăng kí</a></button>    
 
                             </div>
                             <div class="login-form">
                                 <div class="login-form-header">
                                     <form action="login_handler.do" method="post">
                                         <div class="login-form-user">
-                                            <label for="username">
+                                            <label for="email">
                                                 Email <br>
-                                                <input id="username" type="text" name="username" placeholder="Tài khoản" value="${username}" required=""> 
+                                                <input id="email" type="email" name="email" placeholder="example@gmail.com" value="${email}" required=""> 
                                             </label>
                                         </div>
                                         <div class="login-form-password">
@@ -242,7 +243,7 @@
                 <div id="copyright">
                     <div class="container">
                         <p class="copyright-content">&copy;2023 NhaTrangNatureElite. Bản quyền thuộc về Công ty TNHH Nha Trang Nature Elite. Mọi hành vi sao chép đều là phạm pháp nếu không có sự cho phép bằng văn bản của chúng tôi.</p>
-                        <p class="author-copyright">copyright&copy; by DKTBL</a></p>
+                        <p class="author-copyright">copyright&copy; by DKTBL</p>
                     </div>
                 </div>
             </div>

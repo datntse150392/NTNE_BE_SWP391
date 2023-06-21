@@ -42,7 +42,8 @@
                         <span class="form-message"></span>
                     </div>
                     <div class="forget">
-                        <label for=""><input type="checkbox" required>Ghi nhớ mật khẩu</label>
+                        <label for="">
+                        <input type="checkbox" required>Ghi nhớ mật khẩu</label>
                     </div>
                     <button type="submit">Đăng nhập</button>
                     <div class="register">

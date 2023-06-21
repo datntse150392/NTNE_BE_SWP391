@@ -80,7 +80,6 @@ public class AccountDAO extends DBContext{
                 if(accPsw.equalsIgnoreCase(oldPassword)){
                     check = true;
                 }
-                System.out.println("MK cũ: "+accPsw);
             }
         }catch(SQLException ex){
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,10 +145,10 @@ public class AccountDAO extends DBContext{
         return check;
     }
     
-    public boolean insertAccount(String newName, String newEmail, String newPassword, String newPhone, String newAddress, String newRole, int accumulatedScore, String linkImg){
+    public boolean insertAccount(String newName, String newEmail, String newPassword, String newPhone, String newAddress, String newRole, int accumulatedScore, boolean isActive, String linkImg){
         boolean check = false;
         try{
-            String sql = "INSERT INTO Account (name, email, password, phone, address, role, accumulatedScore, linkImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Account (name, email, password, phone, address, role, accumulatedScore, isActive, linkImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, newName);
             ps.setString(2, newEmail);
@@ -158,11 +157,69 @@ public class AccountDAO extends DBContext{
             ps.setString(5, newAddress);
             ps.setString(6, newRole);
             ps.setInt(7, accumulatedScore);
-            ps.setString(8, linkImg);
+            ps.setBoolean(8, isActive);
+            ps.setString(9, linkImg);
             check = ps.executeUpdate() > 0;
         }catch(SQLException ex){
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return check;
+    }
+    
+    public boolean updateToken(String token, String email){
+        boolean check = true;
+        try{
+            String sql = "UPDATE Account SET token = ? WHERE email = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, token);
+            ps.setString(2, email);
+            check = ps.executeUpdate() > 0;
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+    
+    public boolean validToken(String token) {
+        boolean check = false;
+        try {
+            String sql = "SELECT id, name, email, password, phone, address, role, accumulatedScore, isActive, linkImg FROM Account WHERE token = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, token);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                check = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return check;
+    }
+    
+    public User_Account getAccountByToken(String token){
+        try{
+            String sql = "SELECT id, name, email, password, phone, address, role, accumulatedScore, isActive, linkImg FROM Account WHERE token = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, token);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int AccId = rs.getInt("id");
+                String name = rs.getString("name");
+                String Email = rs.getString("email");
+                String pwd = rs.getString("password");
+                int totalTour = getAccountTotalTour(AccId);
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String role = rs.getString("role");
+                int accumulatedScore = rs.getInt("accumulatedScore");
+                boolean isActive = rs.getBoolean("isActive");
+                String img = rs.getString("linkImg");
+                User_Account p1 = new User_Account(AccId, name, Email, totalTour, pwd, phone, address, role, accumulatedScore, isActive, img);
+                return p1;
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
