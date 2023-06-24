@@ -26,6 +26,27 @@ public class TourDAO extends DBContext {
 
     List<ListBooked> list = null;
 
+    //Lấy danh sách tour với điều kiện availability = true và 6 tour mới nhất
+    public Map<Integer, Tour> getListRecent() throws SQLException {
+        DBContext db = new DBContext();
+        String sql = "SELECT * FROM [dbo].[Tour] as a, [dbo].[Trip] AS b WHERE a.id = b.tour_id AND b.availability = 1 ORDER BY b.depart_time DESC";
+        PreparedStatement ps = db.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        Map<Integer, Tour> maps = new HashMap<>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            float priceAdult = rs.getFloat("priceAdult");
+            float priceChild = rs.getFloat("priceChild");
+            String thumbnail = rs.getString("thumbnail");
+            String location = rs.getString("location");
+            Tour tour = new Tour(id, name, priceAdult, priceChild, thumbnail, location);
+            maps.put(id, tour);
+            System.out.println(tour);
+        }
+        return maps;
+    }
+
     //Lấy danh sách tour với điều kiện availability = true
     public Map<Integer, Tour> getList() throws SQLException {
         DBContext db = new DBContext();
@@ -48,13 +69,19 @@ public class TourDAO extends DBContext {
     }
 
     //Lấy danh sách Booking by ID
-    public List<ListBooked> select(int index) {
+    public List<ListBooked> select(int accountID, int index) {
         //Tạo connection để kết nối vào DBMS
         try {
-            String sql = "SELECT A.depart_time ,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time ,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status\n"
+                    + "  FROM TRIP A JOIN Tour B ON A.tour_id = B.id \n"
+                    + "  JOIN BOOKING C ON C.trip_id = A.id \n"
+                    + "  JOIN ACCOUNT D ON D.id = C.account_id \n"
+                    + "  WHERE C.account_id = ? \n"
+                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
-
-            ps.setInt(1, (index - 1) * 3);
+            
+            ps.setInt(1, accountID);
+            ps.setInt(2, (index - 1) * 3);
 
             ResultSet rs = ps.executeQuery();
             list = new ArrayList<>();
@@ -81,12 +108,13 @@ public class TourDAO extends DBContext {
         return null;
     }
 
-    public List<ListBooked> sortPriceMonth(int index) {
+    public List<ListBooked> sortPriceMonth(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            ps.setInt(1, (index - 1) * 3);
+            ps.setInt(1, accountID);
+            ps.setInt(2, (index - 1) * 3);
 
             ResultSet rs = ps.executeQuery();
             list = new ArrayList<>();
@@ -113,12 +141,13 @@ public class TourDAO extends DBContext {
         return null;
     }
 
-    public List<ListBooked> sortPriceDay(int index) {
+    public List<ListBooked> sortPriceDay(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            ps.setInt(1, (index - 1) * 3);
+            ps.setInt(1, accountID);
+            ps.setInt(2, (index - 1) * 3);
 
             ResultSet rs = ps.executeQuery();
             list = new ArrayList<>();
@@ -145,12 +174,13 @@ public class TourDAO extends DBContext {
         return null;
     }
 
-    public int count() {
+    public int count(int accountID) {
         try {
             //Tạo connection để kết nối vào DBMS
 
             //Tạo đối tượng statement
-            PreparedStatement stm = connection.prepareStatement("select count(*) from TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id");
+            PreparedStatement stm = connection.prepareStatement("select count(*) from TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ");
+            stm.setInt(1, accountID);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);

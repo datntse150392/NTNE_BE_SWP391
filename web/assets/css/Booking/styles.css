@@ -173,13 +173,13 @@ and open the template in the editor.
   margin-bottom: 1rem;
 }
 
-.btn-pink {
-  background-color: #e12d36;
+.btnPink {
+  background-color: #ff6347 !important;
   color: white;
 }
 
-.btn-pink:hover {
-  background-color: #db000b;
+.btnPink:hover {
+  background-color: #e12d36 !important;
   color: white;
   text-decoration: none;
 }

@@ -68,7 +68,7 @@
 <!--                    -----------------------------------------------------------
                                            HIỂN THỊ ĐỊA ĐIỂM NỔI BẬT
                         ------------------------------------------------------------->
-                        <p class="content-title">Địa điểm nổi bật</p>
+                        <p class="content-title">Tour mới nhất</p>
                         <p class="content-description">Cùng Nha Trang Nature Elite bắt đầu chuyến hành trình khám phá Nha Trang của bạn</p>
                         <!-- Start: Content Slider -->
                         <div class="content-slider">
@@ -79,17 +79,17 @@
                                 <!---------------------------------->
                                 
                                 <c:if test="${listTour != null}">
-                                    <c:forEach var="tour" items="${listTour}" varStatus="counter">
+                                    <c:forEach var="tourRecent" items="${listTourRecent}" varStatus="counter">
                                         <div class="item content-slider-item">
-                                            <a href="<c:url value="#"/>"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                            <a href="<c:url value="#"/>"><img src="${tourRecent.getValue().getThumbnail()}" alt="" class="content-slider-img">
                                                 <div class="content-slider-name">
-                                                    <h3 class="content-slider-heading">${tour.getValue().getName()}</h3>   
+                                                    <h3 class="content-slider-heading">${tourRecent.getValue().getName()}</h3>   
                                                 </div>
                                             </a>
                                         </div>
                                     </c:forEach>
                                 </c:if>
-                                <c:if test="${listTour == null}">
+                                <c:if test="${listTourRecent == null}">
                                     <h1>LIST IS NULL</h1>
                                 </c:if>
                             </div>
@@ -98,28 +98,6 @@
                     </div>
                 </div>
                 <!-- End: Location -->
-
-                <!-- Start: Promotion -->
-                <!-- <div class="content-container">
-                    <div class="content-promotion">
-                        <p class="content-title">Ưu đãi độc quyền</p>
-                        <p class="content-description">Chỉ có tại Luxstay, hấp dẫn và hữu hạn, book ngay!</p>
-                        <div class="content-slider">
-                            <div class="owl-carousel" id="promotion-slider">
-                                <div class="item">
-                                    <a href=""><img src="./assets/imgs/promotion1.jpg" alt="" class="content-promotion-img"></a>
-                                </div>
-                                <div class="item">
-                                    <a href=""><img src="./assets/imgs/promotion2.jpg" alt="" class="content-promotion-img"></a>
-                                </div>
-                                <div class="item">
-                                    <a href=""><img src="./assets/imgs/promotion3.jpg" alt="" class="content-promotion-img"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- End: Promotion -->
 
 <!--                    <!---------------------------------->
                         <!--LẤY THÔNG TIN TOUR NỔI BẬT-->
@@ -155,53 +133,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End: Suggest -->
-
-                <!-- Start Explore -->
-                <!-- <div class="content-container">
-                    <div class="content-explore">
-                        <p class="content-title">Gợi ý khám phá</p>
-                        <p class="content-description">Để mỗi chuyến đi là một hành trình truyền cảm hứng, mỗi căn phòng là một khoảng trời an yên</p> -->
-                <!-- Start: Explore Slider -->
-                <!-- <div class="explore-slider">
-                    <div class="owl-carousel" id="explore-slider">
-                        <div class="item explore-slider-item">
-                            <a href=""><img src="./assets/imgs/explore/explore.jpg" alt="" class="content-slider-img"></a>
-                            <div class="explore-slider-name">Thông tin HomeStay</div>
-                            <p class="explore-slider-description">5 resort hạng sang ở Việt Nam xuất hiện trên tạp chí du lịch Anh</p>
-                        </div>
-                        <div class="item explore-slider-item">
-                            <a href=""><img src="./assets/imgs/explore/explore2.jpg" alt="" class="content-slider-img"></a>
-                            <div class="explore-slider-name">Thông tin HomeStay</div>
-                            <p class="explore-slider-description">Du lịch Cần Thơ nhất định phải ghé thăm những địa điểm này</p>
-                        </div>
-                        <div class="item explore-slider-item">
-                            <a href=""><img src="./assets/imgs/explore/explore3.jpg" alt="" class="content-slider-img"></a>
-                            <div class="explore-slider-name">Thông tin HomeStay</div>
-                            <p class="explore-slider-description">Tuần lễ “Tôi yêu bánh mì Sài Gòn” chính thức diễn ra từ ngày 24/3</p>
-                        </div>
-                        <div class="item explore-slider-item">
-                            <a href=""><img src="./assets/imgs/explore/explore4.jpg" alt="" class="content-slider-img"></a>
-                            <div class="explore-slider-name">Thông tin HomeStay</div>
-                            <p class="explore-slider-description">Trải nghiệm thú vị ở sở thú Zoodoo Đà Lạt</p>
-                        </div>
-                        <div class="item explore-slider-item">
-                            <a href=""><img src="./assets/imgs/explore/explore5.jpg" alt="" class="content-slider-img"></a>
-                            <div class="explore-slider-name">Thông tin HomeStay</div>
-                            <p class="explore-slider-description">Hội An sẽ lập chốt quản lý du khách đeo khẩu trang khi vào thành phố</p>
-                        </div>
-                        <div class="item explore-slider-item">
-                            <a href=""><img src="./assets/imgs/explore/explore6.png" alt="" class="content-slider-img"></a>
-                            <div class="explore-slider-name">Thông tin HomeStay</div>
-                            <p class="explore-slider-description">Thủ đô Hà Nội nằm trong danh sách những thành phố đẹp nhất thế giới</p>
-                        </div>
-                    </div>
-                    
-                </div> -->
-                <!-- End: Explore Slider -->
-                <!-- </div>
-            </div> -->
-                <!-- End Explore -->
+                
                 <div class="content-container">
                     <div class="content-targets">
                         <p class="content-title">Vì sao chọn Nha Trang Nature Elite</p>

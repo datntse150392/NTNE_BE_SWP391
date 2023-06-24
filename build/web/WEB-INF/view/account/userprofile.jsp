@@ -47,7 +47,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    <li class="profile-link-collapse2"><a href="#">Đơn đặt chỗ</a></li>
+                                    <li class="profile-link-collapse2"><a href="<c:url value="/tour/bookedList.do?index=1"/>">Đơn đặt chỗ</a></li>
                                     <li class="profile-link-collapse3"><a href="#">Đánh giá của Quý khách</a></li>
 
                                 </ul>

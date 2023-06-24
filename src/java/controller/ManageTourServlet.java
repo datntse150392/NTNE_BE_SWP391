@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import models.Image;
 import models.ListBooked;
 import models.Trip;
+import models.User_Account;
 
 /**
  *
@@ -90,6 +91,9 @@ public class ManageTourServlet extends HttpServlet {
                 break;
             }
             //---------------XU LY VOI BOOKED LIST (CRUD)---------------
+            case "booking":
+                viewFormBooking(request, response);
+                break;
             case "bookedList":
                 bookedList(request, response);
                 break;
@@ -111,9 +115,11 @@ public class ManageTourServlet extends HttpServlet {
             TourDAO tourDAO = new TourDAO();
             //Thực hiện lấy danh sách
             Map<Integer, Tour> Maplist = tourDAO.getList();
+            Map<Integer, Tour> MaplistRecent = tourDAO.getListRecent();
 
             //Lưu danh sách vào Attribute
             request.setAttribute("listTour", Maplist);
+            request.setAttribute("listTourRecent", MaplistRecent);
             System.out.println("Check suggestionList is valid: " + Config.isValidList);
             if (!Config.isValidList) {
                 System.out.println("Create SearchList");
@@ -243,6 +249,7 @@ public class ManageTourServlet extends HttpServlet {
             request.setAttribute("tripList", tripList);
             request.setAttribute("imageList", Imagelist);
             request.setAttribute("itemList", Maplist);
+            request.setAttribute("tourID", tourID);
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (SQLException ex) {
             System.out.println("----------------EXCEPTION----------------");
@@ -281,7 +288,9 @@ public class ManageTourServlet extends HttpServlet {
     //1.[READ] - Đọc danh sách tất cả Booking
     protected void bookedList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lấy tour từ tourDAO
-
+        HttpSession session = request.getSession();
+        User_Account user = (User_Account) session.getAttribute("person");
+        
         String sort_option = request.getParameter("sort_option");
         String indexPage = request.getParameter("index");
 
@@ -291,18 +300,18 @@ public class ManageTourServlet extends HttpServlet {
         List<ListBooked> list = null;
 
         if (sort_option == null || sort_option.isEmpty()) {
-            list = tourDAO.select(index);
+            list = tourDAO.select(user.getId(), index);
         } else if (sort_option.equalsIgnoreCase("month")) {
-            list = tourDAO.sortPriceMonth(index);
+            list = tourDAO.sortPriceMonth(user.getId(), index);
         } else if (sort_option.equalsIgnoreCase("day")) {
-            list = tourDAO.sortPriceDay(index);
+            list = tourDAO.sortPriceDay(user.getId(), index);
         }
         for (ListBooked listBooked : list) {
             System.out.println("list = " + listBooked.toString());
 
         }
         //Đếm tổng số trang cần có
-        int count = tourDAO.count();
+        int count = tourDAO.count(user.getId());
         count = count / 3;
         if (count % 2 != 0) {
             count++;
@@ -317,9 +326,24 @@ public class ManageTourServlet extends HttpServlet {
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } else {
             request.setAttribute("error", "Something Wrong");
-//            session.setAttribute("list", list);
             request.getRequestDispatcher("/WEB-INF/view/error/error.jsp").forward(request, response);
         }
+    }
+    
+    //2.[READ] - LẤY THÔNG TIN TRIP DISPLAY LÊN FORM BOOKING
+    protected void viewFormBooking(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
+
+            System.out.println("----------------VIEW FORM BOOKING----------------");
+            int tourID = Integer.parseInt(request.getParameter("tourID"));
+            int tripID = Integer.parseInt(request.getParameter("tripID"));
+            TripDAO tripDAO = new TripDAO();
+            
+            Trip trip = tripDAO.getTrip_by_TripID_TourID(tourID, tripID);
+            request.setAttribute("tripInfo", trip);
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
 
     @Override

@@ -89,6 +89,13 @@
                             </c:if>
                             <c:if test="${person != null}">
                                 <li class="header-nav-item">
+                                    <a class="header-nav-link" href="<c:url value="/account/userprofile.do"/>">
+                                        <p>Tài khoản</p>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${person != null}">
+                                <li class="header-nav-item">
                                     <a class="header-nav-link" href="<c:url value="/account/logOut.do"/>">
                                         <p>Đăng xuất</p>
                                     </a>

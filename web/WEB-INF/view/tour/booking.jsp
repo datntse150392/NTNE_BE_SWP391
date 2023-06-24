@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,7 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Booking Tour - Nha Trang Nature Elite</title>
-        <link rel="stylesheet" href="../assets/css/Booking/styles.css" />
+        <link href="<c:url value="/assets/css/Booking/styles.css"/>" type="text/css" rel="stylesheet"/>
 
         <link
             rel="stylesheet"
@@ -51,13 +53,11 @@
         <section class="main">
             <div class="checkout">
                 <div class="container">
-                    
-                    <h1>Đặt tour</h1>
                     <h2 class="chekout-name">
                         Tên dịch vụ
-                        <a href="<c:url value="/view/detailTour .jsp"/>" class="pink-color"
-                           >TOUR 3 ĐẢO NHA TRANG (GIÁ TOUR THAM QUAN 3 ĐẢO VIP)</a
-                        >
+                        <a href="<c:url value="/view/detailTour .jsp"/>" class="pink-color">
+                            ${tripInfo.getName()}
+                        </a>
                     </h2>
                     <form method="post" action="<c:url value="/view/history.jsp"/>">
                         <input type="hidden" id="PriceId" name="PriceId" value="15" />
@@ -82,7 +82,7 @@
                                                 class="form-control"
                                                 type="text"
                                                 name="Name"
-                                                value=""
+                                                value="${sessionScope.person.name}"
                                                 />
                                             <span class="text-danger field-validation-valid"></span>
                                         </div>
@@ -95,7 +95,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 name="Email"
-                                                value=""
+                                                value="${sessionScope.person.name}"
                                                 />
                                             <span class="text-danger field-validation-valid"></span>
                                         </div>
@@ -105,7 +105,7 @@
                                                 type="text"
                                                 class="form-control"
                                                 name="PhoneNumber"
-                                                value=""
+                                                value="${sessionScope.person.phone}"
                                                 />
                                             <span class="text-danger field-validation-valid"></span>
                                         </div>
@@ -191,7 +191,7 @@
                                                 id="date-go"
                                                 type="text"
                                                 name="StartDate"
-                                                value=""
+                                                value="${tripInfo.getDepart_time()}"
                                                 />
                                         </div>
                                     </div>
@@ -244,15 +244,15 @@
                                     <div class="price-group">
                                         <p class="price-name">
                                             <i class="fas fa-male"></i>
-                                            Người lớn:
+                                            Người lớn: <fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,### VNĐ" />
                                         </p>
-                                        <p class="price-value" id="adults-price">650.000 đ</p>
+                                        <p class="price-value" id="adults-price"></p>
                                     </div>
                                     <div class="price-group">
                                         <p class="price-name">
-                                            <i class="fas fa-child"></i> Trẻ em:
+                                            <i class="fas fa-child"></i> Trẻ em: <fmt:formatNumber value="${tripInfo.getPriceChild()}" pattern="###,### VNĐ" />
                                         </p>
-                                        <p class="price-value" id="childs-price">450.000 đ</p>
+                                        <p class="price-value" id="childs-price"></p>
                                     </div>
                                     <div class="price-group">
                                         <p class="price-name">
@@ -279,7 +279,7 @@
                                         </p>
                                         <p class="price-value" id="total-price">650.000 đ</p>
                                     </div>
-                                    <button class="btn btn-pink btn-radius btn-checkout">
+                                    <button class="btn btnPink btn-radius btn-checkout">
                                         Đặt Tour
                                     </button>
                                     <input
@@ -294,10 +294,10 @@
                                             <i class="fas fa-phone pink-color"></i> Hỗ trợ Tư Vấn +
                                             Đặt Tour:
                                         </p>
-                                        <a class="btn btn-radius btn-pink btn-booking mb10" href="#"
+                                        <a class="btn btn-radius btnPink btn-booking mb10" href="#"
                                            >0903.xxx.xxx</a
                                         >
-                                        <a class="btn btn-radius btn-pink btn-booking mb10" href="#"
+                                        <a class="btn btn-radius btnPink btn-booking mb10" href="#"
                                            >0903.xxx.xxx</a
                                         >
                                         <p>
