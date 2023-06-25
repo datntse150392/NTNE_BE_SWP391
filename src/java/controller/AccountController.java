@@ -46,8 +46,8 @@ public class AccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = (String) request.getAttribute("action");
         switch (action) {
-            case "login":
-                login(request, response);
+            case "login1":
+                Login(request, response);
                 break;
             case "login_handler":
                 login_handler(request, response);
@@ -55,7 +55,7 @@ public class AccountController extends HttpServlet {
             case "login_google":
                 loginGoogleHandler(request, response);
                 break;
-            case "displayUserProfile":
+            case "userprofile":
                 displayUserProfile(request, response);
                 break;
             case "changePassword":
@@ -111,11 +111,15 @@ public class AccountController extends HttpServlet {
                 response.addCookie(p);
 
                 session.setAttribute("person", person);
-                request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "userprofile");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 //response.sendRedirect(request.getContextPath() + "/Home.jsp");
             } else {
                 request.setAttribute("MSG_ERROR", "This account has been blocked!");
-                request.getRequestDispatcher("/WEB-INF/view/account/login1.jsp").forward(request, response);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "Login");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             }
         } else if (admin != null) {
             //Gọi cookie để lưu username va password vào cookie 
@@ -136,7 +140,9 @@ public class AccountController extends HttpServlet {
             request.setAttribute("message", "Incorrect username or password");
 
 //           response.sendRedirect(request.getContextPath() + "/login.jsp");
-            request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "Login");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         }
 
     }
@@ -154,13 +160,17 @@ public class AccountController extends HttpServlet {
                 User_Account person = accDAO.getAccountInfoByEmail(email);
                 session.setAttribute("person", person);
                 if (person.isIsActive()) {
-                    request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "userprofile");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             } else {
                 accDAO.insertAccount(user.getName(), user.getEmail(), "******", "", "", "US", 0, true, user.getPicture());
                 User_Account person = accDAO.getAccountInfoByEmail(email);
                 session.setAttribute("person", person);
-                request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "userprofile");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             }
             Cookie e = new Cookie("email", email);
             e.setMaxAge(60);
@@ -170,7 +180,7 @@ public class AccountController extends HttpServlet {
         }
     }
 
-    protected void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void Login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         //Ta sẽ get cookie từ request 
         //Vì là trên server có thể có nhiều cookies nên khi lấy dữ liệu
         //Ta phải lấy 1 mảng các cookies
@@ -186,7 +196,10 @@ public class AccountController extends HttpServlet {
                 request.setAttribute("password", Cooky.getValue());
             }
         }
-        request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+
+//        request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
@@ -222,7 +235,7 @@ public class AccountController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             User_Account user = (User_Account) session.getAttribute("person");
-            request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (IOException | ServletException e) {
 
         }
@@ -232,7 +245,7 @@ public class AccountController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             User_Account user = (User_Account) session.getAttribute("person");
-            request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (IOException | ServletException e) {
         }
     }
@@ -243,6 +256,8 @@ public class AccountController extends HttpServlet {
             User_Account user = (User_Account) session.getAttribute("person");
             AccountDAO accDAO = new AccountDAO();
             if (user != null) {
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "changePassword");
                 String oldPassword = SecurityUtils.hashMd5(request.getParameter("oldPassword"));
                 boolean checkOldPsw = accDAO.checkOldPassword(user.getId(), oldPassword);
                 if (checkOldPsw) {
@@ -252,18 +267,18 @@ public class AccountController extends HttpServlet {
                         boolean checkNewPsw = accDAO.updateAccountPassword(user.getId(), newPassword);
                         if (checkNewPsw) {
                             request.setAttribute("MSG_SUCCESS", "Change password successfully!");
-                            request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                         } else {
                             request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                            request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                         }
                     } else {
                         request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                        request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                     }
                 } else {
                     request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                    request.getRequestDispatcher("/WEB-INF/view/account/changePassword.jsp").forward(request, response);
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             }
         } catch (IOException | ServletException e) {
@@ -285,7 +300,9 @@ public class AccountController extends HttpServlet {
                     }
                 }
             }
-            request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "Login");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (IOException | ServletException ex) {
         }
     }
@@ -295,10 +312,12 @@ public class AccountController extends HttpServlet {
             HttpSession session = request.getSession();
             User_Account acc = (User_Account) session.getAttribute("person");
             if (acc == null) {
-                request.getRequestDispatcher("/WEB-INF/view/account/register.jsp").forward(request, response);
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             } else {
                 if (acc.getRole().equals("US")) {
-                    request.getRequestDispatcher("/WEB-INF/view/account/userprofile.jsp").forward(request, response);
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "userprofile");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 } else {
                     request.getRequestDispatcher("").forward(request, response);
                 }
@@ -317,7 +336,9 @@ public class AccountController extends HttpServlet {
             if (account != null) {
                 request.setAttribute("MSG_ERROR", "Email này đã được sử dụng bởi tài khoản khác. Vui lòng nhập lại email mới!");
                 request.setAttribute("email", email);
-                request.getRequestDispatcher("/WEB-INF/view/account/register.jsp").forward(request, response);
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "register");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             } else {
                 String name = request.getParameter("fullname");
                 String phone = request.getParameter("phone");
@@ -327,12 +348,16 @@ public class AccountController extends HttpServlet {
                 if (password.equals(re_password)) {
                     boolean check = dao.insertAccount(name, email, password, phone, address, "US", 0, true, "https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2F%C4%90%C4%83ng%20nh%E1%BA%ADp%2Fuserimage.jpg?alt=media&token=6144393d-547a-4827-8356-e04867f1139e");
                     if (check) {
+                        request.setAttribute("controller", "account");
+                        request.setAttribute("action", "Login");
                         request.setAttribute("MSG_SUCCESS", "You have successfully registered an account!");
-                        request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+                        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                     }
                 } else {
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "register");
                     request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
-                    request.getRequestDispatcher("/WEB-INF/view/account/register.jsp").forward(request, response);
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             }
         } catch (IOException | ServletException e) {

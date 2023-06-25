@@ -6,6 +6,7 @@
 package dal;
 
 import models.Tour;
+import models.ListBooked;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,35 +24,13 @@ import java.util.logging.Logger;
  */
 public class TourDAO extends DBContext {
 
-    //Nơi đây xử lý lấy chi tiết 1 TOUR
-    public Tour getTour_by_TourID(int id) {
-        try {
-            String sql = "select * from [dbo].[Tour] as tour where tour.id = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+    List<ListBooked> list = null;
 
-            Tour tour = new Tour();
-            while (rs.next()) {
-                tour.setId(rs.getInt(1));
-                tour.setName(rs.getString(2));
-                tour.setPriceAdult(rs.getFloat(3));
-                tour.setPriceChild(rs.getFloat(4));
-                tour.setThumbnail(rs.getString(5));
-                tour.setLocation(rs.getString(6));
-                return tour;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    //Lấy danh sách Tour
+    //Lấy danh sách tour với điều kiện availability = true
     public Map<Integer, Tour> getList() throws SQLException {
-        String sql = "SELECT * FROM [dbo].[Tour]";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        DBContext db = new DBContext();
+        String sql = "SELECT * FROM [dbo].[Tour] as a, [dbo].[Trip] AS b WHERE a.id = b.tour_id AND b.availability = 1";
+        PreparedStatement ps = db.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         Map<Integer, Tour> maps = new HashMap<>();
         while (rs.next()) {
@@ -63,7 +42,122 @@ public class TourDAO extends DBContext {
             String location = rs.getString("location");
             Tour tour = new Tour(id, name, priceAdult, priceChild, thumbnail, location);
             maps.put(id, tour);
+            System.out.println(tour);
         }
         return maps;
+    }
+
+    //Lấy danh sách Booking by ID
+    public List<ListBooked> select(int index) {
+        //Tạo connection để kết nối vào DBMS
+        try {
+            String sql = "SELECT A.depart_time ,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while (rs.next()) {
+                ListBooked product = new ListBooked();
+                product.setDeparttime(rs.getDate("depart_time"));
+                product.setQuantityAdult(rs.getInt("quantityAdult"));
+                product.setQuantityChild(rs.getInt("quantityChild"));
+                product.setName(rs.getString("name"));
+                product.setTotalPrice(rs.getDouble("totalPrice"));
+                product.setTour_id(rs.getInt("Tour ID"));
+                product.setTrip_id(rs.getInt("Trip ID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setStatus(rs.getBoolean("status"));
+                list.add(product);
+            }
+            rs.close();
+            ps.close();
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<ListBooked> sortPriceMonth(int index) {
+        try {
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while (rs.next()) {
+                ListBooked product = new ListBooked();
+                product.setDeparttime(rs.getDate("depart_time"));
+                product.setQuantityAdult(rs.getInt("quantityAdult"));
+                product.setQuantityChild(rs.getInt("quantityChild"));
+                product.setName(rs.getString("name"));
+                product.setTotalPrice(rs.getDouble("totalPrice"));
+                product.setTour_id(rs.getInt("Tour ID"));
+                product.setTrip_id(rs.getInt("Trip ID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setStatus(rs.getBoolean("status"));
+                list.add(product);
+            }
+            rs.close();
+            ps.close();
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<ListBooked> sortPriceDay(int index) {
+        try {
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, (index - 1) * 3);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while (rs.next()) {
+                ListBooked product = new ListBooked();
+                product.setDeparttime(rs.getDate("depart_time"));
+                product.setQuantityAdult(rs.getInt("quantityAdult"));
+                product.setQuantityChild(rs.getInt("quantityChild"));
+                product.setName(rs.getString("name"));
+                product.setTotalPrice(rs.getDouble("totalPrice"));
+                product.setTour_id(rs.getInt("Tour ID"));
+                product.setTrip_id(rs.getInt("Trip ID"));
+                product.setThumbnail(rs.getString("thumbnail"));
+                product.setStatus(rs.getBoolean("status"));
+                list.add(product);
+            }
+            rs.close();
+            ps.close();
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public int count() {
+        try {
+            //Tạo connection để kết nối vào DBMS
+
+            //Tạo đối tượng statement
+            PreparedStatement stm = connection.prepareStatement("select count(*) from TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id");
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+
+        }
+        return 0;
     }
 }

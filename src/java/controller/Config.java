@@ -11,5 +11,13 @@ package controller;
  */
 public class Config {
     public static final String LAYOUT = "/WEB-INF/layouts/main.jsp";
-    
+    public static boolean isValidList = false;
+
+    public static boolean isIsValidList() {
+        return isValidList;
+    }
+
+    public static void setIsValidList(boolean isValidList) {
+        Config.isValidList = isValidList;
+    }
 }

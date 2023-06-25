@@ -36,8 +36,7 @@ body {
 
 .info-image img {
     border-radius: 50%;
-    width: 96px;
-    height: 96px;
+    width: 100%;
 }
 
 .info_details {
@@ -257,4 +256,3 @@ li {
     display: inline-block;
 
 }
-

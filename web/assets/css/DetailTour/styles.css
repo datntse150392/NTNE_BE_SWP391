@@ -34,6 +34,7 @@ h1 {
   gap: 20px;
   padding: 10px 0px;
   justify-self: center;
+  margin: 25px 0 15px 0
 }
 
 .layout-item {
@@ -79,8 +80,12 @@ h1 {
 }
 
 .destination {
-  border: 1px solid #ececec;
-  border-radius: 10px;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    padding: 10px 10px 10px 35px;
+    text-align: justify;
+    margin-top: 10px;
+    margin-bottom: 20px
 }
 
 .destination li {
@@ -423,6 +428,7 @@ h5 {
   border: 1px solid #ececec;
   border-radius: 10px;
   padding: 20px;
+  margin-bottom: 20px
 }
 .container {
   display: flex;

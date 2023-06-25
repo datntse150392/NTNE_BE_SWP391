@@ -15,19 +15,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--Import FONT-->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        
+        <link rel="shortcut icon" href="./assets/imgs/five-icon.png" type="image/x-icon" sizes="30x30">
+        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <!--Import CSS-->
         <link href="<c:url value="/assets/css/DetailTour/styles.css"/>" rel="stylesheet" type="text/css">
         
         <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/DetailTour/detailTour.js"/>" type="text/javascript"></script>
+        
         <title>Detail Tour</title>
     </head>
 
@@ -36,7 +31,7 @@
             <div class="container">
                 <div class="header"></div>
                 <div class="content">
-                    <h1 class="header-title" style="font-size: 40px; color: red">${tour.getName()}</h1>
+                    <h1 class="header-title" style="font-size: 40px; color: red">${trip.getName()}</h1>
                     <span
                         >"Đặt ngay tour du lịch để khám phá những điểm đến tuyệt vời và tạo
                         ra những kỷ niệm không thể quên."</span
@@ -58,9 +53,23 @@
                             </c:forEach>
                         </c:if>
                     </div>
+                    <div class="departTime">
+                        <h2>Ngày bắt đầu đi</h2>
+                    </div>
+                    
+                    <!--CHỌN TRIP THEO NGÀY-->
+                    <div class="selectOption">
+                        <select>
+                            <c:forEach var="tripItem" items="${tripList}">
+                                <option value="<c:url value="/tour/detailTour.do?tourID=${tripItem.getTour_id()}&tripID=${tripItem.getId()}"/>">${tripItem.getDepart_time()}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                     <div class="time-line">
                         <h2>Lịch trình di chuyển</h2>
                     </div>
+                    
+                    <!--HIỂN THỊ TOURITEM || TIMELINE-->
                     <ul class="destination">
                         <c:if test="${itemList != null}">
                             <c:forEach var="item" items="${itemList}" varStatus="counter">
@@ -77,15 +86,16 @@
                     <!-- Start Box Booking  -->
                     <div class="booking-tour">
                         <div class="container">
-                            <h1>Các gói <b class="title">Tour</b></h1>
+                            <h1>Giá <b class="title">Tour</b></h1>
                             <p>
-                                Vui lòng chọn một trong các gói giá (nhấp vào
+                                Vui lòng chọn gói giá (nhấp vào
                                 <strong>“Chọn”</strong> để xem đầy đủ gói).
                             </p>
                             <div class="tourpackage-body">
                                 <div class="tourpackage-body-detail">
-                                    <h3 class="tourpackage-body-detail-title">${tour.getName()} [ Gói cơ bản ] <fmt:formatNumber value="${tour.getPriceAdult()}" pattern="###,### VNĐ" /></h3>
                                     
+                                    <!--HIỂN THỊ GIÁ CƠ BẢN CỦA TRIP-->
+                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [NGƯỜI LỚN] <br></br> <fmt:formatNumber value="${trip.getPriceAdult()}" pattern="###,### VNĐ" /></h3>
                                     <form action="#">
                                         <!-- form handle button book tourpackages -->
                                         <button class="btn-booking-tour"">
@@ -96,7 +106,9 @@
                             </div>
                             <div class="tourpackage-body">
                                 <div class="tourpackage-body-detail">
-                                    <h3 class="tourpackage-body-detail-title">${tour.getName()} [ Gói VIP ] ??? VNĐ</h3>
+                                    
+                                    <!--HIỂN THỊ GIÁ VIP CỦA TRIP-->
+                                    <h3 class="tourpackage-body-detail-title">${trip.getName()} [TRẺ EM] <br></br> <fmt:formatNumber value="${trip.getPriceChild()}" pattern="###,### VNĐ" /></h3>
                                     <form action="#">
                                         <!-- form handle button book tourpackages -->
                                         <button class="btn-booking-tour">
@@ -144,61 +156,7 @@
                                 </div>-->
                 <!-- End Booking Tour -->
             </div>
-
-            <!-- Start Feedback Box -->
-            <div class="box-feedback">
-                <h3 class="feedback-title">
-                    2 Khách trên Nha Trang Nature Elite chia sẻ về trải nghiệm của mình:
-                </h3>
-
-                <!-- Start FB content -->
-                <div class="feedback-content">
-                    <div class="feedback-content-avt">
-                        <img
-                            src="https://www.vinamilk.com.vn/sua-bot-nguoi-lon-vinamilk/wp-content/themes/suabotnguoilon/tpl/assets/img/profile/avt-default.jpg"
-                            alt=""
-                            width="50px"
-                            />
-                    </div>
-                    <div class="feedback-content-detail">
-                        <div class="feedback-content-detail-top">
-                            <h3>Nguyễn Thành Đạt</h3>
-                            <p>27/05/2023</p>
-                        </div>
-                        <div class="feedback-content-detail-bottom">
-                            <p>
-                                Hướng dẫn viên chuyên nghiệp, nhiệt tình hướng dẫn và hỗ trợ
-                                thông tin trong và ngoài tour. Điểm trừ là sắp xếp khách hơi lộn
-                                xộn, thay đổi hdv liên tục nhưng có thể thông cảm do quá đông.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="feedback-content">
-                    <div class="feedback-content-avt">
-                        <img
-                            src="https://www.vinamilk.com.vn/sua-bot-nguoi-lon-vinamilk/wp-content/themes/suabotnguoilon/tpl/assets/img/profile/avt-default.jpg"
-                            alt=""
-                            width="50px"
-                            />
-                    </div>
-                    <div class="feedback-content-detail">
-                        <div class="feedback-content-detail-top">
-                            <h3>Trí Bùi</h3>
-                            <p>26/05/2023</p>
-                        </div>
-                        <div class="feedback-content-detail-bottom">
-                            <p>
-                                Tour đi vui, đảo Hòn tằm đẹp, nhưng thời gian ngắn ở điểm này,
-                                cần thêm thời gian để khám phá. Bửa trưa cho vé Vip 3 đảo khá
-                                đơn giản, không để lại nhiều ấn tượng. Tạm ổn trong tầm giá.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- End FB content -->
-            </div>
-            <!-- End Feedback Box -->
         </div>
+        <script src="<c:url value="/assets/js/DetailTour/detailTour.js"/>" type="text/javascript"></script>
     </body>
 </html>

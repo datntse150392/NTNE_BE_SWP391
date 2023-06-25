@@ -17,19 +17,13 @@
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">         
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/styles.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/header_footer.css"/>" rel="stylesheet" type="text/css">
         
         
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
+        
         
         <title>Nha Trang Nature Elite</title>
     </head>
@@ -40,7 +34,7 @@
             <div class="container">
                 <div class="owl-carousel owl-theme" id="banner-slider">
                     <div class="item">
-                        <a href=""><img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fslider-1.png?alt=media&token=57178d7c-0a2f-489a-b223-b4f9cebd472a&_gl=1*16no2wc*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NjE1MzcyNS4xMS4xLjE2ODYxNTM4MTUuMC4wLjA."></a>
+                        <a href=""><img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FLogo%20-%20Banner%20-%20Cover%20Image%2FNha%20Trang%20Nature%20Elite.png?alt=media&token=0d1b4cd8-51a4-4ab4-bcf0-fbc3c9e058cc"></a>
                     </div>
                     <div class="item">
                         <a href=""><img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fslider2.png?alt=media&token=117e06ae-5b11-4274-a32c-31681f030fb5&_gl=1*170m984*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NjE1MzcyNS4xMS4xLjE2ODYxNTU1NTMuMC4wLjA."></a>
@@ -80,22 +74,20 @@
                                 <!--LẤY THÔNG TIN ĐỊA ĐIỂM NỔI BẬT-->
                                 <!---------------------------------->
                                 
-                                <c:if test="${list != null}">
-                                    <c:forEach var="tour" items="${list}" varStatus="counter">
+                                <c:if test="${listTour != null}">
+                                    <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item content-slider-item">
                                             <a href="<c:url value="#"/>"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
                                                 <div class="content-slider-name">
-                                                    <h3 class="content-slider-heading">${tour.getValue().getName()}</h3>
-                                                    <p class="content-slider-description">Đã có <strong>X</strong> lượt khách</p>
+                                                    <h3 class="content-slider-heading">${tour.getValue().getName()}</h3>   
                                                 </div>
                                             </a>
                                         </div>
                                     </c:forEach>
                                 </c:if>
-                                <c:if test="${list == null}">
+                                <c:if test="${listTour == null}">
                                     <h1>LIST IS NULL</h1>
                                 </c:if>
-                                
                             </div>
                         </div>
                         <!-- End: Content Slider -->
@@ -136,11 +128,14 @@
                         <div class="content-slider">
                             <div class="owl-carousel" id="suggest-slider">
                                 
-                                <c:if test="${list != null}">
-                                    <c:forEach var="tour" items="${list}" varStatus="counter">
+                                <c:if test="${listTour != null}">
+                                    <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item">
                                             <!--Router to detail Tour-->
-                                            <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getValue().getId()}"/>" class="content-suggest-item-link"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                            <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getValue().getId()}&tripID=0"/>" class="content-suggest-item-link">
+                                                <div class="contentImage">
+                                                    <img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                                </div>
                                                 <div class="content-suggest-item">
                                                     <p class="content-suggest-heading">${tour.getValue().getName()}</p>
                                                     <p class="content-suggest-description">
@@ -210,24 +205,6 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
-                                    <i class="fas fa-trophy"></i>
-                                    <div class="content">
-                                        <h3 class="target-name">Đầy Đủ Giấy Phép</h3>
-                                        <p>Giấy phép lữ hàng quốc tế số XX-XXX/2023/TCDL-GP LHQT do Tổng cục Du Lịch cấp</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div class="target">
-                                    <i class="fas fa-money-check-alt"></i>
-                                    <div class="content">
-                                        <h3 class="target-name">Thanh Toán Linh Hoạt</h3>
-                                        <p>Chấp nhận thanh toán bằng cả hình thức trực tiếp lẫn chuyển khoản</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div class="target">
                                     <i class="fas fa-hand-holding-usd"></i>
                                     <div class="content">
                                         <h3 class="target-name">Giá Rẻ</h3>
@@ -235,6 +212,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-smile-beam"></i>
@@ -244,15 +222,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div class="target">
-                                    <i class="far fa-thumbs-up"></i>
-                                    <div class="content">
-                                        <h3 class="target-name">Đặt Tour / Dịch Vụ</h3>
-                                        <p>Dễ dàng, nhanh chóng trong vòng 30s</p>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-question-circle"></i>
@@ -262,6 +232,39 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <div class="target">
+                                    <i class="fas fa-money-check-alt"></i>
+                                    <div class="content">
+                                        <h3 class="target-name">Thanh Toán Linh Hoạt</h3>
+                                        <p>Chấp nhận thanh toán bằng cả hình thức trực tiếp lẫn chuyển khoản</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <div class="target">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <div class="content">
+                                        <h3 class="target-name">Đặt Tour / Dịch Vụ</h3>
+                                        <p>Dễ dàng, nhanh chóng trong vòng 30s</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <div class="target">
+                                    <i class="fas fa-trophy"></i>
+                                    <div class="content">
+                                        <h3 class="target-name">Đầy Đủ Giấy Phép</h3>
+                                        <p>Giấy phép lữ hàng quốc tế số XX-XXX/2023/TCDL-GP LHQT do Tổng cục Du Lịch cấp</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -306,7 +309,7 @@
                                     và tiếp đón hơn 10.000 khách du lịch trong và ngoài nước mỗi năm, độ chuyên nghiệp và uy tín của chúng tôi là không phải bàn. Ở Nha Trang Nature Elite, khách hàng là thượng đế.</p>
                             </div> 
                             <div class="text-center">
-                                <a class="btn btn-default" href="./about.html">Tìm hiểu thêm</a>
+                                <a class="btn btn-default" href="<c:url value="/tour/about.do"/>">Tìm hiểu thêm</a>
                             </div>
                         </div>
                     </div>
@@ -319,25 +322,10 @@
             </div>
         </div>
         <!--End: Download App  -->
-        <div id=stats class=s-stats>
-            <div class="row stats block-1-4 block-m-1-2 block-mob-full" data-aos=fade-up>
-                <div class="col-block stats-col">
-                    <div class=stats-count>16</div>
-                    <h5>Đối tác</h5>
-                </div>
-                <div class="col-block stats-col">
-                    <div class=stats-count>90</div>
-                    <h5>Khách hàng</h5>
-                </div>
-                <div class="col-block stats-col">
-                    <div class=stats-count>28</div>
-                    <h5>Truy cập</h5>
-                </div>
-                <div class="col-block stats-col">
-                    <div class=stats-count>1440</div>
-                    <h5>Đặt tour</h5>
-                </div>
-            </div>
-        </div>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
     </body>
 </html>

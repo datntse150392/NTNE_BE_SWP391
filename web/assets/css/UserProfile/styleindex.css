@@ -36,15 +36,12 @@ body {
 
 .info-image img {
     border-radius: 50%;
-    width: 96px;
-    height: 96px;
-    
+    width: 100%;
 }
 
 .info_details {
-     
+    margin: auto;
     width: 100%;
-    
 }
 
 .user_name {
@@ -226,4 +223,3 @@ li {
     font-size: 15px;
     line-height: 24px;
 }
-
