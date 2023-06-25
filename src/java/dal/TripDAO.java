@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Book;
 import models.Trip;
 
 
@@ -390,6 +391,82 @@ public class TripDAO {
             Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
+    
+    //Lấy ra ngày của các trip 
+    public List<Trip> getTrip_date(int tourID) {
+        try {
+            DBContext db = new DBContext();
+            String sql = "  select * from TRIP a WHERE a.tour_id = ?";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            List<Trip> list = new ArrayList<Trip>();
+
+            ps.setInt(1, tourID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Trip trip = new Trip(rs.getDate("depart_time"));
+                list.add(trip);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public void book_TripForGuest(Book p) {
+        try {
+            System.out.println(p);
+            DBContext db = new DBContext();
+            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, expireDate, status, payment_id, quantityAdult, quantityChild, trip_id, reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            
+            ps.setDouble(1, p.getTotalPrice());
+            ps.setString(2, p.getRequirement());
+            ps.setString(3, p.getCusBook());
+            ps.setString(4, p.getCusMail());
+            ps.setString(5, p.getCusPhone());
+            ps.setString(6, p.getExpireDate());
+            ps.setBoolean(7, p.isStatus());
+            ps.setInt(8, p.getPayment_id());
+            ps.setInt(9, p.getQuantityAdult());
+            ps.setInt(10, p.getQuantityChild());
+            ps.setInt(11, p.getTrip_id());
+            ps.setString(12, p.getReason());
+            System.out.println("Reponse OK!");
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+    
+    public void book_Trip(Book p) {
+        try {
+            System.out.println(p);
+            DBContext db = new DBContext();
+            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, expireDate, status, payment_id, account_id, quantityAdult, quantityChild, trip_id, cusAddress,reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            
+            ps.setDouble(1, p.getTotalPrice());
+            ps.setString(2, p.getRequirement());
+            ps.setString(3, p.getCusBook());
+            ps.setString(4, p.getCusMail());
+            ps.setString(5, p.getCusPhone());
+            ps.setString(6, p.getExpireDate());
+            ps.setBoolean(7, p.isStatus());
+            ps.setInt(8, p.getPayment_id());
+            ps.setInt(9, p.getAccount_id());
+            ps.setInt(10, p.getQuantityAdult());
+            ps.setInt(11, p.getQuantityChild());
+            ps.setInt(12, p.getTrip_id());
+            ps.setString(13, p.getCusAddress());
+            ps.setString(14, p.getReason());
+            System.out.println("I'm here");
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
     
     public static void main(String[] args) throws SQLException {

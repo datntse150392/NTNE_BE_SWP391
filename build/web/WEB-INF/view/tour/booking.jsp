@@ -9,25 +9,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
+<fmt:setLocale value="vi_VN" />
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Booking Tour - Nha Trang Nature Elite</title>
-        <link href="<c:url value="/assets/css/Booking/styles.css"/>" type="text/css" rel="stylesheet"/>
+        
+        <!--Import CSS-->
+        <link href="<c:url value="/assets/css/Booking/styles.css"/>" rel="stylesheet" type="text/css">
 
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous"
-            />
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"
-        ></script>
+        <!-- Link Font -->
         <link
             as="style"
             onload='this.onload = null;this.rel = "stylesheet"'
@@ -35,13 +29,8 @@
             rel="stylesheet"
             type="text/css"
             />
-        <noscript>
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Roboto+Slab:400,700&amp;subset=vietnamese&display=swap"
-            />
-        </noscript>
-        <!-- Link FontAwesome CDN -->
+
+        <!-- Link Icons FontAwesome CDN -->
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -52,84 +41,82 @@
     <body>
         <section class="main">
             <div class="checkout">
-                <div class="container">
-                    <h2 class="chekout-name">
-                        Tên dịch vụ
-                        <a href="<c:url value="/view/detailTour .jsp"/>" class="pink-color">
-                            ${tripInfo.getName()}
-                        </a>
-                    </h2>
-                    <form method="post" action="<c:url value="/view/history.jsp"/>">
+                <div class="booking">
+                    <h2><a href="#" class="chekoutName pink-color"> ${tripInfo.getName()} </a></h2>
+                    <form method="post" action="<c:url value="/tour/book.do"/>">
                         <input type="hidden" id="PriceId" name="PriceId" value="15" />
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="box">
-                                    <h3 class="checkout-title">Thông tin của bạn</h3>
-                                    <p>
-                                        Vui lòng điền đầy đủ thông tin vào trường bắt buộc (
-                                        <span class="pink-color">*</span>
-                                        )
-                                    </p>
-                                    <div class="text-danger validation-summary-valid">
-                                        <ul>
-                                            <li style="display: none"></li>
-                                        </ul>
+                        <div class="wrapper">
+                            <div class="boxLeft">
+                                <h3 class="checkoutTitle">Thông tin của bạn</h3>
+                                <p>
+                                    Vui lòng điền đầy đủ thông tin vào trường bắt buộc (
+                                    <span class="pink-color">*</span>
+                                    )
+                                </p>
+                                <div class="text-danger validation-summary-valid">
+                                    <ul>
+                                        <li style="display: none"></li>
+                                    </ul>
+                                </div>
+                                <div class="formRow">
+                                    <div class="formGroup">
+                                        <label for="Name"> Tên đầy đủ </label>
+                                        <input
+                                            class="formControl"
+                                            type="text"
+                                            name="Name"
+                                            value="${sessionScope.person.name}"
+                                            />
+                                        <span class="text-danger field-validation-valid"></span>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-12">
-                                            <label for="Name"> Tên đầy đủ </label>
-                                            <input
-                                                class="form-control"
-                                                type="text"
-                                                name="Name"
-                                                value="${sessionScope.person.name}"
-                                                />
-                                            <span class="text-danger field-validation-valid"></span>
-                                        </div>
-                                    </div>
+                                </div>
 
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="Email">Email</label>
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                name="Email"
-                                                value="${sessionScope.person.name}"
-                                                />
-                                            <span class="text-danger field-validation-valid"></span>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="PhoneNumber">Số điện thoại</label>
-                                            <input
-                                                type="text"
+                                <div class="formRow2">
+                                    <div class="itemRow2">
+                                        <label for="Email">Email</label>
+                                        <input
+                                            type="text"
+                                            class="formControl"
+                                            name="Email"
+                                            value="${sessionScope.person.email}"
+                                            />
+                                        <span class="text-danger field-validation-valid"></span>
+                                    </div>
+                                    <div class="itemRow2">
+                                        <label for="PhoneNumber">Số điện thoại</label>
+                                        <input
+                                                type="tel"
                                                 class="form-control"
                                                 name="PhoneNumber"
                                                 value="${sessionScope.person.phone}"
-                                                />
-                                            <span class="text-danger field-validation-valid"></span>
-                                        </div>
+                                                placeholder="0903.xxx.xxx"
+                                                pattern="[0-9]{10}"
+                                                maxlength="10"
+                                            />
+                                        <span class="text-danger field-validation-valid"></span>
                                     </div>
+                                </div>
 
-                                    <div class="form-row">
-                                        <div class="form-group col-6 col-md-3">
+                                <div class="formRow3">
+                                    <div class="formLeft">
+                                        <div class="formGroup3Left">
                                             <label for="AdultAmount">
                                                 Số người lớn
                                                 <span class="pink-color">*</span>
                                             </label>
                                             <div
-                                                class="input-group bootrap-touchspin boot strap-touchspin-injected"
+                                                class="input-group"
                                                 >
                                                 <span class="input-group-btn input-group-prepend">
                                                     <button
-                                                        class="btn btn-normal bootstrap-touchspin-down"
+                                                        class="btnMinus"
                                                         type="button"
                                                         >
                                                         -
                                                     </button>
                                                 </span>
                                                 <input
-                                                    class="form-control people-count"
+                                                    class="formControl people-count"
                                                     id="adults"
                                                     value="1"
                                                     type="number"
@@ -137,7 +124,7 @@
                                                     />
                                                 <span class="input-group-btn input-group-append">
                                                     <button
-                                                        class="btn btn-normal bootstrap-touchspin-up"
+                                                        class="btnPlus"
                                                         type="button"
                                                         >
                                                         +
@@ -146,7 +133,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-6 col-md-3">
+                                        <div class="formGroup3Right">
                                             <label for="ChildAmount"
                                                    >Số Trẻ em
                                                 <span class="pink-color">*</span>
@@ -156,14 +143,14 @@
                                                 >
                                                 <span class="input-group-btn input-group-prepend">
                                                     <button
-                                                        class="btn btn-normal bootstrap-touchspin-down"
+                                                        class="btnMinus"
                                                         type="button"
                                                         >
                                                         -
                                                     </button>
                                                 </span>
                                                 <input
-                                                    class="form-control people-count"
+                                                    class="formControl people-count"
                                                     id="childs"
                                                     value="0"
                                                     type="number"
@@ -172,7 +159,7 @@
                                                     />
                                                 <span class="input-group-btn input-group-append">
                                                     <button
-                                                        class="btn btn-normal bootstrap-touchspin-up"
+                                                        class="btnPlus"
                                                         type="button"
                                                         >
                                                         +
@@ -180,54 +167,61 @@
                                                 </span>
                                             </div>
                                         </div>
-
-                                        <div class="form-group-col col-12 col-md-6">
-                                            <label for="StartDate"
-                                                   >Ngày đi
-                                                <span class="pink-color">*</span>
-                                            </label>
-                                            <input
-                                                class="form-control"
-                                                id="date-go"
-                                                type="text"
-                                                name="StartDate"
-                                                value="${tripInfo.getDepart_time()}"
-                                                />
-                                        </div>
                                     </div>
 
-                                    <div class="form-row">
-                                        <div class="form-group-col">
-                                            <label>Thanh toán bằng</label>
-                                            <select
-                                                class="form-control"
-                                                id="payment_type"
-                                                name="PaymentType"
-                                                >
-                                                <option value="Cash" selected="">
-                                                    Thanh toán tiền mặt
-                                                </option>
-                                                <option value="DomesticBank">
-                                                    Chuyển khoản ngân hàng
-                                                </option>
-                                                <!-- <option value="InternationalCard">
-                                                  Visa/Master Card
-                                                </option> -->
-                                                <!-- <option value="VTCPay">VTC Pay</option> -->
-                                                <!-- <option value="MoMo">
-                                                  MoMo (Cần liên kết ví với ngân hàng)
-                                                </option> -->
-                                            </select>
-                                        </div>
+                                    <div class="formRight">
+                                        <label for="StartDate"
+                                               >Ngày đi
+                                            <span class="pink-color">*</span>
+                                        </label>
+                                        <select name="StartDate" class="formControl">
+                                                <c:forEach var="date" items="${tripDate}">
+                                                <option value="${date.getDepart_time()}"><fmt:formatDate value="${date.getDepart_time()}" pattern="dd/MM/yyyy"/></option>
+                                                </c:forEach>
+                                        </select>
+<!--                                        <input
+                                            class="formControl"
+                                            id="date-go"
+                                            type="text"
+                                            name="StartDate"
+                                            value="24/06/2023"
+                                            />-->
                                     </div>
+                                </div>
 
-                                    <div class="form-row">
-                                        <div style="width: 100%" class="form-group-col">
+                                <div class="formRow4">
+                                    <div class="itemRow4">
+                                        <label>Thanh toán bằng</label>
+                                        <select
+                                            class="formControl"
+                                            id="payment_type"
+                                            name="PaymentType"
+                                            >
+                                            <option value="1" selected="">
+                                                Thanh toán tiền mặt
+                                            </option>
+                                            <option value="2">
+                                                Chuyển khoản ngân hàng
+                                            </option>
+                                            <!-- <option value="InternationalCard">
+                                                                            Visa/Master Card
+                                                                          </option> -->
+                                            <!-- <option value="VTCPay">VTC Pay</option> -->
+                                            <!-- <option value="MoMo">
+                                                                            MoMo (Cần liên kết ví với ngân hàng)
+                                                                          </option> -->
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="formRow5">
+                                    <div class="itemRow5">
+                                        <div style="width: 100%" class="">
                                             <label for="AdditionField"
                                                    >Yêu cầu thêm (không bắt buộc)</label
                                             >
                                             <textarea
-                                                class="form-control"
+                                                class="formControl formTextArea"
                                                 rows="6"
                                                 id="AdditionField"
                                                 maxlength="500"
@@ -236,11 +230,15 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="box">
-                                    <h3 class="checkout-title">Thanh toán</h3>
+                            <div class="boxRight">
+                                <div class="wrapperRight">
+                                    <h3 class="checkoutTitle">Thông tin tour</h3>
+                                    <div class="image-group">
+                                        <img class="image" src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FLogo%20-%20Banner%20-%20Cover%20Image%2Fbackground.png?alt=media&token=1b455e43-a143-47d2-a864-0a71c76d08a8&_gl=1*1yc29x1*_ga*ODIxNzI4MDkuMTY4NDA3OTMxMQ..*_ga_CW55HF8NVT*MTY4NjI0OTE3OC4xNS4xLjE2ODYyNDkyMDUuMC4wLjA." alt=""/>
+                                    </div>
                                     <div class="price-group">
                                         <p class="price-name">
                                             <i class="fas fa-male"></i>
@@ -277,29 +275,29 @@
                                         <p class="price-name">
                                             <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
                                         </p>
-                                        <p class="price-value" id="total-price">650.000 đ</p>
+                                        <p class="price-value" id="total-price"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,### VNĐ" /></p></p>
                                     </div>
-                                    <button class="btn btnPink btn-radius btn-checkout">
+                                    
+                                        <input type="hidden" value="${tripInfo.getPriceChild()}" name="priceChild"/>
+                                        <input type="hidden" value="${tripInfo.getPriceAdult()}" name="priceAdult"/>
+                                        <input type="hidden" value="${tripInfo.getId()}" name="tripID"/>
+                                    <button class="btnPink btnCheckout" type="submit">
                                         Đặt Tour
                                     </button>
-                                    <input
-                                        type="hidden"
-                                        value=""
-                                        id="total-price-value"
-                                        name="TotalPriceValue"
-                                        />
-                                    <hr />
-                                    <div class="btn-content text-center">
-                                        <p>
-                                            <i class="fas fa-phone pink-color"></i> Hỗ trợ Tư Vấn +
-                                            Đặt Tour:
+
+                                    <div class="btnContent text-center">
+                                        <p class="contentP">
+                                            <i class="fas fa-phone pink-color"></i> Hỗ trợ Tư Vấn + Đặt
+                                            Tour:
                                         </p>
-                                        <a class="btn btn-radius btnPink btn-booking mb10" href="#"
-                                           >0903.xxx.xxx</a
-                                        >
-                                        <a class="btn btn-radius btnPink btn-booking mb10" href="#"
-                                           >0903.xxx.xxx</a
-                                        >
+                                        <div class="wrapperPhone">
+                                            <a class="btnPhone btnPink" href="#">
+                                                0903.xxx.xxx
+                                            </a>
+                                            <a class="btnPhone btnPink" href="#">
+                                                0903.xxx.xxx
+                                            </a>
+                                        </div>
                                         <p>
                                             <i class="fas fa-info-circle pink-color"></i>
                                             <a target="_blank" href="#" class="paymentMethod"

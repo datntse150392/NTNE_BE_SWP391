@@ -38,6 +38,10 @@ public class Trip {
         this.location = location;
         this.tour_id = tour_id;
     }
+    
+    public Trip(Date depart_time) {
+        this.depart_time = depart_time;
+    }
 
     public int getId() {
         return id;
