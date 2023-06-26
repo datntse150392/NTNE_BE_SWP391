@@ -119,11 +119,14 @@ public class ManageTourServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
             HttpSession session = request.getSession();
+            
             //Khai báo biến
             TourDAO tourDAO = new TourDAO();
             //Thực hiện lấy danh sách
             Map<Integer, Tour> Maplist = tourDAO.getList();
-            Map<Integer, Tour> MaplistRecent = tourDAO.getListRecent();
+            Map<Integer, Tour> MaplistRecent = tourDAO.getList();
+            
+            System.out.println("HOMEPAGE TEST");
 
             //Lưu danh sách vào Attribute
             request.setAttribute("listTour", Maplist);
@@ -135,7 +138,7 @@ public class ManageTourServlet extends HttpServlet {
                 session.setAttribute("searchList", tourListJson);
                 Config.setIsValidList(true);
             }
-
+//
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (SQLException ex) {
             System.out.println("----------------EXCEPTION----------------");
@@ -238,7 +241,6 @@ public class ManageTourServlet extends HttpServlet {
                 Trip trip = tripDAO.getTrip_by_TripID_TourID(tourID, tripID);
                 request.setAttribute("trip", trip);
             } else if (tripID == 0) {
-                System.out.println("TEST TRIP = 0");
                 Trip trip = tripDAO.getTrip_by_TourID(tourID).get(0);
                 request.setAttribute("trip", trip);
             }
@@ -351,8 +353,8 @@ public class ManageTourServlet extends HttpServlet {
         TripDAO tripDAO = new TripDAO();
 
         Trip trip = tripDAO.getTrip_by_TripID_TourID(tourID, tripID);
-        list = tripDAO.getTrip_date(tourID);
-
+        list = tripDAO.getTrip_by_TourID(tourID);
+        
         request.setAttribute("tripDate", list);
         request.setAttribute("tripInfo", trip);
         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
@@ -408,7 +410,6 @@ public class ManageTourServlet extends HttpServlet {
                 System.out.println(book);
                 tripdao.book_Trip(book);
             }
-            
 //            System.out.println("Name: " + name + "email: " + email + "phone: " + phone + "adult: " + adult + "child: " + child + "date: " + date + "payment: " + payment + "addtionField: " + additionfield);
         
         } catch (ParseException ex) {

@@ -38,6 +38,17 @@ public class Trip {
         this.location = location;
         this.tour_id = tour_id;
     }
+
+    public Trip(String name, boolean availability, float priceAdult, float priceChild, int quantity, String thumbnail, String location, int tour_id) {
+        this.name = name;
+        this.availability = availability;
+        this.priceAdult = priceAdult;
+        this.priceChild = priceChild;
+        this.quantity = quantity;
+        this.thumbnail = thumbnail;
+        this.location = location;
+        this.tour_id = tour_id;
+    }
     
     public Trip(Date depart_time) {
         this.depart_time = depart_time;

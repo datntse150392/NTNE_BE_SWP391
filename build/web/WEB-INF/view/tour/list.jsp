@@ -10,16 +10,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="./assets/imgs/five-icon.png" type="image/x-icon" sizes="30x30">
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/TourListCSS/style.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/TourListCSS/plugins.css"/>" rel="stylesheet" type="text/css">
-
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/main.js"/>" type="text/javascript"></script>
+        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/TourListCSS/style.css"/>" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/TourListCSS/plugins.css"/>" type="text/css" rel="stylesheet">
 
         <title>Tour One-day Nha Trang</title>
     </head>
@@ -165,13 +159,13 @@
 
                         <div class="row mrg-0">
                             <div class="tr-single-box short-box">
-                                <div class="col-sm-3 hidden-xs align-self-center">
+                                <div class="col-sm-3 hidden-xs align-self-center" style="padding-top: 5px">
                                     <h4>Sort By</h4>
                                 </div>
 
                                 <div class="col-sm-9 text-right">
 
-                                    <form action="<c:url value="/tour/list.do"/>" method="get">
+                                    <form action="<c:url value="/tour/list.do"/>" method="get" style="margin-top: -16px">
                                         <input type="hidden" name="search" value="${search}"/>
                                         <input type="hidden" name="date" id="date" value="${date}"/>
                                         <input type="hidden" name="sort_option" id="sort_option" value="${sort_option}"/>
@@ -202,7 +196,7 @@
 
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-default tooltips">
-                                                SUBMIT
+                                                SORT
                                             </button>
                                         </div>
                                     </form>
@@ -246,7 +240,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="entry-meta">
+                                                        <!--<div class="entry-meta">
                                                             <div class="meta-item meta-author">
                                                                 <div class="coauthors">
                                                                     <span class="vcard author">
@@ -266,7 +260,7 @@
                                                                 <i class="fa fa-star"></i>
                                                                 <i class="fa fa-star-half"></i>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </div>
 
@@ -334,5 +328,10 @@
                 date.value = "";
             }
         </script>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/main.js"/>" type="text/javascript"></script>
     </body>
 </html>

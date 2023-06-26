@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300&display=swap');
 * {
+  font-family: 'Be Vietnam Pro', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -66,7 +68,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 2;
+  z-index: 10;
   border-bottom: 1px solid #f2f2f2;
   background-color: #fff;
 }
@@ -93,7 +95,7 @@
 
 .header-logo-mobile-svg:hover,
 .header-logo-pc-svg:hover {
-  fill: var(--tomato-color);
+  fill: var(-tomato-color);
   transition: 0.2s ease-in;
 }
 
@@ -170,13 +172,13 @@
 }
 
 .search-suggest-item:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   background: #fdf6f0;
   transition: 0.3s linear;
 }
 
 .search-suggest-item.active {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   background: #fdf6f0;
 }
 
@@ -259,7 +261,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: 0;
+  margin: 10px 0px -5px 50px;
 }
 
 .header-nav-item {
@@ -276,6 +278,7 @@
 .header-nav-link p {
     font-size: medium;
     text-align: center;
+    font-weight: bold
 }
 .header-nav-item a:hover {
   text-decoration: none;
@@ -359,7 +362,7 @@
 }
 
 .content-welcome-link:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.3s linear;
 }
 
@@ -373,7 +376,7 @@
 }
 
 .content-slider-img {
-  height: 100%;
+  height: 130%;
   width: 100%;
   border-radius: 3px;
   object-fit: cover;
@@ -488,10 +491,11 @@
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 0;
+  margin-top: 60px
 }
 
 .content-suggest-heading:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.3s linear;
 }
 
@@ -532,6 +536,7 @@
   font-size: 20px;
   margin-bottom: 15px;
   color: #000;
+  font-weight: bold
 }
 .content-targets .target p {
   /* font-family: 'Manrope', sans-serif; */
@@ -648,7 +653,7 @@
   padding: 10px;
 }
 
-.download-app--app {
+.download-app-app {
   height: 100%;
   display: flex;
   align-items: center;
@@ -712,7 +717,7 @@
 }
 
 .contact-content-link:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.2s linear;
 }
 /*  */
@@ -736,7 +741,7 @@
 }
 
 .footer-content-link:hover {
-  color: var(--tomato-color);
+  color: var(-tomato-color);
   transition: 0.2s linear;
 }
 

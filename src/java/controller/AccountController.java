@@ -46,8 +46,8 @@ public class AccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String action = (String) request.getAttribute("action");
         switch (action) {
-            case "Login":
-                Login(request, response);
+            case "login1":
+                login1(request, response);
                 break;
             case "login_handler":
                 login_handler(request, response);
@@ -118,7 +118,7 @@ public class AccountController extends HttpServlet {
             } else {
                 request.setAttribute("MSG_ERROR", "This account has been blocked!");
                 request.setAttribute("controller", "account");
-                request.setAttribute("action", "Login");
+                request.setAttribute("action", "login1");
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             }
         } else if (admin != null) {
@@ -141,7 +141,7 @@ public class AccountController extends HttpServlet {
 
 //           response.sendRedirect(request.getContextPath() + "/login.jsp");
             request.setAttribute("controller", "account");
-            request.setAttribute("action", "Login");
+            request.setAttribute("action", "login1");
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         }
 
@@ -180,7 +180,7 @@ public class AccountController extends HttpServlet {
         }
     }
 
-    protected void Login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void login1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         //Ta sẽ get cookie từ request 
         //Vì là trên server có thể có nhiều cookies nên khi lấy dữ liệu
         //Ta phải lấy 1 mảng các cookies
@@ -197,7 +197,7 @@ public class AccountController extends HttpServlet {
             }
         }
 
-//        request.getRequestDispatcher("/WEB-INF/view/account/Login.jsp").forward(request, response);
+//        request.getRequestDispatcher("/WEB-INF/view/account/login1.jsp").forward(request, response);
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
 
     }
@@ -301,7 +301,7 @@ public class AccountController extends HttpServlet {
                 }
             }
             request.setAttribute("controller", "account");
-            request.setAttribute("action", "Login");
+            request.setAttribute("action", "login1");
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (IOException | ServletException ex) {
         }
@@ -349,7 +349,7 @@ public class AccountController extends HttpServlet {
                     boolean check = dao.insertAccount(name, email, password, phone, address, "US", 0, true, "https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2F%C4%90%C4%83ng%20nh%E1%BA%ADp%2Fuserimage.jpg?alt=media&token=6144393d-547a-4827-8356-e04867f1139e");
                     if (check) {
                         request.setAttribute("controller", "account");
-                        request.setAttribute("action", "Login");
+                        request.setAttribute("action", "login1");
                         request.setAttribute("MSG_SUCCESS", "You have successfully registered an account!");
                         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                     }

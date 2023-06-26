@@ -4,7 +4,9 @@
     Author     : thuyk
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,9 +17,9 @@
             rel="stylesheet"
             href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
             />
-        <link rel="stylesheet" href="../assets/css/bootstrap.css" />
-        <link rel="stylesheet" href="../assets/css/About/styles.css" />
-        <link rel="stylesheet" href="../assets/css/Homepage/styles.css" />
+        <link href="<c:url value="/assets/css/Homepage/styles.css"/>" type="text/css" rel="stylesheet" />
+        <link href="<c:url value="/assets/css/About/styles.css"/>" type="text/css" rel="stylesheet" />
+        <link href="<c:url value="/assets/css/bootstrap.css"/>" type="text/css" rel="stylesheet" />
         <title>Giới thiệu</title>
     </head>
     <body>
@@ -199,7 +201,7 @@
                                     </p>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FGi%E1%BB%9Bi%20Thi%E1%BB%87u%2Fbusiness-about.jpg?alt=media&token=476c7b32-9103-4aa2-bbf7-fbbb38bd9275&_gl=1*l35d2r*_ga*MTU1OTk0NzM3OC4xNjgzNTA1MDE2*_ga_CW55HF8NVT*MTY4NTkwMjU0Ny4zNC4xLjE2ODU5MDI2NjAuMC4wLjA." alt="Sứ mệnh" />
+                                    <img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fbusiness-about.png?alt=media&token=32a3afb8-82f5-4f57-8582-abecd126092c&_gl=1*15dlftg*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NTgwNzc3NC40LjEuMTY4NTgwNzkxMi4wLjAuMA.." alt="Sứ mệnh" />
                                 </div>
                             </div>
                         </div>

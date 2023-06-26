@@ -18,19 +18,15 @@
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">         
-        <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootsrap1.css"/>" rel="stylesheet" type="text/css">
+        
+        <link href="<c:url value="/assets/css/header_footer.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/styles.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/header_footer.css"/>" rel="stylesheet" type="text/css">
+        
         
         
         <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
+        
         
         <title>Nha Trang Nature Elite</title>
     </head>
@@ -40,6 +36,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
+                        <div class="header-logo">
+                            <a href="<c:url value="/tour/homePage.do"/>">
+                                <img style="width: 150px; padding-right: 20px;" src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Flogo.png?alt=media&token=2b706eb6-a8dd-488b-a807-bd03f3c56ad4&_gl=1*q7lns9*_ga*MTU1OTk0NzM3OC4xNjgzNTA1MDE2*_ga_CW55HF8NVT*MTY4NjE1ODg4Ni40NC4xLjE2ODYxNTg5MTYuMC4wLjA."/>
+                            </a>
+                        </div>
                         <div class="contact-item">
                             <i class="fas fa-comments-alt contact-icon"></i>
                             <div class="contact-content">
@@ -118,5 +119,9 @@
             </div>
         </div>
         <!-- End: Footer -->
+        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
     </body>
 </html>

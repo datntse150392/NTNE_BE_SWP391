@@ -1,9 +1,3 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 :root{
     -gray-color: #F5F5F5;
     -dark-color: #555555;
@@ -44,189 +38,9 @@
     top: 0;
     right: 0;
     left: 0;
-    z-index: 2;
+    z-index: 5;
     border-bottom: 1px solid #f2f2f2;
     background-color: #fff;
-}
-
-.header__container{
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-
-.header__logo-pc-svg{
-    width: 70px;
-    height: 70px;
-    border: 10px solid var(-gray-color);
-    border-radius: 50%;
-}
-
-.header__logo-mobile-svg{
-    width: 230px;
-    display: none;
-}
-
-.header__logo-mobile-svg:hover,
-.header__logo-pc-svg:hover{
-    fill: var(-tomato-color);
-    transition: .2s ease-in;
-}
-
-.header__search{
-    margin-right: 250px;
-    flex: 1;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    margin-left: 16px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 4px rgb(0 0 0 / 20%);
-    position: relative;
-}
-
-.header__search-inputs{
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 100%;
-    font-size: 14px;
-    flex: 1;
-}
-
-.header__search-icon{
-    position: absolute;
-    top: 2px;
-    color: #423F3E;
-    height: 100%;
-    width: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header__search-input{
-    padding-left: 36px;
-    padding-right: 10px;
-    height: 100%;
-    width: 100%;
-    font-weight: 600;
-    border: none;
-    border-radius: 5px;
-}
-
-.header__search-input:focus{
-    outline: 1px solid #ccc;
-}
-/* SEARCH SUGGEST */
-.header__search-suggest{
-    position: absolute;
-    width: 100%;
-    top: 110%;
-    border: 1px solid var(-gray-color);
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 1px 1px 4px rgb(0 0 0 / 20%);
-    display: none;
-}
-
-.search__suggest-heading{
-    padding-top: 16px;
-    text-align: center;
-    font-weight: 500;
-}
-
-.search__suggest-list{
-    margin-top: 16px;
-    overflow-y: auto;
-}
-
-.search__suggest-item{
-    list-style: none;
-    padding: 8px 16px;
-    display: flex;
-    cursor: pointer;
-}
-
-.search__suggest-item:hover{
-    color: var(-tomato-color);
-    background: #FDF6F0;
-    transition: .3s linear;
-}
-
-.search__suggest-item.active{
-    color: var(-tomato-color);
-    background: #FDF6F0;
-}
-
-.search__suggest-thumbnail{
-    width: 48px;
-    height: 48px;
-}
-
-.search__suggest-thumbnail-img{
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-}
-
-.search__suggest-content{
-    padding-left: 16px;
-}
-
-.search__suggest-title{
-    margin-bottom: 0;
-    font-size: 15px;
-    font-weight: 500;
-}
-
-/*  */
-
-.header__search-submit{
-    margin-right: 6px;
-}
-
-.header__search-submit-btn{
-    background: black;
-    border: none;
-    padding: 9px 19px;
-    border-radius: 4px;
-    color: #fff;
-
-}
-
-.header__search-submit-btn:focus{
-    outline: none;
-}
-
-/*  */
-.header__nav{
-    flex: 1;
-}
-
-.header__nav-list{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 0;
-}
-
-.header__nav-item{
-    list-style: none;
-    position: relative;
-    padding: 12px;
-}
-
-.header__nav-link{
-    padding: 10px 15px;
-    color: black;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.header__nav-item a:hover{
-    text-decoration: none;
-    color: tomato;
 }
 
 #footer{
@@ -248,55 +62,6 @@
     height: 45px;
     background: rgb(0 0 0 / 3%);
     border-radius: 100%;
-}
-
-.contact__content{
-    margin-left: 6px;
-}
-
-.contact__content-title{
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 700;
-    padding-bottom: 5px;
-}
-
-
-.contact__content-link{
-    color: #222;
-    display: block;
-    line-height: 1.4;
-    font-size: 13px;
-    font-weight: 400;
-}
-
-.contact__content-link:hover{
-    color: var(-tomato-color);
-    transition: .2s linear;
-}
-/*  */
-.footer__content-heading{
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.footer__content-list{
-    list-style: none;
-}
-
-.footer__content-item{
-    padding: 5px 0;
-    font-weight: 400;
-}
-
-.footer__content-link{
-    color: #222;
-    font-size: 14px;
-}
-
-.footer__content-link:hover{
-    color: var(-tomato-color);
-    transition: .2s linear;
 }
 
 
@@ -370,7 +135,7 @@
     position: fixed;
     right: 10px;
     bottom: 10px;
-    z-index: 10;
+    z-index: 100;
 }
 
 .move-on-top-btn{

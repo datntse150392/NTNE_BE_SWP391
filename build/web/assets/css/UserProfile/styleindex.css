@@ -32,11 +32,13 @@ body {
 
 .info-image {
     margin-right: 15px;
+    width: 5rem;
 }
 
 .info-image img {
     border-radius: 50%;
     width: 100%;
+    object-fit: contain;
 }
 
 .info_details {

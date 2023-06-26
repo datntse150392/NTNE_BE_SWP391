@@ -11,7 +11,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
 <!DOCTYPE html>
-<html
+<html>
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,17 +20,11 @@
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">         
-        <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootsrap1.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/header_footer.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
 
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
-
+        
         <title>Nha Trang Nature Elite</title>
     </head>
 
@@ -82,15 +76,8 @@
                             </li>
                             <c:if test="${person == null}">
                                 <li class="header-nav-item">
-                                    <a class="header-nav-link" href="<c:url value="/account/Login.do"/>">
+                                    <a class="header-nav-link" href="<c:url value="/account/login1.do"/>">
                                         <p>Đăng nhập</p>
-                                    </a>
-                                </li>
-                            </c:if>
-                            <c:if test="${person != null}">
-                                <li class="header-nav-item">
-                                    <a class="header-nav-link" href="<c:url value="/account/userprofile.do"/>">
-                                        <p>Tài khoản</p>
                                     </a>
                                 </li>
                             </c:if>
