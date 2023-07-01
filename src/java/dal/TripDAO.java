@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Trip;
 import models.Book;
+import models.Trip;
 
 /**
  *
@@ -79,6 +79,28 @@ public class TripDAO {
         return list;
     }
 
+    public Trip getTripQuantity_by_TripID(int tripID) {
+        List<Trip> list = null;
+        try {
+            DBContext db = new DBContext();
+            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b WHERE a.tour_id = b.id AND a.id = ?";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            ps.setInt(1, tripID);
+            ResultSet rs = ps.executeQuery();
+            Trip trip = new Trip();
+
+            while (rs.next()) {
+
+                trip.setQuantity(rs.getInt("quantity"));
+
+            }
+            return trip;
+        } catch (SQLException ex) {
+            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     //Lấy Trip bằng TripID và TourID
     public Trip getTrip_by_TripID_TourID(int tourID, int tripID) {
         try {
@@ -108,28 +130,6 @@ public class TripDAO {
         return null;
     }
 
-    //Lấy ra ngày của các trip 
-    public List<Trip> getTrip_date(int tourID) {
-        try {
-            DBContext db = new DBContext();
-            String sql = "  select * from TRIP a WHERE a.tour_id = ?";
-            PreparedStatement ps = db.connection.prepareStatement(sql);
-            List<Trip> list = new ArrayList<Trip>();
-
-            ps.setInt(1, tourID);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Trip trip = new Trip(rs.getDate("depart_time"));
-                list.add(trip);
-            }
-            return list;
-        } catch (SQLException ex) {
-            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
     /*
     --------------------------------------------
             ĐIỀU KIỆN KHÔNG CÓ NGÀY BẮT ĐẦU
@@ -137,34 +137,33 @@ public class TripDAO {
      */
     //Phân trang + Search
     public List<Trip> pagingStuff(String search, int index) {
-        List<Trip> list = null;
+        List<Trip> listTrip = null;
         try {
             DBContext db = new DBContext();
-            list = new ArrayList();
-            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
-                    + "  AND b.name LIKE ? \n"
-                    + "  ORDER BY a.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, a.priceAdult, a.priceChild, a.quantity, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE a.tour_id = b.id AND a.availability = 1 \n"
+                    + "AND b.name LIKE ? \n"
+                    + "ORDER BY b.name \n"
+                    + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
             PreparedStatement stm = db.connection.prepareStatement(sql);
             stm.setString(1, "%" + search + "%");
             stm.setInt(2, (index - 1) * 6);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Trip trip = new Trip();
-                trip.setId(rs.getInt("id"));
                 trip.setName(rs.getString("name"));
                 trip.setAvailability(rs.getBoolean("availability"));
                 trip.setPriceAdult(rs.getFloat("priceAdult"));
                 trip.setPriceChild(rs.getFloat("priceChild"));
                 trip.setQuantity(rs.getInt("quantity"));
-                trip.setDepart_time(rs.getDate("depart_time"));
                 trip.setThumbnail(rs.getString("thumbnail"));
                 trip.setLocation(rs.getString("location"));
                 trip.setTour_id(rs.getInt("tour_id"));
-                list.add(trip);
-                System.out.println(trip);
+                listTrip.add(trip);
             }
-            return list;
+            return listTrip;
         } catch (SQLException ex) {
             Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
@@ -174,34 +173,33 @@ public class TripDAO {
 
     //Phân trang + Sort tăng dần + Search
     public List<Trip> sortPriceAcending(String search, int index) {
-        List<Trip> list = null;
+        List<Trip> listTrip = null;
         try {
             DBContext db = new DBContext();
-            list = new ArrayList();
-            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
-                    + "  AND b.name LIKE ? \n"
-                    + "  ORDER BY a.priceAdult ASC OFFSET ? \n"
-                    + "  ROWS FETCH NEXT 6 ROWS ONLY";
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, a.priceAdult, a.priceChild, a.quantity, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE a.tour_id = b.id AND a.availability = 1 \n"
+                    + "AND b.name LIKE ? \n"
+                    + "ORDER BY a.priceAdult ASC \n"
+                    + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
             PreparedStatement stm = db.connection.prepareStatement(sql);
             stm.setString(1, "%" + search + "%");
             stm.setInt(2, (index - 1) * 6);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Trip trip = new Trip();
-                trip.setId(rs.getInt("id"));
                 trip.setName(rs.getString("name"));
                 trip.setAvailability(rs.getBoolean("availability"));
                 trip.setPriceAdult(rs.getFloat("priceAdult"));
                 trip.setPriceChild(rs.getFloat("priceChild"));
                 trip.setQuantity(rs.getInt("quantity"));
-                trip.setDepart_time(rs.getDate("depart_time"));
                 trip.setThumbnail(rs.getString("thumbnail"));
                 trip.setLocation(rs.getString("location"));
                 trip.setTour_id(rs.getInt("tour_id"));
-                list.add(trip);
+                listTrip.add(trip);
             }
-            return list;
+            return listTrip;
         } catch (SQLException ex) {
             Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
@@ -211,34 +209,33 @@ public class TripDAO {
 
     //Phân trang + Sort giảm dần + Search
     public List<Trip> sortPriceDescending(String search, int index) {
-        List<Trip> list = null;
+        List<Trip> listTrip = null;
         try {
             DBContext db = new DBContext();
-            list = new ArrayList();
-            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b\n"
-                    + "  WHERE a.tour_id = b.id AND a.availability = 1 \n"
-                    + "  AND b.name LIKE ? \n"
-                    + "  ORDER BY a.priceAdult DESC OFFSET ? \n"
-                    + "  ROWS FETCH NEXT 6 ROWS ONLY";
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, a.priceAdult, a.priceChild, a.quantity, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE a.tour_id = b.id AND a.availability = 1 \n"
+                    + "AND b.name LIKE ? \n"
+                    + "ORDER BY a.priceAdult DESC \n"
+                    + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY;";
             PreparedStatement stm = db.connection.prepareStatement(sql);
             stm.setString(1, "%" + search + "%");
             stm.setInt(2, (index - 1) * 6);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Trip trip = new Trip();
-                trip.setId(rs.getInt("id"));
                 trip.setName(rs.getString("name"));
                 trip.setAvailability(rs.getBoolean("availability"));
                 trip.setPriceAdult(rs.getFloat("priceAdult"));
                 trip.setPriceChild(rs.getFloat("priceChild"));
                 trip.setQuantity(rs.getInt("quantity"));
-                trip.setDepart_time(rs.getDate("depart_time"));
                 trip.setThumbnail(rs.getString("thumbnail"));
                 trip.setLocation(rs.getString("location"));
                 trip.setTour_id(rs.getInt("tour_id"));
-                list.add(trip);
+                listTrip.add(trip);
             }
-            return list;
+            return listTrip;
         } catch (SQLException ex) {
             Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
@@ -251,10 +248,12 @@ public class TripDAO {
         try {
             DBContext db = new DBContext();
             //Tạo đối tượng statement
-            String sql = "SELECT COUNT(*) FROM [dbo].[Trip] as a,[dbo].[Tour] as b \n"
-                    + "  WHERE a.tour_id = b.id \n"
-                    + "  AND a.availability = 1 \n"
-                    + "  AND b.name LIKE ? ";
+            String sql = "SELECT COUNT(*) FROM ( \n"
+                    + "	SELECT DISTINCT b.name, a.availability, a.priceAdult, a.priceChild, a.quantity, b.thumbnail, b.location, a.tour_id\n"
+                    + "	FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "	WHERE a.tour_id = b.id AND a.availability = 1 \n"
+                    + "	AND b.name LIKE ? \n"
+                    + ") as count";
             PreparedStatement ps = db.connection.prepareStatement(sql);
             ps.setString(1, "%" + search + "%");
             ResultSet rs = ps.executeQuery();
@@ -413,12 +412,35 @@ public class TripDAO {
         return 0;
     }
 
-    public void book_Trip(Book p) {
+    //Lấy ra ngày của các trip 
+    public List<Trip> getTrip_date(int tourID) {
         try {
             DBContext db = new DBContext();
-            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, expireDate, status, payment_id, account_id, quantityAdult, quantityChild, trip_id, cusAddress,reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "  select * from TRIP a WHERE a.tour_id = ?";
             PreparedStatement ps = db.connection.prepareStatement(sql);
-            
+            List<Trip> list = new ArrayList<Trip>();
+
+            ps.setInt(1, tourID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Trip trip = new Trip(rs.getDate("depart_time"));
+                list.add(trip);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void book_TripForGuest(Book p) {
+        try {
+            System.out.println(p);
+            DBContext db = new DBContext();
+            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, expireDate, status, payment_id, quantityAdult, quantityChild, trip_id, reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+
             ps.setDouble(1, p.getTotalPrice());
             ps.setString(2, p.getRequirement());
             ps.setString(3, p.getCusBook());
@@ -427,23 +449,50 @@ public class TripDAO {
             ps.setString(6, p.getExpireDate());
             ps.setBoolean(7, p.isStatus());
             ps.setInt(8, p.getPayment_id());
-            ps.setInt(9, p.getAccount_id());
-            ps.setInt(10, p.getQuantityAdult());
-            ps.setInt(11, p.getQuantityChild());
-            ps.setInt(12, p.getTrip_id());
-            ps.setString(13, p.getCusAddress());
-            ps.setString(14, p.getReason());
+            ps.setInt(9, p.getQuantityAdult());
+            ps.setInt(10, p.getQuantityChild());
+            ps.setInt(11, p.getTrip_id());
+            ps.setString(12, p.getReason());
+            System.out.println("Reponse OK!");
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void book_Trip(Book p) {
+        try {
+            System.out.println(p);
+            DBContext db = new DBContext();
+            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, status, payment_id, account_id, quantityAdult, quantityChild, trip_id, cusAddress,reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+
+            ps.setDouble(1, p.getTotalPrice());
+            ps.setString(2, p.getRequirement());
+            ps.setString(3, p.getCusBook());
+            ps.setString(4, p.getCusMail());
+            ps.setString(5, p.getCusPhone());
+            ps.setBoolean(6, p.isStatus());
+            ps.setInt(7, p.getPayment_id());
+            ps.setInt(8, p.getAccount_id());
+            ps.setInt(9, p.getQuantityAdult());
+            ps.setInt(10, p.getQuantityChild());
+            ps.setInt(11, p.getTrip_id());
+            ps.setString(12, p.getCusAddress());
+            ps.setString(13, p.getReason());
             System.out.println("I'm here");
             ps.execute();
         } catch (SQLException ex) {
             Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     public static void main(String[] args) throws SQLException {
         TripDAO dao = new TripDAO();
         String date = "2023-06-30";
-        dao.pagingStuff("", 1);
+        List<Trip> listTrip = dao.getTrip_by_TourID(1);
+        for (Trip trip : listTrip) {
+            System.out.println(trip);
+        }
     }
 }
