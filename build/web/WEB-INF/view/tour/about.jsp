@@ -19,7 +19,7 @@
             />
         <link href="<c:url value="/assets/css/Homepage/styles.css"/>" type="text/css" rel="stylesheet" />
         <link href="<c:url value="/assets/css/About/styles.css"/>" type="text/css" rel="stylesheet" />
-        <link href="<c:url value="/assets/css/bootstrap.css"/>" type="text/css" rel="stylesheet" />
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <title>Giới thiệu</title>
     </head>
     <body>
