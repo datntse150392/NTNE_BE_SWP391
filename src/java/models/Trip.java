@@ -26,12 +26,6 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(Date depart_time) {
-        this.depart_time = depart_time;
-    }
-
-    
-    
     public Trip(int id, String name, boolean availability, float priceAdult, float priceChild, int quantity, Date depart_time, String thumbnail, String location, int tour_id) {
         this.id = id;
         this.name = name;
@@ -43,6 +37,24 @@ public class Trip {
         this.thumbnail = thumbnail;
         this.location = location;
         this.tour_id = tour_id;
+    }
+
+    public Trip(String name, boolean availability, float priceAdult, float priceChild, int quantity, String thumbnail, String location, int tour_id) {
+        this.name = name;
+        this.availability = availability;
+        this.priceAdult = priceAdult;
+        this.priceChild = priceChild;
+        this.quantity = quantity;
+        this.thumbnail = thumbnail;
+        this.location = location;
+        this.tour_id = tour_id;
+    }
+
+   
+    
+    
+    public Trip(Date depart_time) {
+        this.depart_time = depart_time;
     }
 
     public int getId() {

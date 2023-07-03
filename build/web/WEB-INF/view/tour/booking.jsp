@@ -28,11 +28,12 @@
     </head>
 
     <body>
+
         <section class="mainBooking">
             <div class="checkout">
                 <div class="booking">
                     <h2><a href="#" class="chekoutName pink-color"> ${tripInfo.getName()} </a></h2>
-                    <form method="post" action="<c:url value="/tour/book.do"/>">
+                    <form method="get" action="<c:url value="/tour/book.do"/>">
                         <input type="hidden" id="PriceId" name="PriceId" value="15" />
                         <div class="wrapper">
                             <div class="boxLeft">
@@ -167,11 +168,11 @@
                                                >Tour theo ngày hiện có
                                             <span class="pink-color">*</span>
                                         </label>
-                                        <select name="tripID" class="formControl">
+                                        <select name="tripDate" class="formControl">
                                             <c:forEach var="trip" items="${tripDate}" varStatus= "loop">
 
                                                 <c:if test="${tripDate.get(loop.index).isAvailability()== true}">
-                                                    <option value="${trip.getId()}"><fmt:formatDate value="${trip.getDepart_time()}" pattern="dd/MM/yyyy"/></option>
+                                                    <option value="${trip.getDepart_time()}"><fmt:formatDate value="${trip.getDepart_time()}" pattern="dd/MM/yyyy"/></option>
                                                 </c:if>                 
                                             </c:forEach>
                                         </select>
@@ -250,35 +251,36 @@
                                     </div>
                                     <div class="price-group">
                                         <p class="price-name">
-                                            <i class="fas fa-users"></i> Số lượng:
+                                            <i class="fas fa-users"></i> Số ghế:
                                         </p>
                                         <p class="price-value" id="amount">
                                             <span id="adults-count" style="font-size: medium" class="adults-count"
-                                                  >1 người lớn</span
-                                            >
-                                            <span id="childs-count" style="font-size: medium" class="childs-count"
-                                                  >0 trẻ em</span
-                                            >
-                                        </p>
+                                                  ><c:if test="${quantity.getQuantity() > 0}">${quantity.getQuantity()} chỗ trống</c:if> 
+                                                <c:if test="${quantity.getQuantity() <= 0}">Hết chỗ trống</c:if>
+                                                </span>                                           
+                                            </p>    
+                                        </div>
+                                        <div class="price-group">
+                                            <p class="price-name">
+                                                <i class="fas fa-hand-holding-usd"></i> Phí giao dịch:
+                                            </p>
+                                            <p class="price-value" id="transaction-price">0 đ</p>
+                                        </div>
+                                        <div class="price-group">
+                                            <p class="price-name">
+                                                <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
+                                            </p>
+                                            <p class="price-value" id="total-price">
+                                                <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
                                     </div>
-                                    <div class="price-group">
-                                        <p class="price-name">
-                                            <i class="fas fa-hand-holding-usd"></i> Phí giao dịch:
-                                        </p>
-                                        <p class="price-value" id="transaction-price">0 đ</p>
-                                    </div>
-                                    <div class="price-group">
-                                        <p class="price-name">
-                                            <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
-                                        </p>
-                                        <p class="price-value" id="total-price">
-                                            <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
-                                    </div>
-
+                                    
+                                    <c:if test="${alert != null}">  <input type="hidden" value="${alert}" id="alertID"/></c:if>  
                                     <input type="hidden" value="${tripInfo.getPriceChild()}" id="priceChild" name="priceChild"/>
                                     <input type="hidden" value="${tripInfo.getPriceAdult()}" id="priceAdult" name="priceAdult"/>
                                     <input type="hidden" value="${tripInfo.getId()}" name="tripID"/>
-                                    <button class="btnPink btnCheckout" type="submit">
+                                    <input type="hidden" value="${tourID}" name="tourID"/>
+
+                                    <button class="btnPink btnCheckout" type="submit"  >
                                         Đặt Tour
                                     </button>
 
@@ -313,7 +315,6 @@
             const btnPlus1 = document.getElementById("btnPlus1");
             const btnMinus1 = document.getElementById("btnMinus1");
             const numberAdult = document.getElementById("adults");
-            const spanAdult = document.getElementById("adults-count");
             const displayPriceAdult = document.getElementById("displayPriceAdult");
             const priceAdult = document.getElementById("priceAdult");
             var tempAdult = 1;
@@ -323,13 +324,13 @@
             const btnPlus2 = document.getElementById("btnPlus2");
             const btnMinus2 = document.getElementById("btnMinus2");
             const numberChild = document.getElementById("childs");
-            const spanChild = document.getElementById("childs-count");
             const displayPriceChild = document.getElementById("displayPriceChild");
             const priceChild = document.getElementById("priceChild");
             var tempChild = 0;
 
             const tripQuantity = ${quantity.getQuantity()};
             const totalPrice = document.getElementById("totalPrice");
+            const caution = document.getElementById("alertID");
             console.log(totalPrice);
 
 
@@ -348,13 +349,12 @@
 
             function increaseNumber() {
                 let currentValue = parseInt(numberAdult.value);
-                
+
 //                console.log(tempAdult);
                 numberAdult.value = currentValue + 1;
-                console.log(currentValue)
+                console.log(currentValue);
                 tempAdult = parseInt(numberAdult.value);
                 //Hiển thị số lượng người lớn
-                spanAdult.textContent = currentValue + 1 + " người lớn";
                 //Tính toán số tiền người lớn
                 const number = priceAdult.value;
                 totalAdult = parseInt((currentValue + 1) * number);
@@ -370,7 +370,6 @@
                     tempAdult = parseInt(numberAdult.value);
 
                     //Hiển thị số lượng người lớn
-                    spanAdult.textContent = currentValue - 1 + " người lớn";
                     //Tính toán số tiền người lớn
                     const number = priceAdult.value;
                     totalAdult = parseInt((currentValue - 1) * number);
@@ -391,9 +390,6 @@
             });
 
 
-
-
-
             btnMinus2.addEventListener("click", function () {
                 decreaseNumber2();
             });
@@ -404,7 +400,6 @@
                 tempChild = parseInt(numberChild.value);
                 console.log(tempChild);
                 //Hiển thị số lượng trẻ em
-                spanChild.textContent = currentValue + 1 + " trẻ em";
                 //Tính toán số tiền trẻ em
                 const number = priceChild.value;
                 totalChild = parseInt((currentValue + 1) * number);
@@ -420,7 +415,6 @@
                     numberChild.value = currentValue - 1;
                     tempChild = parseInt(numberChild.value);
                     //Hiển thị số lượng trẻ em
-                    spanChild.textContent = currentValue - 1 + " trẻ em";
                     //Tính toán số tiền trẻ em
                     const number = priceChild.value;
                     totalChild = parseInt((currentValue - 1) * number);
@@ -433,6 +427,13 @@
             function tolalPriceTour(priceChild, priceAdult) {
                 totalPrice.textContent = priceChild + priceAdult;
             }
+
+            if (caution !== null) {
+                console.log('im here');
+                alert(caution.value);
+            }
+            console.log("caution ", caution);
+
         </script>
     </body>
 </html>

@@ -79,11 +79,35 @@ public class TripDAO {
         return list;
     }
 
+//    public Trip getTripQuantity_by_TripID(int tripID) {
+//        List<Trip> list = null;
+//        try {
+//            DBContext db = new DBContext();
+//            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b WHERE a.tour_id = b.id AND a.id = ?";
+//            PreparedStatement ps = db.connection.prepareStatement(sql);
+//            ps.setInt(1, tripID);
+//            ResultSet rs = ps.executeQuery();
+//            Trip trip = new Trip();
+//
+//            while (rs.next()) {
+//
+//                trip.setQuantity(rs.getInt("quantity"));
+//
+//            }
+//            return trip;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
     public Trip getTripQuantity_by_TripID(int tripID) {
-        List<Trip> list = null;
+        
         try {
             DBContext db = new DBContext();
-            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b WHERE a.tour_id = b.id AND a.id = ?";
+            String sql = "SELECT A.quantity - SUM(C.quantityAdult + C.quantityChild) as quantity \n"
+                    + "FROM [dbo].[Trip] as a,[dbo].[Tour] as b, [dbo].[Booking] as c \n"
+                    + "WHERE a.tour_id = b.id AND c.trip_id = a.id AND a.id = ?\n"
+                    + "GROUP BY A.quantity";
             PreparedStatement ps = db.connection.prepareStatement(sql);
             ps.setInt(1, tripID);
             ResultSet rs = ps.executeQuery();
@@ -91,9 +115,10 @@ public class TripDAO {
 
             while (rs.next()) {
 
-                trip.setQuantity(rs.getInt("quantity"));
+                trip.setQuantity(rs.getInt(1));
 
             }
+            System.out.println(trip.getQuantity());
             return trip;
         } catch (SQLException ex) {
             Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -438,7 +463,7 @@ public class TripDAO {
         try {
             System.out.println(p);
             DBContext db = new DBContext();
-            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, expireDate, status, payment_id, quantityAdult, quantityChild, trip_id, reason) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, status, payment_id, quantityAdult, quantityChild, trip_id, reason) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = db.connection.prepareStatement(sql);
 
             ps.setDouble(1, p.getTotalPrice());
@@ -446,13 +471,12 @@ public class TripDAO {
             ps.setString(3, p.getCusBook());
             ps.setString(4, p.getCusMail());
             ps.setString(5, p.getCusPhone());
-            ps.setString(6, p.getExpireDate());
-            ps.setBoolean(7, p.isStatus());
-            ps.setInt(8, p.getPayment_id());
-            ps.setInt(9, p.getQuantityAdult());
-            ps.setInt(10, p.getQuantityChild());
-            ps.setInt(11, p.getTrip_id());
-            ps.setString(12, p.getReason());
+            ps.setBoolean(6, p.isStatus());
+            ps.setInt(7, p.getPayment_id());
+            ps.setInt(8, p.getQuantityAdult());
+            ps.setInt(9, p.getQuantityChild());
+            ps.setInt(10, p.getTrip_id());
+            ps.setString(11, p.getReason());
             System.out.println("Reponse OK!");
             ps.execute();
         } catch (SQLException ex) {

@@ -103,6 +103,7 @@ public class ManageTourServlet extends HttpServlet {
                 bookedList(request, response);
                 break;
             case "book":
+
                 book(request, response);
                 break;
             default: {
@@ -119,13 +120,13 @@ public class ManageTourServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");
             HttpSession session = request.getSession();
-            
+
             //Khai báo biến
             TourDAO tourDAO = new TourDAO();
             //Thực hiện lấy danh sách
             Map<Integer, Tour> Maplist = tourDAO.getList();
             Map<Integer, Tour> MaplistRecent = tourDAO.getList();
-            
+
             System.out.println("HOMEPAGE TEST");
 
             //Lưu danh sách vào Attribute
@@ -300,7 +301,7 @@ public class ManageTourServlet extends HttpServlet {
         //Lấy tour từ tourDAO
         HttpSession session = request.getSession();
         User_Account user = (User_Account) session.getAttribute("person");
-        
+
         String sort_option = request.getParameter("sort_option");
         String indexPage = request.getParameter("index");
 
@@ -339,11 +340,11 @@ public class ManageTourServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/error/error.jsp").forward(request, response);
         }
     }
-    
+
     //2.[READ] - LẤY THÔNG TIN TRIP DISPLAY LÊN FORM BOOKING
     protected void viewFormBooking(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         List<Trip> list = new ArrayList<Trip>();
 
@@ -355,65 +356,86 @@ public class ManageTourServlet extends HttpServlet {
         Trip trip = tripDAO.getTrip_by_TripID_TourID(tourID, tripID);
         list = tripDAO.getTrip_by_TourID(tourID);
         Trip tripQuantity = tripDAO.getTripQuantity_by_TripID(tripID);
-        
+
+        request.setAttribute("tourID", tourID);
         request.setAttribute("quantity", tripQuantity);
         request.setAttribute("tripDate", list);
         request.setAttribute("tripInfo", trip);
         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
-    
+
     //3. [CREATE] - TẠO BOOKING
-    protected void book(HttpServletRequest request, HttpServletResponse response) {
+    protected void book(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String name = request.getParameter("Name");
             String email = request.getParameter("Email");
             String phone = request.getParameter("PhoneNumber");
             String adult = request.getParameter("AdultAmount"); //number
             String child = request.getParameter("ChildAmount"); //number
-            String date = request.getParameter("StartDate"); //date
+            String date = request.getParameter("tripDate"); //date
             String payment = request.getParameter("PaymentType");
             String additionfield = request.getParameter("AdditionField");
             String AdultPrice = request.getParameter("priceAdult");
             String ChildPrice = request.getParameter("priceChild");
             String requirement = request.getParameter("requirement");
             String trip = request.getParameter("tripID");
+            String tour = request.getParameter("tourID");
             boolean status = true;
-            
+
             HttpSession session = request.getSession();
+            TripDAO tripdao = new TripDAO();
             User_Account user = (User_Account) session.getAttribute("person");
+            List<Trip> list = null;
 
             int adultAmount = Integer.parseInt(adult);
             int childAmount = Integer.parseInt(child);
             int paymentID = Integer.parseInt(payment);
             int tripID = Integer.parseInt(trip);
-            Book book;
+            int tourID = Integer.parseInt(tour);
             double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice);
-            TripDAO tripdao = new TripDAO();
-            
+            Trip TripSlot = tripdao.getTripQuantity_by_TripID(tripID);
+
+            Book book;
+
             //Xử lí date
             Date temp = new Date();
             Date currentDay = new Date(temp.getTime()); // Lấy ra ngày hôm nay           
             Date expDate = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            System.out.println(date);
             expDate = dateFormat.parse(date); //format ngày quá hạn
             //Nếu ngày quá hạn đến trước ngày mua thì status = 0
-            if(expDate.before(currentDay)) {
+            if (expDate.before(currentDay)) {
                 status = false;
             } else {
                 status = true;
             }
-            System.out.println(user);
-            if (user == null){
-                book = new Book(totalPrice, additionfield, name, email, phone, date, status, paymentID, adultAmount, childAmount, tripID, requirement);
-                System.out.println(book);
-                tripdao.book_TripForGuest(book);
+
+            if (TripSlot.getQuantity() - (adultAmount + childAmount) < 0) {
+                Trip tripInfo = tripdao.getTrip_by_TripID_TourID(tourID, tripID);
+                list = tripdao.getTrip_by_TourID(tourID);
+                Trip tripQuantity = tripdao.getTripQuantity_by_TripID(tripID);
+
+                request.setAttribute("quantity", tripQuantity);
+                request.setAttribute("tripDate", list);
+                request.setAttribute("tripInfo", tripInfo);
+                request.setAttribute("tourID", tourID);
+                request.setAttribute("alert", "Số chỗ vượt quá số lượng");
+                request.setAttribute("action", "booking");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             } else {
-                book = new Book(totalPrice, additionfield, name, email, phone, date, status, paymentID, user.getId(), adultAmount, childAmount, tripID, user.getAddress(), requirement);
-                System.out.println(book);
-                tripdao.book_Trip(book);
+                if (user == null) {
+                    book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, adultAmount, childAmount, tripID, requirement);
+                    System.out.println(book);
+                    tripdao.book_TripForGuest(book);
+                } else {
+                    book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, user.getId(), adultAmount, childAmount, tripID, user.getAddress(), requirement);
+                    System.out.println(book);
+                    tripdao.book_Trip(book);
+                }
             }
+
 //            System.out.println("Name: " + name + "email: " + email + "phone: " + phone + "adult: " + adult + "child: " + child + "date: " + date + "payment: " + payment + "addtionField: " + additionfield);
-        
         } catch (ParseException ex) {
             Logger.getLogger(ManageTourServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
