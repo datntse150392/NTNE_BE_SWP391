@@ -13,32 +13,28 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">         
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
-        
-        
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
-        
+
+
+
+
         <title>Nha Trang Nature Elite</title>
     </head>
-    
+
     <body>
         <!-- Start Slider -->
         <div id="slider"> 
             <div class="container">
                 <div class="owl-carousel owl-theme" id="banner-slider">
                     <div class="item">
-                        <a href=""><img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fslider-1.png?alt=media&token=57178d7c-0a2f-489a-b223-b4f9cebd472a&_gl=1*16no2wc*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NjE1MzcyNS4xMS4xLjE2ODYxNTM4MTUuMC4wLjA."></a>
+                        <a href=""><img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FLogo%20-%20Banner%20-%20Cover%20Image%2FNha%20Trang%20Nature%20Elite.png?alt=media&token=0d1b4cd8-51a4-4ab4-bcf0-fbc3c9e058cc"></a>
                     </div>
                     <div class="item">
                         <a href=""><img src="https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fslider2.png?alt=media&token=117e06ae-5b11-4274-a32c-31681f030fb5&_gl=1*170m984*_ga*MTEyNjY4OTYyMi4xNjgzNzM0MDMx*_ga_CW55HF8NVT*MTY4NjE1MzcyNS4xMS4xLjE2ODYxNTU1NTMuMC4wLjA."></a>
@@ -64,32 +60,32 @@
                 <!-- Start: Location -->
                 <div class="content-container">
                     <div class="content-location">
-                        
-<!--                    -----------------------------------------------------------
-                                           HIỂN THỊ ĐỊA ĐIỂM NỔI BẬT
-                        ------------------------------------------------------------->
-                        <p class="content-title">Tour mới nhất</p>
+
+                        <!--                    -----------------------------------------------------------
+                        HIỂN THỊ CÁC TOUR MỚI
+     ------------------------------------------------------------->
+                        <p class="content-title">Các tour mới</p>
                         <p class="content-description">Cùng Nha Trang Nature Elite bắt đầu chuyến hành trình khám phá Nha Trang của bạn</p>
                         <!-- Start: Content Slider -->
                         <div class="content-slider">
                             <div class="owl-carousel" id="content-slider">
-                                
+
                                 <!---------------------------------->
                                 <!--LẤY THÔNG TIN ĐỊA ĐIỂM NỔI BẬT-->
                                 <!---------------------------------->
-                                
+
                                 <c:if test="${listTour != null}">
-                                    <c:forEach var="tourRecent" items="${listTourRecent}" varStatus="counter">
+                                    <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item content-slider-item">
-                                            <a href="<c:url value="#"/>"><img src="${tourRecent.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                            <a href="<c:url value="#"/>"><img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
                                                 <div class="content-slider-name">
-                                                    <h3 class="content-slider-heading">${tourRecent.getValue().getName()}</h3>   
+                                                    <h3 class="content-slider-heading">${tour.getValue().getName()}</h3>   
                                                 </div>
                                             </a>
                                         </div>
                                     </c:forEach>
                                 </c:if>
-                                <c:if test="${listTourRecent == null}">
+                                <c:if test="${listTour == null}">
                                     <h1>LIST IS NULL</h1>
                                 </c:if>
                             </div>
@@ -99,9 +95,31 @@
                 </div>
                 <!-- End: Location -->
 
-<!--                    <!---------------------------------->
-                        <!--LẤY THÔNG TIN TOUR NỔI BẬT-->
-                        <!---------------------------------->
+                <!-- Start: Promotion -->
+                <!-- <div class="content-container">
+                    <div class="content-promotion">
+                        <p class="content-title">Ưu đãi độc quyền</p>
+                        <p class="content-description">Chỉ có tại Luxstay, hấp dẫn và hữu hạn, book ngay!</p>
+                        <div class="content-slider">
+                            <div class="owl-carousel" id="promotion-slider">
+                                <div class="item">
+                                    <a href=""><img src="./assets/imgs/promotion1.jpg" alt="" class="content-promotion-img"></a>
+                                </div>
+                                <div class="item">
+                                    <a href=""><img src="./assets/imgs/promotion2.jpg" alt="" class="content-promotion-img"></a>
+                                </div>
+                                <div class="item">
+                                    <a href=""><img src="./assets/imgs/promotion3.jpg" alt="" class="content-promotion-img"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- End: Promotion -->
+
+                <!--                    <!---------------------------------->
+                <!--LẤY THÔNG TIN TOUR NỔI BẬT-->
+                <!---------------------------------->
                 <!-- Start: Suggest -->
                 <div class="content-container">
                     <div class="content-suggest">
@@ -109,7 +127,7 @@
                         <p class="content-description">Những Tour one-day nổi tiếng mà Nha Trang Nature Elite gợi ý dành cho bạn</p>
                         <div class="content-slider">
                             <div class="owl-carousel" id="suggest-slider">
-                                
+
                                 <c:if test="${listTour != null}">
                                     <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item">
@@ -133,30 +151,58 @@
                         </div>
                     </div>
                 </div>
-                
+                <!-- End: Suggest -->
+
+                <!-- Start Explore -->
+                <!-- <div class="content-container">
+                    <div class="content-explore">
+                        <p class="content-title">Gợi ý khám phá</p>
+                        <p class="content-description">Để mỗi chuyến đi là một hành trình truyền cảm hứng, mỗi căn phòng là một khoảng trời an yên</p> -->
+                <!-- Start: Explore Slider -->
+                <!-- <div class="explore-slider">
+                    <div class="owl-carousel" id="explore-slider">
+                        <div class="item explore-slider-item">
+                            <a href=""><img src="./assets/imgs/explore/explore.jpg" alt="" class="content-slider-img"></a>
+                            <div class="explore-slider-name">Thông tin HomeStay</div>
+                            <p class="explore-slider-description">5 resort hạng sang ở Việt Nam xuất hiện trên tạp chí du lịch Anh</p>
+                        </div>
+                        <div class="item explore-slider-item">
+                            <a href=""><img src="./assets/imgs/explore/explore2.jpg" alt="" class="content-slider-img"></a>
+                            <div class="explore-slider-name">Thông tin HomeStay</div>
+                            <p class="explore-slider-description">Du lịch Cần Thơ nhất định phải ghé thăm những địa điểm này</p>
+                        </div>
+                        <div class="item explore-slider-item">
+                            <a href=""><img src="./assets/imgs/explore/explore3.jpg" alt="" class="content-slider-img"></a>
+                            <div class="explore-slider-name">Thông tin HomeStay</div>
+                            <p class="explore-slider-description">Tuần lễ “Tôi yêu bánh mì Sài Gòn” chính thức diễn ra từ ngày 24/3</p>
+                        </div>
+                        <div class="item explore-slider-item">
+                            <a href=""><img src="./assets/imgs/explore/explore4.jpg" alt="" class="content-slider-img"></a>
+                            <div class="explore-slider-name">Thông tin HomeStay</div>
+                            <p class="explore-slider-description">Trải nghiệm thú vị ở sở thú Zoodoo Đà Lạt</p>
+                        </div>
+                        <div class="item explore-slider-item">
+                            <a href=""><img src="./assets/imgs/explore/explore5.jpg" alt="" class="content-slider-img"></a>
+                            <div class="explore-slider-name">Thông tin HomeStay</div>
+                            <p class="explore-slider-description">Hội An sẽ lập chốt quản lý du khách đeo khẩu trang khi vào thành phố</p>
+                        </div>
+                        <div class="item explore-slider-item">
+                            <a href=""><img src="./assets/imgs/explore/explore6.png" alt="" class="content-slider-img"></a>
+                            <div class="explore-slider-name">Thông tin HomeStay</div>
+                            <p class="explore-slider-description">Thủ đô Hà Nội nằm trong danh sách những thành phố đẹp nhất thế giới</p>
+                        </div>
+                    </div>
+                    
+                </div> -->
+                <!-- End: Explore Slider -->
+                <!-- </div>
+            </div> -->
+                <!-- End Explore -->
                 <div class="content-container">
                     <div class="content-targets">
                         <p class="content-title">Vì sao chọn Nha Trang Nature Elite</p>
                         <!-- Start Target -->
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div class="target">
-                                    <i class="fas fa-trophy"></i>
-                                    <div class="content">
-                                        <h3 class="target-name">Đầy Đủ Giấy Phép</h3>
-                                        <p>Giấy phép lữ hàng quốc tế số XX-XXX/2023/TCDL-GP LHQT do Tổng cục Du Lịch cấp</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div class="target">
-                                    <i class="fas fa-money-check-alt"></i>
-                                    <div class="content">
-                                        <h3 class="target-name">Thanh Toán Linh Hoạt</h3>
-                                        <p>Chấp nhận thanh toán bằng cả hình thức trực tiếp lẫn chuyển khoản</p>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="fas fa-hand-holding-usd"></i>
@@ -166,6 +212,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-smile-beam"></i>
@@ -175,15 +222,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <div class="target">
-                                    <i class="far fa-thumbs-up"></i>
-                                    <div class="content">
-                                        <h3 class="target-name">Đặt Tour / Dịch Vụ</h3>
-                                        <p>Dễ dàng, nhanh chóng trong vòng 30s</p>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-question-circle"></i>
@@ -193,6 +232,39 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <div class="target">
+                                    <i class="fas fa-money-check-alt"></i>
+                                    <div class="content">
+                                        <h3 class="target-name">Thanh Toán Linh Hoạt</h3>
+                                        <p>Chấp nhận thanh toán bằng cả hình thức trực tiếp lẫn chuyển khoản</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <div class="target">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <div class="content">
+                                        <h3 class="target-name">Đặt Tour / Dịch Vụ</h3>
+                                        <p>Dễ dàng, nhanh chóng trong vòng 30s</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                <div class="target">
+                                    <i class="fas fa-trophy"></i>
+                                    <div class="content">
+                                        <h3 class="target-name">Đầy Đủ Giấy Phép</h3>
+                                        <p>Giấy phép lữ hàng quốc tế số XX-XXX/2023/TCDL-GP LHQT do Tổng cục Du Lịch cấp</p>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -237,7 +309,7 @@
                                     và tiếp đón hơn 10.000 khách du lịch trong và ngoài nước mỗi năm, độ chuyên nghiệp và uy tín của chúng tôi là không phải bàn. Ở Nha Trang Nature Elite, khách hàng là thượng đế.</p>
                             </div> 
                             <div class="text-center">
-                                <a class="btn btn-default" href="./about.html">Tìm hiểu thêm</a>
+                                <a class="btn btn-default" href="<c:url value="/tour/about.do"/>">Tìm hiểu thêm</a>
                             </div>
                         </div>
                     </div>
@@ -248,27 +320,44 @@
                     </div>
                 </div>
             </div>
+            <!-- Messenger Plugin chat Code -->
+            <div id="fb-root"></div>
+
+            <!-- Your Plugin chat code -->
+            <div id="fb-customer-chat" class="fb-customerchat">
+            </div>
+
         </div>
         <!--End: Download App  -->
-        <div id=stats class=s-stats>
-            <div class="row stats block-1-4 block-m-1-2 block-mob-full" data-aos=fade-up>
-                <div class="col-block stats-col">
-                    <div class=stats-count>16</div>
-                    <h5>Đối tác</h5>
-                </div>
-                <div class="col-block stats-col">
-                    <div class=stats-count>90</div>
-                    <h5>Khách hàng</h5>
-                </div>
-                <div class="col-block stats-col">
-                    <div class=stats-count>28</div>
-                    <h5>Truy cập</h5>
-                </div>
-                <div class="col-block stats-col">
-                    <div class=stats-count>1440</div>
-                    <h5>Đặt tour</h5>
-                </div>
-            </div>
-        </div>
+        <!--Import JS Slider -->
+        <script>
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "102516469574099");
+            chatbox.setAttribute("attribution", "biz_inbox");
+        </script>
+        <!-- Your SDK code -->
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    xfbml: true,
+                    version: 'v17.0'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
     </body>
 </html>
