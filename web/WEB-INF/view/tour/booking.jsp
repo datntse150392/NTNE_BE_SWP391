@@ -168,11 +168,11 @@
                                                >Tour theo ngày hiện có
                                             <span class="pink-color">*</span>
                                         </label>
-                                        <select name="tripDate" class="formControl">
+                                        <select name="tripID" class="formControl" id="dateID">
                                             <c:forEach var="trip" items="${tripDate}" varStatus= "loop">
 
                                                 <c:if test="${tripDate.get(loop.index).isAvailability()== true}">
-                                                    <option value="${trip.getDepart_time()}"><fmt:formatDate value="${trip.getDepart_time()}" pattern="dd/MM/yyyy"/></option>
+                                                    <option value="${trip.getId()}"><fmt:formatDate value="${trip.getDepart_time()}" pattern="dd/MM/yyyy"/></option>
                                                 </c:if>                 
                                             </c:forEach>
                                         </select>
@@ -255,8 +255,8 @@
                                         </p>
                                         <p class="price-value" id="amount">
                                             <span id="adults-count" style="font-size: medium" class="adults-count"
-                                                  ><c:if test="${quantity.getQuantity() > 0}">${quantity.getQuantity()} chỗ trống</c:if> 
-                                                <c:if test="${quantity.getQuantity() <= 0}">Hết chỗ trống</c:if>
+                                                  ><c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() > 0}">${quantity.getQuantity() - currentQuantity.getCurrent_quantity()} chỗ trống</c:if> 
+                                                <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() <= 0}">Hết chỗ trống</c:if>
                                                 </span>                                           
                                             </p>    
                                         </div>
@@ -273,13 +273,13 @@
                                             <p class="price-value" id="total-price">
                                                 <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
                                     </div>
-                                    
+
                                     <c:if test="${alert != null}">  <input type="hidden" value="${alert}" id="alertID"/></c:if>  
                                     <input type="hidden" value="${tripInfo.getPriceChild()}" id="priceChild" name="priceChild"/>
                                     <input type="hidden" value="${tripInfo.getPriceAdult()}" id="priceAdult" name="priceAdult"/>
-                                    <input type="hidden" value="${tripInfo.getId()}" name="tripID"/>
                                     <input type="hidden" value="${tourID}" name="tourID"/>
-
+                                    <input type="hidden" value="${tripDate}" id="trips"/>
+                                        
                                     <button class="btnPink btnCheckout" type="submit"  >
                                         Đặt Tour
                                     </button>
@@ -328,17 +328,41 @@
             const priceChild = document.getElementById("priceChild");
             var tempChild = 0;
 
-            const tripQuantity = ${quantity.getQuantity()};
+            const tripQuantity = ${quantity.getQuantity() - currentQuantity.getCurrent_quantity()};
             const totalPrice = document.getElementById("totalPrice");
             const caution = document.getElementById("alertID");
-            console.log(totalPrice);
+            const trips = document.getElementById("trips").value;
+//            const trips = tripDateID.value;
+            
+//            const triplength
+//            // Convert trips to an array
+//            var tripArray = [];
+//            const dateID = document.getElementById("dateID");
+//            const tripsString = tripDateID;
+//            // Extract the individual trip objects from the string
+//            const tripObjects = tripsString.match(/Trip\{[^}]+\}/g);
+//
+//            // Parse each trip object into a JavaScript object
+//            const tripArray = tripObjects.map(tripString => {
+//                const tripProperties = tripString.match(/\w+=\S+/g);
+//                const trip = {};
+//
+//                tripProperties.forEach(property => {
+//                    const [key, value] = property.split('=');
+//                    trip[key] = isNaN(value) ? value : parseFloat(value);
+//                });
+//
+//                return trip;
+//            });
+//
+//            console.log(tripArray);
 
 
             btnPlus1.addEventListener("click", function () {
                 if (parseInt(tempAdult + tempChild) < tripQuantity) {
                     increaseNumber();
                 } else {
-                    alert(`Số lượng hành khách không vượt quá ${quantity.getQuantity()}`);
+                    alert(`Số lượng hành khách không vượt quá ${quantity.getQuantity() - currentQuantity.getCurrent_quantity()}`);
                 }
             });
 
@@ -384,7 +408,7 @@
                 if (parseInt(tempAdult + tempChild) < tripQuantity) {
                     increaseNumber2();
                 } else {
-                    alert(`Số lượng hành khách không vượt quá ${quantity.getQuantity()}`);
+                    alert(`Số lượng hành khách không vượt quá ${quantity.getQuantity() - currentQuantity.getCurrent_quantity()}`);
 
                 }
             });

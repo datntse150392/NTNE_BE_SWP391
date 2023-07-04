@@ -79,35 +79,11 @@ public class TripDAO {
         return list;
     }
 
-//    public Trip getTripQuantity_by_TripID(int tripID) {
-//        List<Trip> list = null;
-//        try {
-//            DBContext db = new DBContext();
-//            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b WHERE a.tour_id = b.id AND a.id = ?";
-//            PreparedStatement ps = db.connection.prepareStatement(sql);
-//            ps.setInt(1, tripID);
-//            ResultSet rs = ps.executeQuery();
-//            Trip trip = new Trip();
-//
-//            while (rs.next()) {
-//
-//                trip.setQuantity(rs.getInt("quantity"));
-//
-//            }
-//            return trip;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
     public Trip getTripQuantity_by_TripID(int tripID) {
-        
+        List<Trip> list = null;
         try {
             DBContext db = new DBContext();
-            String sql = "SELECT A.quantity - SUM(C.quantityAdult + C.quantityChild) as quantity \n"
-                    + "FROM [dbo].[Trip] as a,[dbo].[Tour] as b, [dbo].[Booking] as c \n"
-                    + "WHERE a.tour_id = b.id AND c.trip_id = a.id AND a.id = ?\n"
-                    + "GROUP BY A.quantity";
+            String sql = "SELECT * FROM [dbo].[Trip] as a,[dbo].[Tour] as b WHERE a.tour_id = b.id AND a.id = ?";
             PreparedStatement ps = db.connection.prepareStatement(sql);
             ps.setInt(1, tripID);
             ResultSet rs = ps.executeQuery();
@@ -115,15 +91,59 @@ public class TripDAO {
 
             while (rs.next()) {
 
-                trip.setQuantity(rs.getInt(1));
+                trip.setQuantity(rs.getInt("quantity"));
 
             }
-            System.out.println(trip.getQuantity());
             return trip;
         } catch (SQLException ex) {
             Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public Trip getTripCurrentQuantity_by_TripID(int tripID) {
+
+        try {
+            DBContext db = new DBContext();
+            String sql = "SELECT SUM(C.quantityAdult + C.quantityChild) as current_quantity \n"
+                    + "FROM [dbo].[Trip] as a,[dbo].[Tour] as b, [dbo].[Booking] as c\n"
+                    + "WHERE a.tour_id = b.id AND c.trip_id = a.id AND a.id = ?\n"
+                    + "GROUP BY A.quantity";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            ps.setInt(1, tripID);
+            ResultSet rs = ps.executeQuery();
+            Trip trip = new Trip();
+            while (rs.next()) {
+                trip.setCurrent_quantity(rs.getInt(1));
+            }
+            Trip quantity = getTripQuantity_by_TripID(tripID);
+            if (trip.getCurrent_quantity() > quantity.getQuantity()) {
+                return trip;
+            } else {
+                UpdateCurrentQuantity_by_TripID(tripID, trip.getCurrent_quantity());
+                return trip;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void UpdateCurrentQuantity_by_TripID(int tripID, int currentValue) {
+
+        try {
+            DBContext db = new DBContext();
+            String sql = " update trip\n"
+                    + "  set [current_quantity] = ?\n"
+                    + "  where trip.id = ?";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            ps.setInt(1, currentValue);
+            ps.setInt(2, tripID);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(TourDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     //Lấy Trip bằng TripID và TourID

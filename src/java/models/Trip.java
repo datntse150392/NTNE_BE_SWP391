@@ -22,7 +22,7 @@ public class Trip {
     private String thumbnail;
     private String location;
     private int tour_id;
-
+    private int current_quantity;
     public Trip() {
     }
 
@@ -50,8 +50,14 @@ public class Trip {
         this.tour_id = tour_id;
     }
 
-   
-    
+    public int getCurrent_quantity() {
+        return current_quantity;
+    }
+
+    public void setCurrent_quantity(int current_quantity) {
+        this.current_quantity = current_quantity;
+    }
+
     
     public Trip(Date depart_time) {
         this.depart_time = depart_time;
