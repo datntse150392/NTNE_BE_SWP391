@@ -12,14 +12,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
+        
     </head>
     <body>
         <section>
-            <div class="container-lg" style="padding-top: 7rem;">
-                <div class="row gap-4">
-                    <div class="col-12 col-md-4 border rounded p-2">
+            <div class="container-lg" style="padding-top: 9rem;">
+                <div class="row gap-4 justify-content-center mx-0">
+                    <div class="col-12 col-md-4 border rounded pt-2 ps-4">
                         <div class="container-fluid">
                             <div class="row pb-4 align-items-center border-bottom">
                                 <div class="col-3">
@@ -29,12 +32,12 @@
                                 </div>
                                 <div class="col-9 align-items-center">
                                     <p class="fs-3 fw-semibold mb-0">${sessionScope.person.name}</p>
-                                    <p class="fs-6 fw-light mb-0">${sessionScope.person.email}</p>
+                                    <p class="fs-4 fw-light mb-0">${sessionScope.person.email}</p>
                                 </div>
                             </div>
                             <nav class="row pt-4 align-items-center">
                                     <div class="row">
-                                        <div class="row px-4 fw-semibold">Tài khoản</div>
+                                        <div class="row ms-0 fw-semibold">Tài khoản</div>
                                         <div class="row px-4">
                                             <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#">Thông tin cá nhân</a>
                                             <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<c:url value="/account/changepassword.do"/>">Đổi mật khẩu</a>
@@ -55,12 +58,12 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <p class="display-6 fs-2 fw-semibold">Thông tin cá nhân</p>
-                                <p class="lead">
+                                <p class="lead fs-4">
                                     Cập nhật thông tin của Quý khách và tìm hiểu các thông tin này được sử dụng ra sao.
                                 </p>
                             </div>
                             <div class="row">
-                                <div class="container-flui justify-">
+                                <div class="container-fluid">
                                     <div class="row py-2 border-bottom border-top" >
                                         <div class="col p-3 fw-semibold">
                                             <i class="fas fa-user"></i>
@@ -110,5 +113,8 @@
                 </div>
             </div>
         </section>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

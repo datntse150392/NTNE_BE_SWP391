@@ -17,6 +17,11 @@
     align-items: center;
 }
 
+.img-thumbnail{
+    height: 4rem;
+    width: auto;
+}
+
 .loader-icon{
     font-size: 70px;
     color: #16A596;

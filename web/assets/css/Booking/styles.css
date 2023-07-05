@@ -17,6 +17,7 @@
   .checkout {
     background-color: #f5f5f5;
     border-radius: 8px;
+    padding-top: 2rem
   }
 
   .wrapper{
@@ -30,7 +31,7 @@
     background-color: white;
     height: 100%;
     margin: 1rem;
-    padding: 1rem;
+    padding: 2rem;
     border-radius: 8px;
   }
 
@@ -201,17 +202,15 @@
   }
 
   .btnPlus{
-    border-radius: 0 0.5rem 0.5rem 0  ;
-    height: 42px;
-    padding: 0 1rem;
-    line-height: 42px;
+    border-radius: 0 0.5rem 0.5rem 0 !important;
+    width: 1rem !important;
+    height: 4.8rem !important;
   }
   
   .btnMinus{
-    border-radius: 0.5rem 0 0 0.5rem;
-    height: 42px;
-    padding: 0 1rem;
-    line-height: 42px;
+    border-radius: 0.5rem 0 0 0.5rem !important;
+    width: 1rem !important;
+    height: 4.8rem !important;
   }
   
   .pink-color {
@@ -337,7 +336,7 @@
     position: relative;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    width: 1%;
+    width: 100%;
     margin-bottom: 0;
     text-align: center;
   }
@@ -412,7 +411,7 @@
   .formGroup3Right{
     padding: 0 0 0 2%;
   }
-
+  
   .formRight{
     padding: 0 2%;
   }
@@ -435,14 +434,12 @@
     width: 100%;
     height: calc(1.5em + 0.75rem + 2px);
     padding: 0.375rem 0.75rem;
-    font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
     color: black;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: 8px;
     margin-bottom: 10px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
@@ -494,9 +491,9 @@
     margin-bottom: 10px;
   }
 
-  @media (max-width: 799px) {
+  @media (max-width: 1099px) {
       .mainBooking{
-        height: 120rem;
+        height: 160rem;
         padding-bottom: 120rem;
       }
     .wrapper{
@@ -504,10 +501,15 @@
       background-color: #f5f5f5;
       display: grid;
       grid-template-columns: auto;
+      grid-row-gap: 3rem;
     }
   }
   
   @media (max-width: 799px) {
+     .mainBooking{
+        height: 185rem;
+        padding-bottom: 120rem;
+     }
     .formRow2{
       width: 100%;
       display: grid;

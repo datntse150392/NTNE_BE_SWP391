@@ -20,11 +20,12 @@
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/HomePageCSS/bootsrap1.css"/>" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">     
         <link href="<c:url value="/assets/css/header_footer.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
 
-        
+
         <title>Nha Trang Nature Elite</title>
     </head>
 
@@ -57,36 +58,38 @@
                     <!-- End: Logo And Search -->
 
                     <!-- Start: Nav PC -->
-                    <div class="header-nav">
-                        <ul class="header-nav-list">
+                    <div class="header-nav px-5">
+                        <ul class="header-nav-list align-items-center d-flex justify-content-between">
                             <li class="header-nav-item">
                                 <a class="header-nav-link" href="<c:url value="/tour/about.do"/>">
-                                    <p>Giới thiệu</p>
+                                    <p class="mb-0">Giới thiệu</p>
                                 </a>
                             </li>
                             <li class="header-nav-item">
                                 <a class="header-nav-link" href="<c:url value="/tour/list.do"/>">
-                                    <p>Tour</p>
+                                    <p class="mb-0">Tour</p>
                                 </a>
                             </li>
                             <li class="header-nav-item">
                                 <a class="header-nav-link" href="<c:url value="/tour/contact.do"/>">
-                                    <p>Liên hệ</p>
+                                    <p class="mb-0">Liên hệ</p>
                                 </a>
                             </li>
                             <c:if test="${person == null}">
                                 <li class="header-nav-item">
                                     <a class="header-nav-link" href="<c:url value="/account/login1.do"/>">
-                                        <p>Đăng nhập</p>
+                                        <p class="mb-0">Đăng nhập</p>
                                     </a>
                                 </li>
                             </c:if>
                             <c:if test="${person != null}">
-                                <li class="header-nav-item">
-                                    <a class="header-nav-link" href="<c:url value="/account/logOut.do"/>">
-                                        <p>Đăng xuất</p>
-                                    </a>
-                                </li>
+                                <div class="dropdown">
+                                    <img class=" img-thumbnail rounded-circle rounded-sm border-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="${sessionScope.person.getLinkImg()}" />
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="<c:url value="/account/userprofile.do"/>">Tài khoản</a>
+                                        <a class="dropdown-item" href="<c:url value="/account/logOut.do"/>">Đăng xuất</a>
+                                    </div>
+                                </div>
                             </c:if>
                         </ul>
                     </div>

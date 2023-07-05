@@ -114,7 +114,7 @@
 
             <div class="move-on-top">
                 <div class="move-on-top-container">
-                    <a href="#"><i class="fas fa-arrow-up move-on-top-btn"></i></a>
+                    <a href="#" class="text-decoration-none" ><i class="fas fa-arrow-up move-on-top-btn"></i></a>
                 </div>
             </div>
         </div>

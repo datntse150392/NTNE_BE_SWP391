@@ -19,6 +19,7 @@
             />
         <link href="<c:url value="/assets/css/Homepage/styles.css"/>" type="text/css" rel="stylesheet" />
         <link href="<c:url value="/assets/css/About/styles.css"/>" type="text/css" rel="stylesheet" />
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <title>Giới thiệu</title>
     </head>
@@ -255,8 +256,9 @@
                 </div>
             </div>
         </section>
-        <script src="../assets/js/Homepage/sliders/jquery.min.js"></script>
-        <script src="../assets/js/Homepage/sliders/bootstrap.js"></script>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>
 

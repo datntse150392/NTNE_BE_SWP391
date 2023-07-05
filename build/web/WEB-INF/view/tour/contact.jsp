@@ -22,11 +22,6 @@
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossorigin="anonymous"
             />
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"
-        ></script>
         <link
             as="style"
             onload='this.onload = null;this.rel = "stylesheet"'
@@ -45,6 +40,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             />
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
         <meta property="og:locale" content="vi_VN" />
     </head>
     <body>
@@ -162,5 +158,8 @@
                 </div>
             </div>
         </section>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

@@ -12,9 +12,9 @@
         <link rel="shortcut icon" href="./assets/imgs/five-icon.png" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" type="text/css" rel="stylesheet">
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
         <link href="<c:url value="/assets/css/TourListCSS/style.css"/>" type="text/css" rel="stylesheet">
-        <link href="<c:url value="/assets/css/TourListCSS/plugins.css"/>" type="text/css" rel="stylesheet">
-
+        
         <title>Tour One-day Nha Trang</title>
     </head>
     <body>
@@ -159,9 +159,7 @@
 
                         <div class="row mrg-0">
                             <div class="tr-single-box short-box">
-                                <div class="col-sm-3 hidden-xs align-self-center" style="padding-top: 5px">
-                                    <h4>Sort By</h4>
-                                </div>
+                                
 
                                 <div class="col-sm-9 text-right">
 
@@ -172,31 +170,31 @@
                                         
                                         <div class="btn-group mr-lg-2">
                                             <button id="displayDate" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Sort By Date
+                                                Lọc theo ngày
                                             </button>
                                             <div class="dropdown-menu pull-right animated flipInX">
-                                                <a onClick="handleSelectDate('All Date')">All Date</a>
+                                                <a onClick="handleSelectDate('All Date')">Tất cả ngày</a>
                                                 <input type="date" onChange="handleSelectDateTime()" value="${date}" id="dateInput" >
                                             </div>
                                         </div>
                                             
                                         <div class="btn-group mr-lg-2">
                                             <button id="displaySortOption" value="" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Sort By Price
+                                                Lọc theo giá
                                             </button>
                                             <button type="button" class="dropdown-menu pull-right animated flipInX">
                                                 <!--Sort tăng dần-->
-                                                <a onClick="{handleSelect('Ascending','asc')}">Ascending</a>
+                                                <a onClick="{handleSelect('Tăng dần','asc')}">Tăng dần</a>
                                                 <!--Sort giảm dần-->
-                                                <a onClick="{handleSelect('Descending','desc')}">Descending</a>
+                                                <a onClick="{handleSelect('Giảm dần','desc')}">Giảm dần</a>
                                                 <!--Sort mặc định-->
-                                                <a onClick="{handleSelect('Normal','normal')}">Normal</a>
+                                                <a onClick="{handleSelect('Mặc định','normal')}">Mặc định</a>
                                             </button>
                                         </div>
 
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-default tooltips">
-                                                SORT
+                                                LỌC
                                             </button>
                                         </div>
                                     </form>
@@ -316,7 +314,7 @@
             const handleSelect = (text,code) => {
                 console.log("FUNCTION")
                 console.log(text);
-                button.innerHTML = "Sort By " + text;
+                button.innerHTML = text;
                 sort_option.value = code;
             }
             const handleSelectDateTime = () => {

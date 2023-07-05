@@ -22,8 +22,23 @@ public class Trip {
     private String thumbnail;
     private String location;
     private int tour_id;
+    private int current_quantity;
 
     public Trip() {
+    }
+
+    public Trip(int id, String name, boolean availability, float priceAdult, float priceChild, int quantity, Date depart_time, String thumbnail, String location, int tour_id, int current_quantity) {
+        this.id = id;
+        this.name = name;
+        this.availability = availability;
+        this.priceAdult = priceAdult;
+        this.priceChild = priceChild;
+        this.quantity = quantity;
+        this.depart_time = depart_time;
+        this.thumbnail = thumbnail;
+        this.location = location;
+        this.tour_id = tour_id;
+        this.current_quantity = current_quantity;
     }
 
     public Trip(int id, String name, boolean availability, float priceAdult, float priceChild, int quantity, Date depart_time, String thumbnail, String location, int tour_id) {
@@ -48,6 +63,14 @@ public class Trip {
         this.thumbnail = thumbnail;
         this.location = location;
         this.tour_id = tour_id;
+    }
+
+    public int getCurrent_quantity() {
+        return current_quantity;
+    }
+
+    public void setCurrent_quantity(int current_quantity) {
+        this.current_quantity = current_quantity;
     }
     
     public Trip(Date depart_time) {
@@ -136,6 +159,6 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip{" + "id=" + id + ", name=" + name + ", availability=" + availability + ", priceAdult=" + priceAdult + ", priceChild=" + priceChild + ", quantity=" + quantity + ", depart_time=" + depart_time + ", thumbnail=" + thumbnail + ", location=" + location + ", tour_id=" + tour_id + '}';
+        return "Trip{" + "id=" + id + ", name=" + name + ", availability=" + availability + ", priceAdult=" + priceAdult + ", priceChild=" + priceChild + ", quantity=" + quantity + ", depart_time=" + depart_time + ", thumbnail=" + thumbnail + ", location=" + location + ", tour_id=" + tour_id + ", current_quantity=" + current_quantity + '}';
     }
 }

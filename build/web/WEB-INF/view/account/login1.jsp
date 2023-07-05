@@ -15,7 +15,8 @@
 
         <link rel="stylesheet" href="../assets/css/HomePageCSS/bootstrap1.css">
         <link rel="stylesheet" href="../assets/css/Login/login.css">
-        <link rel="stylesheet" href="../assets/css/header_footer.css">
+        <link rel="stylesheet" href="../assets/css/header_footer.css"
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> >
         
     </head>
     <body>
@@ -50,6 +51,8 @@
                 </div>
             </div>
         </div>
-
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>
