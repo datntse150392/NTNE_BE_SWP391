@@ -158,10 +158,15 @@ public class AccountController extends HttpServlet {
             HttpSession session = request.getSession();
             if (check) {
                 User_Account person = accDAO.getAccountInfoByEmail(email);
-                session.setAttribute("person", person);
                 if (person.isIsActive()) {
+                    session.setAttribute("person", person);
                     request.setAttribute("controller", "account");
                     request.setAttribute("action", "userprofile");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                } else{
+                    request.setAttribute("MSG_ERROR", "This account has been blocked!");
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "login1");
                     request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             } else {
@@ -316,7 +321,7 @@ public class AccountController extends HttpServlet {
             } else {
                 if (acc.getRole().equals("US")) {
                     request.setAttribute("controller", "account");
-                    request.setAttribute("action", "userprofile");
+                    request.setAttribute("action", "register");
                     request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 } else {
                     request.getRequestDispatcher("").forward(request, response);

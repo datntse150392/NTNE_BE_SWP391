@@ -461,8 +461,8 @@ public class TripDAO {
         try {
             System.out.println(p);
             DBContext db = new DBContext();
-            String sql = "  INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, status, payment_id, quantityAdult, quantityChild, trip_id, cusAddress)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "  INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, status, payment_id, quantityAdult, quantityChild, trip_id, cusAddress, reason)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = db.connection.prepareStatement(sql);
             
             ps.setDouble(1, p.getTotalPrice());
@@ -476,6 +476,7 @@ public class TripDAO {
             ps.setInt(9, p.getQuantityChild());
             ps.setInt(10, p.getTrip_id());
             ps.setString(11, p.getCusAddress());
+            ps.setString(12, p.getReason());            
             System.out.println("Reponse OK!");
             ps.execute();
         } catch (SQLException ex) {
@@ -487,8 +488,8 @@ public class TripDAO {
         try {
             System.out.println(p);
             DBContext db = new DBContext();
-            String sql = "  INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, status, payment_id, account_id, quantityAdult, quantityChild, trip_id, cusAddress)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "  INSERT INTO Booking(totalPrice, requirement, cusBook, cusMail, cusPhone, status, payment_id, account_id, quantityAdult, quantityChild, trip_id, cusAddress, reason)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = db.connection.prepareStatement(sql);
             
             ps.setDouble(1, p.getTotalPrice());
@@ -503,7 +504,7 @@ public class TripDAO {
             ps.setInt(10, p.getQuantityChild());
             ps.setInt(11, p.getTrip_id());
             ps.setString(12, p.getCusAddress());
-            System.out.println("I'm here");
+            ps.setString(13, p.getReason());
             ps.execute();
         } catch (SQLException ex) {
             Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -543,11 +544,57 @@ public class TripDAO {
         }   
     }
     
+    public boolean updateStatusBook(int bookID) {
+        try {
+            DBContext db = new DBContext();
+            boolean checked;
+            String sql = "UPDATE [dbo].[Booking] SET status = 1, reason = 'Đã thanh toán thành công' WHERE id = ?";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+            ps.setInt(1, bookID);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                checked = updateCurrentQuantity(bookID);
+                System.out.println("SUCCESS: Update Booking Status");
+                return checked;
+            } else {
+                System.out.println("FAIL: Update Booking Status");
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean updateCurrentQuantity(int bookID) throws SQLException {
+        DBContext db = new DBContext();
+        String sql = "UPDATE [dbo].[Trip] \n"
+                + "SET current_quantity = current_quantity + ( \n"
+                + "    SELECT b.quantityAdult + b.quantityChild \n"
+                + "    FROM [dbo].[Trip] AS a \n"
+                + "    INNER JOIN Booking AS b ON b.trip_id = a.id \n"
+                + "    WHERE b.id = ? \n"
+                + ") \n"
+                + "WHERE id IN ( \n"
+                + "    SELECT a.id \n"
+                + "    FROM [dbo].[Trip] AS a \n"
+                + "    INNER JOIN Booking AS b ON b.trip_id = a.id \n"
+                + "    WHERE b.id = ? \n"
+                + ")";
+        PreparedStatement ps = db.connection.prepareStatement(sql);
+        ps.setInt(1, bookID);
+        ps.setInt(2, bookID);        
+        int rowsAffected1 = ps.executeUpdate();
+        if (rowsAffected1 > 0) {
+            System.out.println("SUCCESS: Update Trip CurrentQuantity");
+            return true;
+        } else {
+            System.out.println("FAIL: Update Trip CurrentQuantity");
+            return false;
+        }
+    }        
+    
     public static void main(String[] args) throws SQLException {
         TripDAO dao = new TripDAO();
-        String date = "2023-06-30";
-        int tid = 64;
-        int tripid = 28;
-        dao.getTrip_by_TripID_TourID(tid, tripid);
     }
 }

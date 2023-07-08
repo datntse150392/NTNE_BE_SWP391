@@ -13,7 +13,8 @@ import java.sql.Date;
  * @author baoit
  */
 public class ListBooked {
- 
+    
+    private int bookID;
     private String name;
     private double totalPrice;
     private String thumbnail;
@@ -27,7 +28,8 @@ public class ListBooked {
     public ListBooked() {
     }
 
-    public ListBooked(String name, double totalPrice, String thumbnail, int trip_id, int tour_id, int quantityAdult, int quantityChild, boolean status, Date departtime) {
+    public ListBooked(int bookID, String name, double totalPrice, String thumbnail, int trip_id, int tour_id, int quantityAdult, int quantityChild, boolean status, Date departtime) {
+        this.bookID = bookID;
         this.name = name;
         this.totalPrice = totalPrice;
         this.thumbnail = thumbnail;
@@ -39,20 +41,16 @@ public class ListBooked {
         this.departtime = departtime;
     }
 
-    
-    
-  
+    public int getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public void setName(String name) {
@@ -107,6 +105,14 @@ public class ListBooked {
         this.quantityChild = quantityChild;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public Date getDeparttime() {
         return departtime;
     }
@@ -117,10 +123,6 @@ public class ListBooked {
 
     @Override
     public String toString() {
-        return "Tour{" + "name=" + name + ", totalPrice=" + totalPrice + ", thumbnail=" + thumbnail + ", trip_id=" + trip_id + ", tour_id=" + tour_id + ", quantityAdult=" + quantityAdult + ", quantityChild=" + quantityChild + ", status=" + status + ", departtime=" + departtime + '}';
+        return "ListBooked{" + "bookID=" + bookID + ", name=" + name + ", totalPrice=" + totalPrice + ", thumbnail=" + thumbnail + ", trip_id=" + trip_id + ", tour_id=" + tour_id + ", quantityAdult=" + quantityAdult + ", quantityChild=" + quantityChild + ", status=" + status + ", departtime=" + departtime + '}';
     }
-    
-    
-
-
 }

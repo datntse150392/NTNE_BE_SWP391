@@ -41,6 +41,7 @@ and open the template in the editor.
   font-weight: 400;
   margin-bottom: 5px;
   color: #9a9a9a;
+  font-size: 100% !important;
 }
 
 .info {

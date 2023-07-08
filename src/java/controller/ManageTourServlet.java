@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dal.BookDAO;
 import java.util.List;
 
 //Import thư viện DAO và DTO
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -42,11 +44,13 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
+import models.Bill;
 import models.Book;
 import models.Image;
 import models.ListBooked;
 import models.Trip;
 import models.User_Account;
+import utils.SecurityUtils;
 
 /**
  *
@@ -113,6 +117,18 @@ public class ManageTourServlet extends HttpServlet {
                 break;
             case "book":
                 book(request, response);
+                break;
+            //---------------XU LY PAYMENT---------------
+            case "returnVNPaydemo":
+                request.setAttribute("controller", "tour");
+                request.setAttribute("action", "returnVNPay");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                break;
+            case "returnPay":
+                returnPay(request, response);
+                break;
+            case "returnVNPay":
+                returnVNPay(request, response);
                 break;
             default: {
                 request.getRequestDispatcher("/WEB-INF/view/error/error.jsp").forward(request, response);
@@ -319,7 +335,6 @@ public class ManageTourServlet extends HttpServlet {
         }
         for (ListBooked listBooked : list) {
             System.out.println("list = " + listBooked.toString());
-
         }
         //Đếm tổng số trang cần có
         int count = tourDAO.count(user.getId());
@@ -369,6 +384,7 @@ public class ManageTourServlet extends HttpServlet {
         TripDAO dao = new TripDAO();
         String name = request.getParameter("Name");
         String email = request.getParameter("Email");
+        String address = request.getParameter("Address");
         String phone = request.getParameter("PhoneNumber");
         String adult = request.getParameter("AdultAmount"); //number
         String child = request.getParameter("ChildAmount"); //number
@@ -402,19 +418,18 @@ public class ManageTourServlet extends HttpServlet {
         } else {
             status = true;
         }
-        
+
         //Tạo booking nhưng chưa trừ số lượng ghế và status = "Chưa thanh toán"
         if (user == null) {
-            book = new Book(totalPrice, additionfield, name, email, phone, dateBook, status, paymentID, adultAmount, childAmount, tripID, "");
+            book = new Book(totalPrice, additionfield, name, email, phone, dateBook, status, paymentID, adultAmount, childAmount, tripID, address, "Đang chờ thanh toán");
             System.out.println(book);
             tripdao.book_TripForGuest(book);
         } else {
-            book = new Book(totalPrice, additionfield, name, email, phone, dateBook, status, paymentID, user.getId(), adultAmount, childAmount, tripID, user.getAddress(), "");
+            book = new Book(totalPrice, additionfield, name, email, phone, dateBook, status, paymentID, user.getId(), adultAmount, childAmount, tripID, address, "Đang chờ thanh toán");
             System.out.println(book);
             tripdao.book_Trip(book);
         }
-        
-        String paymentMethod = null;
+
         if (paymentID == 3) {
             System.out.println("THANH TOÁN VNPAY");
             book = tripdao.getTopBooked();
@@ -422,7 +437,7 @@ public class ManageTourServlet extends HttpServlet {
             String vnp_Command = "pay";
             String vnp_OrderInfo = "Thanh toan Booking so " + book.getBookID();
             String orderType = "billpayment";
-            String vnp_TxnRef = "BOOKING" + book.getBookID();
+            String vnp_TxnRef = "" + book.getBookID();
             String vnp_IpAddr = ConfigVnPay.getIpAddress(request);
             String vnp_TmnCode = ConfigVnPay.vnp_TmnCode;
 
@@ -493,7 +508,104 @@ public class ManageTourServlet extends HttpServlet {
             job.addProperty("message", "success");
             job.addProperty("data", paymentUrl);
             response.sendRedirect(paymentUrl);
+        } else {
+            //Gọi phương thức display ra Bill bình thường
+            returnPay(request,response);
         }
+    }
+
+    /*------------------------------------------------------------------------------
+                        CAC FUNCTION PAYMENT
+    ------------------------------------------------------------------------------*/
+    //1.[READ] - Đọc phản hồi từ VNPay và display ra giao diện
+    protected void returnVNPay(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String vnp_TransactionStatus = request.getParameter("vnp_TransactionStatus");
+        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+        int vnp_TxnRef = Integer.parseInt(request.getParameter("vnp_TxnRef"));
+        String vnp_TmnCode = request.getParameter("vnp_TmnCode");
+                
+        //CHECK THÔNG TIN CÓ ĐÚNG TỪ VNPAY TRẢ VỀ HAY KHÔNG?
+        if (vnp_TmnCode.equals(ConfigVnPay.vnp_TmnCode)) {
+            //Check trạng thái giao dịch trả về từ VNPAY
+            if ("00".equals(vnp_ResponseCode)) {
+                System.out.println("Giao dịch thành công");
+                
+                //Cập nhật lại status trong Database và số lượng slot của Trip
+                TripDAO dao = new TripDAO();
+                BookDAO bookDAO = new BookDAO();
+                System.out.println("----BẮT ĐẦU UPDATE----");
+                boolean checked = dao.updateStatusBook(vnp_TxnRef);
+                System.out.println("----KẾT THÚC UPDATE----");
+                Bill bill = bookDAO.getBillByBookId(vnp_TxnRef);//Lấy thông tin Bill của khách hàng
+                
+                
+                request.setAttribute("bill", bill);
+                request.setAttribute("message", "Giao dịch thành công");
+                request.setAttribute("code", "success");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            } else {
+                System.out.println("Giao dịch không thành công: " + vnp_TransactionStatus);
+                switch (vnp_TransactionStatus) {
+                    case "01":
+                        System.out.println("01: Giao dịch chưa hoàn tất");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch chưa hoàn tất");
+                        break;
+                    case "02":
+                        System.out.println("02: Giao dịch bị lỗi");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch bị lỗi");
+                        break;
+                    case "04":
+                        System.out.println("04: Giao dịch đảo (Khách hàng đã bị trừ tiền tại Ngân hàng nhưng GD chưa thành công ở VNPAY)");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch đảo (Khách hàng đã bị trừ tiền tại Ngân hàng nhưng GD chưa thành công ở VNPAY)");
+                        break;
+                    case "07":
+                        System.out.println("07: Giao dịch bị nghi ngờ gian lận");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch bị nghi ngờ gian lận");
+                        break;
+                    case "00":
+                        System.out.println("00");
+                        break;
+                    default:
+                        System.out.println("Status Fail");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch không thành công");
+                        break;
+                }
+                request.setAttribute("controller", "tour");
+                request.setAttribute("action", "booking");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            }
+        }
+    }
+    
+    //2.[READ] - Display ra giao diện với các phương thức thanh toán tiền mặt
+    protected void returnPay(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+                String bookID = request.getParameter("bookID");
+                int bookId = 0;
+                TripDAO dao = new TripDAO();
+                BookDAO bookDAO = new BookDAO();
+                
+                //2 trường hợp: Từ phía Payment đi vào xem Bill || Từ danh sách Booked đi vào xem Bill
+                
+                if (bookID != null){ //Trường hợp 1: Từ phía danh sách Booked List nhấn link vào xem
+                    bookId = Integer.parseInt(bookID);
+                    Bill bill = bookDAO.getBillByBookId(bookId);
+                    request.setAttribute("bill", bill);
+                    
+                } else { //Trường hợp 2: Sau khi submit Book thì chuyển đến xem Bill
+                    Book book = dao.getTopBooked();
+                    Bill bill = bookDAO.getBillByBookId(book.getBookID());
+                    request.setAttribute("bill", bill);
+                    request.setAttribute("message", "Giao dịch thành công");
+                    request.setAttribute("code", "success");
+                }
+                request.setAttribute("controller", "tour");
+                request.setAttribute("action", "returnVNPay");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
 
     @Override

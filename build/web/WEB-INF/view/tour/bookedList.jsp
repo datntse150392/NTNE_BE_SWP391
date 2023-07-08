@@ -93,12 +93,12 @@
                                             <div class="tab-row">
                                                 <div class="tab-left-col">
                                                     <div class="tab-content-card-image">
-                                                        <a href="<c:url value="/tour/detailTour.do?tourID=${product.getTour_id()}&tripID=${product.getTrip_id()}"/>"><img src="${product.getThumbnail()}" alt=""></a>
+                                                        <a href="<c:url value="/tour/returnPay.do?bookID=${product.getBookID()}"/>"><img src="${product.getThumbnail()}" alt=""></a>
                                                     </div>
                                                 </div>
                                                 <div class="tab-right-col">
                                                     <h5 class="tab-content-card-image">
-                                                        <a href="<c:url value="/tour/detailTour.do?tourID=${product.getTour_id()}&tripID=${product.getTrip_id()}"/>" class="tour-name">
+                                                        <a href="<c:url value="/tour/returnPay.do?bookID=${product.getBookID()}"/>" class="tour-name">
                                                             ${product.name}
                                                         </a>
                                                     </h5>

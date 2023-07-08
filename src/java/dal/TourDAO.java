@@ -102,14 +102,13 @@ public class TourDAO extends DBContext {
     public List<ListBooked> select(int accountID, int index) {
         //Tạo connection để kết nối vào DBMS
         try {
-            String sql = "SELECT A.depart_time ,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status\n"
-                    + "  FROM TRIP A JOIN Tour B ON A.tour_id = B.id \n"
-                    + "  JOIN BOOKING C ON C.trip_id = A.id \n"
-                    + "  JOIN ACCOUNT D ON D.id = C.account_id \n"
-                    + "  WHERE C.account_id = ? \n"
-                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = " SELECT C.id, A.depart_time ,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status\n"
+                    + " FROM TRIP A JOIN Tour B ON A.tour_id = B.id\n"
+                    + " JOIN BOOKING C ON C.trip_id = A.id\n"
+                    + " JOIN ACCOUNT D ON D.id = C.account_id\n"
+                    + " WHERE C.account_id = ?\n"
+                    + " ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
-            
             ps.setInt(1, accountID);
             ps.setInt(2, (index - 1) * 3);
 
@@ -118,6 +117,7 @@ public class TourDAO extends DBContext {
 
             while (rs.next()) {
                 ListBooked product = new ListBooked();
+                product.setBookID(rs.getInt("id"));
                 product.setDeparttime(rs.getDate("depart_time"));
                 product.setQuantityAdult(rs.getInt("quantityAdult"));
                 product.setQuantityChild(rs.getInt("quantityChild"));
@@ -140,7 +140,7 @@ public class TourDAO extends DBContext {
 
     public List<ListBooked> sortPriceMonth(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT C.id, A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -151,6 +151,7 @@ public class TourDAO extends DBContext {
 
             while (rs.next()) {
                 ListBooked product = new ListBooked();
+                product.setBookID(rs.getInt("id"));
                 product.setDeparttime(rs.getDate("depart_time"));
                 product.setQuantityAdult(rs.getInt("quantityAdult"));
                 product.setQuantityChild(rs.getInt("quantityChild"));
@@ -173,7 +174,7 @@ public class TourDAO extends DBContext {
 
     public List<ListBooked> sortPriceDay(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT C.id, A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -184,6 +185,7 @@ public class TourDAO extends DBContext {
 
             while (rs.next()) {
                 ListBooked product = new ListBooked();
+                product.setBookID(rs.getInt("id"));
                 product.setDeparttime(rs.getDate("depart_time"));
                 product.setQuantityAdult(rs.getInt("quantityAdult"));
                 product.setQuantityChild(rs.getInt("quantityChild"));

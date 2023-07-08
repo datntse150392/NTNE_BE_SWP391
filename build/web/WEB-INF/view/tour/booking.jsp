@@ -32,7 +32,7 @@
             <div class="checkout">
                 <div class="booking">
                     <h2><a href="#" class="chekoutName pink-color"> ${tripInfo.getName()} </a></h2>
-                    <form method="post" action="<c:url value="/tour/book.do"/>">
+                    <form method="post" id="handleSubmitForm" action="<c:url value="/tour/book.do"/>">
                         <input type="hidden" id="PriceId" name="PriceId" value="15" />
                         <div class="wrapper">
                             <div class="boxLeft">
@@ -55,6 +55,16 @@
                                             type="text"
                                             name="Name"
                                             value="${sessionScope.person.name}"
+                                            />
+                                        <span class="text-danger field-validation-valid"></span>
+                                    </div>
+                                    <div class="formGroup">
+                                        <label for="Address"> Địa chỉ </label>
+                                        <input
+                                            class="formControl"
+                                            type="text"
+                                            name="Address"
+                                            value=""
                                             />
                                         <span class="text-danger field-validation-valid"></span>
                                     </div>
@@ -323,10 +333,15 @@
             const tripID = document.getElementById("tripID");
 
             btnPlus1.addEventListener("click", function () {
-                if (parseInt(tempAdult + tempChild) < tripQuantity) {
-                    increaseNumber();
+                if (tripQuantity == 0){
+                  alert("Tour đã hết chỗ trống");
                 } else {
-                    alert("Số lượng hành khách không vượt quá " + tripQuantity);
+                    if (parseInt(tempAdult + tempChild) < tripQuantity) {
+                    increaseNumber();
+                    } else {
+                        alert("Số lượng hành khách không vượt quá " + tripQuantity);
+
+                    }
                 }
             });
 
@@ -367,11 +382,15 @@
 
 
             btnPlus2.addEventListener("click", function () {
-                if (parseInt(tempAdult + tempChild) < tripQuantity) {
-                    increaseNumber2();
+                if (tripQuantity == 0){
+                  alert("Tour đã hết chỗ trống");
                 } else {
-                    alert("Số lượng hành khách không vượt quá " + tripQuantity);
+                    if (parseInt(tempAdult + tempChild) < tripQuantity) {
+                    increaseNumber2();
+                    } else {
+                        alert("Số lượng hành khách không vượt quá " + tripQuantity);
 
+                    }
                 }
             });
 
@@ -434,6 +453,7 @@
                     const [key, value] = pair.split('=');
                     tripObject[key.trim()] = value.trim();
                 });
+                console.log("TripObject: ", tripObject);
                 priceAdult.value = tripObject.priceAdult;
                 priceChild.value = tripObject.priceChild;
                 tripID.value = tripObject.id;
@@ -481,6 +501,17 @@
                 console.log('im here');
                 alert(caution.value);
             }
+            
+            const handleSubmitForm = document.getElementById("handleSubmitForm");
+
+            handleSubmitForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if(tripQuantity == 0){
+                    alert("Tour đã hết chỗ trống");
+                } else {
+                    handleSubmitForm.submit();
+                }
+            });
         </script>
         <!--Import JS Slider -->
         <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
