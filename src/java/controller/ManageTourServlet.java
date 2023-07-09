@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dal.BookDAO;
 import java.util.List;
 
 //Import thư viện DAO và DTO
@@ -29,7 +30,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,8 +40,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -53,6 +51,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpSession;
+import models.Bill;
 import models.Book;
 import models.Image;
 import models.ListBooked;
@@ -130,6 +129,18 @@ public class ManageTourServlet extends HttpServlet {
                 break;
             case "book":
                 book(request, response);
+                break;
+            //---------------XU LY PAYMENT---------------
+            case "returnVNPaydemo":
+                request.setAttribute("controller", "tour");
+                request.setAttribute("action", "returnVNPay");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                break;
+            case "returnPay":
+                returnPay(request, response);
+                break;
+            case "returnVNPay":
+                returnVNPay(request, response);
                 break;
             default: {
                 request.getRequestDispatcher("/WEB-INF/view/error/error.jsp").forward(request, response);
@@ -412,14 +423,7 @@ public class ManageTourServlet extends HttpServlet {
         Trip trip = tripDAO.getTrip_by_TripID_TourID(tourID, tripID);
         list = tripDAO.getTrip_by_TourID(tourID);
         Trip tripQuantity = tripDAO.getTripQuantity_by_TripID(tripID);
-        Trip tripCurrentQuantity = tripDAO.getTripCurrentQuantity_by_TripID(tripID);
 
-        for (Trip trip1 : list) {
-            Trip setCurrent_quantity = tripDAO.getTripCurrentQuantity_by_TripID(trip1.getId());
-            trip1.setCurrent_quantity(setCurrent_quantity.getCurrent_quantity());
-        }
-
-        request.setAttribute("currentQuantity", tripCurrentQuantity);
         request.setAttribute("tourID", tourID);
         request.setAttribute("quantity", tripQuantity);
         request.setAttribute("tripDate", list);
@@ -429,70 +433,53 @@ public class ManageTourServlet extends HttpServlet {
 
     //3. [CREATE] - TẠO BOOKING
     protected void book(HttpServletRequest request, HttpServletResponse response) throws ServletException, UnsupportedEncodingException, IOException {
-        TripDAO tripdao = new TripDAO();
-        //Khởi tạo các giá trị cần có cho việc book
+        TripDAO dao = new TripDAO();
         String name = request.getParameter("Name");
         String email = request.getParameter("Email");
+        String address = request.getParameter("Address");
         String phone = request.getParameter("PhoneNumber");
         String adult = request.getParameter("AdultAmount"); //number
         String child = request.getParameter("ChildAmount"); //number
         String payment = request.getParameter("PaymentType");
-        String date = request.getParameter("tripDate");
         String additionfield = request.getParameter("AdditionField");
         String AdultPrice = request.getParameter("priceAdult");
         String ChildPrice = request.getParameter("priceChild");
-        String tour = request.getParameter("tourID");
+        String trip = request.getParameter("tripID");
         boolean status = false;
-        String paymentMethod = null;
-        //Chuyển kiểu dữ liệu
         HttpSession session = request.getSession();
         User_Account user = (User_Account) session.getAttribute("person");
         int adultAmount = Integer.parseInt(adult);
         int childAmount = Integer.parseInt(child);
         int paymentID = Integer.parseInt(payment);
-        int tripID = 0;
-        int tourID = Integer.parseInt(tour);
-        double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice); // tổng giá trẻ em và người lớn
-
+        int tripID = Integer.parseInt(trip);
+        Date date = dao.getDateOfTrip(tripID);
         Book book;
-        List<Trip> list;
-        list = tripdao.getTrip_by_TourID(tourID);
-        //Tìm tripID
-        for (Trip trip1 : list) {
-            if (trip1.getDepart_time().toString().equals(date)) {
-                tripID = trip1.getId();
-            }
+        double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice);
+        TripDAO tripdao = new TripDAO();
+
+        //Xử lí date
+        Date temp = new Date();
+        Date currentDay = new Date(temp.getTime()); // Lấy ra ngày hôm nay
+        //format ngày quá hạn
+        //Nếu ngày quá hạn đến trước ngày mua thì status = 0
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateBook = dateFormat.format(currentDay);
+
+        if (date.before(currentDay)) {
+            status = false;
+        } else {
+            status = true;
         }
-        list = tripdao.getTrip_by_TourID(tourID);
-        Trip currentQuantity = tripdao.getTripCurrentQuantity_by_TripID(tripID);
-        Trip tripQuantity = tripdao.getTripQuantity_by_TripID(tripID);
 
         //Tạo booking nhưng chưa trừ số lượng ghế và status = "Chưa thanh toán"
-        if (paymentID == 1) {
-            if ((currentQuantity.getCurrent_quantity() + adultAmount + childAmount) <= tripQuantity.getQuantity()) {
-                if (user == null) {
-                    System.out.println("Im inside the function");
-                    book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, adultAmount, childAmount, tripID, "");
-                    System.out.println(book);
-                    tripdao.book_TripForGuest(book);
-                } else {
-                    book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, user.getId(), adultAmount, childAmount, tripID, user.getAddress(), "");
-                    System.out.println(book);
-                    tripdao.book_Trip(book);
-                }
-            } else {
-                System.out.println("I'm outside the function");
-                Trip tripInfo = tripdao.getTrip_by_TripID_TourID(tourID, tripID);
-
-                request.setAttribute("currentQuantity", currentQuantity);
-                request.setAttribute("quantity", tripQuantity);
-                request.setAttribute("tripDate", list);
-                request.setAttribute("tripInfo", tripInfo);
-                request.setAttribute("tourID", tourID);
-                request.setAttribute("alert", "Số chỗ vượt quá số lượng");
-                request.setAttribute("action", "booking");
-                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
-            }
+        if (user == null) {
+            book = new Book(totalPrice, additionfield, name, email, phone, dateBook, status, paymentID, adultAmount, childAmount, tripID, address, "Đang chờ thanh toán");
+            System.out.println(book);
+            tripdao.book_TripForGuest(book);
+        } else {
+            book = new Book(totalPrice, additionfield, name, email, phone, dateBook, status, paymentID, user.getId(), adultAmount, childAmount, tripID, address, "Đang chờ thanh toán");
+            System.out.println(book);
+            tripdao.book_Trip(book);
         }
 
         if (paymentID == 3) {
@@ -502,7 +489,7 @@ public class ManageTourServlet extends HttpServlet {
             String vnp_Command = "pay";
             String vnp_OrderInfo = "Thanh toan Booking so " + book.getBookID();
             String orderType = "billpayment";
-            String vnp_TxnRef = "BOOKING" + book.getBookID();
+            String vnp_TxnRef = "" + book.getBookID();
             String vnp_IpAddr = ConfigVnPay.getIpAddress(request);
             String vnp_TmnCode = ConfigVnPay.vnp_TmnCode;
 
@@ -573,27 +560,30 @@ public class ManageTourServlet extends HttpServlet {
             job.addProperty("message", "success");
             job.addProperty("data", paymentUrl);
             response.sendRedirect(paymentUrl);
+        } else {
+            //Gọi phương thức display ra Bill bình thường
+            returnPay(request, response);
         }
     }
-    
+
 //Xử lí send email
-    protected void sendEmail(HttpServletRequest request, HttpServletResponse response){
+    protected void sendEmail(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (IOException | ServletException e) {
 
         }
     }
-    
-    protected void sendEmailHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+    protected void sendEmailHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String phone = request.getParameter("PhoneNumber");
         String subject = request.getParameter("subject");
         String content = request.getParameter("Content");
-        
+
         System.out.println("-------Xử lí send email----------");
-        
+
         final String username = "nhatrangnatureelite@gmail.com";//your email id
         final String password = "krgqhcpqhfpaspzr";// your password
         Properties props = new Properties();
@@ -602,12 +592,12 @@ public class ManageTourServlet extends HttpServlet {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-           @Override
-           protected PasswordAuthentication getPasswordAuthentication(){
-               return new PasswordAuthentication(username, password);
-           }
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
         });
-        try{
+        try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(email));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(username));
@@ -620,15 +610,103 @@ public class ManageTourServlet extends HttpServlet {
             multipart.addBodyPart(textPart);
             message.setContent(multipart, "text/plain; charset=UTF-8");
             message.setSubject("Contact Details");
-            
+
             Transport.send(message);
-        }catch(MessagingException e){
-            
+        } catch (MessagingException e) {
+
         }
         request.setAttribute("controller", "tour");
         request.setAttribute("action", "contact");
         request.setAttribute("status", "success");
         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+    }
+
+    //2.[READ] - Display ra giao diện với các phương thức thanh toán tiền mặt
+    protected void returnPay(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String bookID = request.getParameter("bookID");
+        int bookId = 0;
+        TripDAO dao = new TripDAO();
+        BookDAO bookDAO = new BookDAO();
+
+        //2 trường hợp: Từ phía Payment đi vào xem Bill || Từ danh sách Booked đi vào xem Bill
+        if (bookID != null) { //Trường hợp 1: Từ phía danh sách Booked List nhấn link vào xem
+            bookId = Integer.parseInt(bookID);
+            Bill bill = bookDAO.getBillByBookId(bookId);
+            request.setAttribute("bill", bill);
+
+        } else { //Trường hợp 2: Sau khi submit Book thì chuyển đến xem Bill
+            Book book = dao.getTopBooked();
+            Bill bill = bookDAO.getBillByBookId(book.getBookID());
+            request.setAttribute("bill", bill);
+            request.setAttribute("message", "Giao dịch thành công");
+            request.setAttribute("code", "success");
+        }
+        request.setAttribute("controller", "tour");
+        request.setAttribute("action", "returnVNPay");
+        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+    }
+
+    protected void returnVNPay(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String vnp_TransactionStatus = request.getParameter("vnp_TransactionStatus");
+        String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
+        int vnp_TxnRef = Integer.parseInt(request.getParameter("vnp_TxnRef"));
+        String vnp_TmnCode = request.getParameter("vnp_TmnCode");
+
+        //CHECK THÔNG TIN CÓ ĐÚNG TỪ VNPAY TRẢ VỀ HAY KHÔNG?
+        if (vnp_TmnCode.equals(ConfigVnPay.vnp_TmnCode)) {
+            //Check trạng thái giao dịch trả về từ VNPAY
+            if ("00".equals(vnp_ResponseCode)) {
+                System.out.println("Giao dịch thành công");
+
+                //Cập nhật lại status trong Database và số lượng slot của Trip
+                TripDAO dao = new TripDAO();
+                BookDAO bookDAO = new BookDAO();
+                System.out.println("----BẮT ĐẦU UPDATE----");
+                boolean checked = dao.updateStatusBook(vnp_TxnRef);
+                System.out.println("----KẾT THÚC UPDATE----");
+                Bill bill = bookDAO.getBillByBookId(vnp_TxnRef);//Lấy thông tin Bill của khách hàng
+
+                request.setAttribute("bill", bill);
+                request.setAttribute("message", "Giao dịch thành công");
+                request.setAttribute("code", "success");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            } else {
+                System.out.println("Giao dịch không thành công: " + vnp_TransactionStatus);
+                switch (vnp_TransactionStatus) {
+                    case "01":
+                        System.out.println("01: Giao dịch chưa hoàn tất");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch chưa hoàn tất");
+                        break;
+                    case "02":
+                        System.out.println("02: Giao dịch bị lỗi");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch bị lỗi");
+                        break;
+                    case "04":
+                        System.out.println("04: Giao dịch đảo (Khách hàng đã bị trừ tiền tại Ngân hàng nhưng GD chưa thành công ở VNPAY)");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch đảo (Khách hàng đã bị trừ tiền tại Ngân hàng nhưng GD chưa thành công ở VNPAY)");
+                        break;
+                    case "07":
+                        System.out.println("07: Giao dịch bị nghi ngờ gian lận");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch bị nghi ngờ gian lận");
+                        break;
+                    case "00":
+                        System.out.println("00");
+                        break;
+                    default:
+                        System.out.println("Status Fail");
+                        request.setAttribute("code", "fail");
+                        request.setAttribute("message", "Giao dịch không thành công");
+                        break;
+                }
+                request.setAttribute("controller", "tour");
+                request.setAttribute("action", "booking");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            }
+        }
     }
 
     @Override

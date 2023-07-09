@@ -51,12 +51,13 @@ public class Book {
     
     
 
-    public Book(double totalPrice, String requirement, String cusBook, String cusMail, String cusPhone, boolean status, int payment_id, int account_id, int quantityAdult, int quantityChild, int trip_id, String cusAddress, String reason) {
+    public Book(double totalPrice, String requirement, String cusBook, String cusMail, String cusPhone, String expireDate, boolean status, int payment_id, int account_id, int quantityAdult, int quantityChild, int trip_id, String cusAddress, String reason) {
         this.totalPrice = totalPrice;
         this.requirement = requirement;
         this.cusBook = cusBook;
         this.cusMail = cusMail;
         this.cusPhone = cusPhone;
+        this.expireDate = expireDate;
         this.status = status;
         this.payment_id = payment_id;
         this.account_id = account_id;
@@ -67,17 +68,19 @@ public class Book {
         this.reason = reason;
     }
     
-    public Book(double totalPrice, String requirement, String cusBook, String cusMail, String cusPhone, boolean status, int payment_id, int quantityAdult, int quantityChild, int trip_id, String reason) {
+    public Book(double totalPrice, String requirement, String cusBook, String cusMail, String cusPhone, String expireDate, boolean status, int payment_id, int quantityAdult, int quantityChild, int trip_id, String cusAddress, String reason) {
         this.totalPrice = totalPrice;
         this.requirement = requirement;
         this.cusBook = cusBook;
         this.cusMail = cusMail;
         this.cusPhone = cusPhone;
+        this.expireDate = expireDate;
         this.status = status;
         this.payment_id = payment_id;
         this.quantityAdult = quantityAdult;
         this.quantityChild = quantityChild;
         this.trip_id = trip_id;
+        this.cusAddress = cusAddress;
         this.reason = reason;
     }
 

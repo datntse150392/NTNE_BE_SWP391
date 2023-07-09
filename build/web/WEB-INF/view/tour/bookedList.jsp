@@ -101,14 +101,14 @@
                                             <div class="row justify-content-center mx-0 align-items-center">
                                                 <div class="col-3 m-0 p-0">
                                                     <div style="padding: 10px; width: 110%">
-                                                        <a class="" href="<c:url value="/tour/detailTour.do?tourID=${product.getTour_id()}&tripID=${product.getTrip_id()}"/>">
+                                                        <a class="" href="<c:url value="/tour/returnPay.do?bookID=${product.getBookingID()}"/>">
                                                             <img class="tab-left-col-img" src="${product.getThumbnail()}" alt="">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-9 tab-right-col">
                                                     <h5 class="tab-content-card-image">
-                                                        <a href="<c:url value="/tour/detailTour.do?tourID=${product.getTour_id()}&tripID=${product.getTrip_id()}"/>" class="text-decoration-none tour-name">
+                                                        <a href="<c:url value="/tour/returnPay.do?bookID=${product.getBookingID()}"/>" class="text-decoration-none tour-name">
                                                             ${product.name}
                                                         </a>
                                                     </h5>
