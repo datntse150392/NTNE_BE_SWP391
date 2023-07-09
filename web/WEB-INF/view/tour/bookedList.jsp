@@ -46,7 +46,7 @@
                                     <div class="row ms-0 fw-semibold" style="font-size: 16px; color: #2d4271; font-weight: 700 !important;">Tài khoản</div>
                                     <div class="row px-5" style="margin: 0px -15px;">
                                         <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/userprofile.do"/>" style="font-size: 14px; color: #000000;">Thông tin cá nhân</a>
-                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/changepassword.do"/>" style="font-size: 14px; color: #000000;">Đổi mật khẩu</a>
+                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/changePassword.do"/>" style="font-size: 14px; color: #000000;">Đổi mật khẩu</a>
                                         <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/logOut.do"/>" style="font-size: 14px; color: #000000;">Đăng xuất</a>
                                     </div>
                                 </div>

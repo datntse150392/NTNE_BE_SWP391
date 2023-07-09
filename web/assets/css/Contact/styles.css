@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300&display=swap');
 
 html {}
 
 * {
-    font-family: "Manrope", sans-serif;
+    font-family: 'Be Vietnam Pro', sans-serif;
     box-sizing: border-box;
     font-size: 15px;
 }
@@ -93,6 +93,7 @@ a, button, .btn {
     border: 1px solid transparent;
     font-size: 1rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 230px
 }
 
 .btn:hover {

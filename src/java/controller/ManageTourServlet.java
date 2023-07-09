@@ -38,9 +38,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpSession;
 import models.Book;
 import models.Image;
@@ -104,6 +115,12 @@ public class ManageTourServlet extends HttpServlet {
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 break;
             }
+            case "sendEmail":
+                sendEmail(request, response);
+                break;
+            case "sendEmailHandler":
+                sendEmailHandler(request, response);
+                break;
             //---------------XU LY VOI BOOKED LIST (CRUD)---------------
             case "booking":
                 viewFormBooking(request, response);
@@ -345,27 +362,25 @@ public class ManageTourServlet extends HttpServlet {
         //Đếm tổng số trang cần có
         if (state.equals("All")) {
             count = tourDAO.count_All(user.getId());
-            count = count / 3;
-            if (count % 3 != 0) {
+            count = count / 6;
+            if (count % 6 != 0) {
                 count++;
             }
         }
         if (state.equals("Available")) {
             count = tourDAO.count_Available(user.getId());
-            count = count / 3;
-            if (count % 3 != 0) {
+            count = count / 6;
+            if (count % 6 != 0) {
                 count++;
             }
         }
         if (state.equals("NotAvailable")) {
             count = tourDAO.count_NotAvailable(user.getId());
-            System.out.println("Số đếm của Not Available trước if: " + count);
-            count = count / 3;
+            count = count / 6;
 
-            if (count % 3 != 0) {
+            if (count % 6 != 0) {
                 count++;
             }
-            System.out.println("Số đếm của Not Available sau if: " + count);
         }
 
         if (list != null) {
@@ -559,6 +574,61 @@ public class ManageTourServlet extends HttpServlet {
             job.addProperty("data", paymentUrl);
             response.sendRedirect(paymentUrl);
         }
+    }
+    
+//Xử lí send email
+    protected void sendEmail(HttpServletRequest request, HttpServletResponse response){
+        try {
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        } catch (IOException | ServletException e) {
+
+        }
+    }
+    
+    protected void sendEmailHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("PhoneNumber");
+        String subject = request.getParameter("subject");
+        String content = request.getParameter("Content");
+        
+        System.out.println("-------Xử lí send email----------");
+        
+        final String username = "nhatrangnatureelite@gmail.com";//your email id
+        final String password = "krgqhcpqhfpaspzr";// your password
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+           @Override
+           protected PasswordAuthentication getPasswordAuthentication(){
+               return new PasswordAuthentication(username, password);
+           }
+        });
+        try{
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(username));
+            MimeBodyPart textPart = new MimeBodyPart();
+            Multipart multipart = new MimeMultipart();
+            System.out.println("Nội dung báo cáo: " + content);
+            String final_Text = "Name: " + name + "    " + "Email: " + email + "    " + "Phone Number: " + phone + "    " + "Subject: " + subject + "    " + "Message: " + content;
+            textPart.setText(final_Text);
+            message.setSubject(subject);
+            multipart.addBodyPart(textPart);
+            message.setContent(multipart, "text/plain; charset=UTF-8");
+            message.setSubject("Contact Details");
+            
+            Transport.send(message);
+        }catch(MessagingException e){
+            
+        }
+        request.setAttribute("controller", "tour");
+        request.setAttribute("action", "contact");
+        request.setAttribute("status", "success");
+        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
 
     @Override

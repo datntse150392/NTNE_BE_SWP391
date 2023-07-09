@@ -17,10 +17,9 @@
             rel="stylesheet"
             href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
             />
-        <link href="<c:url value="/assets/css/Homepage/styles.css"/>" type="text/css" rel="stylesheet" />
-        <link href="<c:url value="/assets/css/About/styles.css"/>" type="text/css" rel="stylesheet" />
-        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/About/styles.css"/>" type="text/css" rel="stylesheet" />
+        
         <title>Giới thiệu</title>
     </head>
     <body>
@@ -148,7 +147,7 @@
                                         <h3>Dịch Vụ Du Lịch Đẳng Cấp</h3>
                                         <p>
                                             Chọn lọc những dịch vụ chất lượng cao cung cấp theo yêu
-                                            cầu của khách hàng
+                                            cầu khách hàng
                                         </p>
                                     </div>
                                 </div>
@@ -168,7 +167,7 @@
                                         </span>
                                         <h3>Cải Tiến & Sáng Tạo</h3>
                                         <p>
-                                            Luôn nâng cấp chất lượng, đổi mới dịch vụ và học tập các
+                                            Luôn nâng cấp chất lượng, đổi mới dịch vụ và học tập
                                             mô hình nước ngoài
                                         </p>
                                     </div>
@@ -256,9 +255,8 @@
                 </div>
             </div>
         </section>
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="../assets/js/Homepage/sliders/jquery.min.js"></script>
+        <script src="../assets/js/Homepage/sliders/bootstrap.js"></script>
     </body>
 </html>
 

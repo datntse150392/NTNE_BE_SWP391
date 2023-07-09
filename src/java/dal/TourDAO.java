@@ -107,7 +107,7 @@ public class TourDAO extends DBContext {
                     + "  JOIN BOOKING C ON C.trip_id = A.id \n"
                     + "  JOIN ACCOUNT D ON D.id = C.account_id \n"
                     + "  WHERE C.account_id = ? \n"
-                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 4 ROWS ONLY";
+                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -149,7 +149,7 @@ public class TourDAO extends DBContext {
                     + "  JOIN BOOKING C ON C.trip_id = A.id \n"
                     + "  JOIN ACCOUNT D ON D.id = C.account_id \n"
                     + "  WHERE C.account_id = ? AND C.status = 0\n"
-                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -191,7 +191,7 @@ public class TourDAO extends DBContext {
                     + "  JOIN BOOKING C ON C.trip_id = A.id \n"
                     + "  JOIN ACCOUNT D ON D.id = C.account_id \n"
                     + "  WHERE C.account_id = ? AND C.status = 1\n"
-                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+                    + "  ORDER BY A.id OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -227,7 +227,7 @@ public class TourDAO extends DBContext {
 
     public List<ListBooked> sortPriceMonth_All(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -262,7 +262,7 @@ public class TourDAO extends DBContext {
     
     public List<ListBooked> sortPriceMonth_Available(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 1 ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 1 ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -297,7 +297,7 @@ public class TourDAO extends DBContext {
     
     public List<ListBooked> sortPriceMonth_NotAvailable(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 0 ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 0 ORDER BY MONTH(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -332,7 +332,7 @@ public class TourDAO extends DBContext {
 
     public List<ListBooked> sortPriceDay_All(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -366,7 +366,7 @@ public class TourDAO extends DBContext {
     
     public List<ListBooked> sortPriceDay_Available(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 1 ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 1 ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);
@@ -400,7 +400,7 @@ public class TourDAO extends DBContext {
     
     public List<ListBooked> sortPriceDay_NotAvailable(int accountID, int index) {
         try {
-            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 0 ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY";
+            String sql = "SELECT A.depart_time,b.name, B.thumbnail, C.totalPrice, B.id as 'Tour ID', A.id 'Trip ID', C.quantityAdult, C.quantityChild, C.status, C.id as 'Booking ID', B.code FROM TRIP A JOIN Tour B ON A.tour_id = B.id JOIN BOOKING C ON C.trip_id = A.id JOIN ACCOUNT D ON D.id = C.account_id WHERE C.account_id = ? AND C.status = 0 ORDER BY DAY(A.depart_time) DESC OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, accountID);

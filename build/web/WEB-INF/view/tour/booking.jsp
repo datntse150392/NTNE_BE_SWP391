@@ -221,48 +221,43 @@
                                         </p>
                                         <p class="price-value" id="childs-price"></p>
                                     </div>
-                                    
-                                            <div class="price-group">
-                                                <p class="price-name">
-                                                    <i class="fas fa-users"></i> Số ghế:
-                                                </p>
-                                                <p class="price-value" id="amount">
-                                                    <span id="adults-count" style="font-size: medium" class="adults-count">
-                                                        <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() > 0}">${quantity.getQuantity() - currentQuantity.getCurrent_quantity()} chỗ trống</c:if> 
-                                                        <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() <= 0}">Hết chỗ trống</c:if>
-                                                        
-                                                    </span>                                           
-                                                </p>    
-                                            </div>
-                                    
-                                        <!--SỐ LƯỢNG TRẺ EM && NGƯỜI LỚN-->
-<!--                                    <div class="price-group">
+
+
+
+                                    <!--SỐ LƯỢNG TRẺ EM && NGƯỜI LỚN-->
+                                    <!--                                    <div class="price-group">
+                                                                            <p class="price-name">
+                                                                                <i class="fas fa-users"></i> Số lượng:
+                                                                            </p>
+                                                                            <p class="price-value" id="amount">
+                                                                                <span id="adults-count" style="font-size: medium" class="adults-count"
+                                                                                      >1 người lớn</span
+                                                                                >
+                                                                                <span id="childs-count" style="font-size: medium" class="childs-count"
+                                                                                      >0 trẻ em</span
+                                                                                >
+                                                                            </p>
+                                                                        </div>-->
+                                    <!--SỐ LƯỢNG TRẺ EM && NGƯỜI LỚN-->
+
+                                    <div class="price-group">
                                         <p class="price-name">
-                                            <i class="fas fa-users"></i> Số lượng:
+                                            <i class="fas fa-users"></i> Số ghế:
                                         </p>
                                         <p class="price-value" id="amount">
-                                            <span id="adults-count" style="font-size: medium" class="adults-count"
-                                                  >1 người lớn</span
-                                            >
-                                            <span id="childs-count" style="font-size: medium" class="childs-count"
-                                                  >0 trẻ em</span
-                                            >
-                                        </p>
-                                    </div>-->
-                                    <!--SỐ LƯỢNG TRẺ EM && NGƯỜI LỚN-->
-                                    
-                                    <div class="price-group">
-                                        <p class="price-name">
-                                            <i class="fas fa-hand-holding-usd"></i> Phí giao dịch:
-                                        </p>
-                                        <p class="price-value" id="transaction-price">0 đ</p>
-                                    </div>
-                                    <div class="price-group">
-                                        <p class="price-name">
-                                            <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
-                                        </p>
-                                        <p class="price-value" id="total-price">
-                                            <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
+                                            <span id="adults-count" style="font-size: medium" class="adults-count">
+                                                <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() > 0}">${quantity.getQuantity() - currentQuantity.getCurrent_quantity()} chỗ trống</c:if> 
+                                                <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() <= 0}">Hết chỗ trống</c:if>
+
+                                                </span>                                           
+                                            </p>    
+                                        </div>
+                                        <div class="price-group">
+                                            <p class="price-name">
+                                                <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
+                                            </p>
+                                            <p class="price-value" id="total-price">
+                                                <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
                                     </div>
 
                                     <c:if test="${alert != null}">  <input type="hidden" value="${alert}" id="alertID"/></c:if>  
@@ -323,7 +318,7 @@
             const totalPrice = document.getElementById("totalPrice");
             const caution = document.getElementById("alertID");
             const tripID = document.getElementById("tripID");
-                
+
             btnPlus1.addEventListener("click", function () {
                 if (parseInt(tempAdult + tempChild) < tripQuantity) {
                     increaseNumber();
@@ -441,7 +436,7 @@
                 tripID.value = tripObject.id;
                 console.log("1. Trip Object : ", tripObject);
                 console.log("1. Trip current_quantity : ", tripObject.current_quantity);
-                
+
                 console.log("1. Số lượng ghế: ", tripQuantity);
                 console.log("1. Value của trip ID: ", tripID.value);
                 tripQuantity = tripObject.quantity - tripObject.current_quantity;

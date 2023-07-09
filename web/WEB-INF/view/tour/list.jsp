@@ -12,8 +12,8 @@
         <link rel="shortcut icon" href="./assets/imgs/five-icon.png" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" type="text/css" rel="stylesheet">
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">
-        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
         <link href="<c:url value="/assets/css/TourListCSS/style.css"/>" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/TourListCSS/plugins.css"/>" type="text/css" rel="stylesheet">
         
         <title>Tour One-day Nha Trang</title>
     </head>
@@ -46,6 +46,12 @@
                                 <span class="pull-right clickables" data-toggle="collapse" data-target="#filter"><i class="ti-align-left"></i></span>
                             </div>
                             <div id="filter" class="collapese in">
+                                <!-- Input Box Search -->
+                                <div class="tr-single-body">
+                                    
+                                </div>
+                       
+                                
                                 <!-- Animinities -->
                                 <div class="tr-inner-single-box">
                                     <div class="tr-single-header">
@@ -100,7 +106,9 @@
 
                         <div class="row mrg-0">
                             <div class="tr-single-box short-box">
-                                
+                                <div class="col-sm-3 hidden-xs align-self-center" style="padding-top: 5px">
+                                    <h4>Sắp xếp</h4>
+                                </div>
 
                                 <div class="col-sm-9 text-right">
 
@@ -111,31 +119,31 @@
                                         
                                         <div class="btn-group mr-lg-2">
                                             <button id="displayDate" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Lọc theo ngày
+                                                Sắp xếp theo ngày
                                             </button>
                                             <div class="dropdown-menu pull-right animated flipInX">
-                                                <a onClick="handleSelectDate('All Date')">Tất cả ngày</a>
+                                                <a onClick="handleSelectDate('All Date')">Ngày/Tháng/Năm</a>
                                                 <input type="date" onChange="handleSelectDateTime()" value="${date}" id="dateInput" >
                                             </div>
                                         </div>
                                             
                                         <div class="btn-group mr-lg-2">
                                             <button id="displaySortOption" value="" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Lọc theo giá
+                                                Sắp xếp theo giá 
                                             </button>
                                             <button type="button" class="dropdown-menu pull-right animated flipInX">
                                                 <!--Sort tăng dần-->
-                                                <a onClick="{handleSelect('Tăng dần','asc')}">Tăng dần</a>
+                                                <a onClick="{handleSelect('Ascending','asc')}">Ascending</a>
                                                 <!--Sort giảm dần-->
-                                                <a onClick="{handleSelect('Giảm dần','desc')}">Giảm dần</a>
+                                                <a onClick="{handleSelect('Descending','desc')}">Descending</a>
                                                 <!--Sort mặc định-->
-                                                <a onClick="{handleSelect('Mặc định','normal')}">Mặc định</a>
+                                                <a onClick="{handleSelect('Normal','normal')}">Normal</a>
                                             </button>
                                         </div>
 
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-default tooltips">
-                                                LỌC
+                                                Lọc
                                             </button>
                                         </div>
                                     </form>
@@ -156,13 +164,19 @@
 
                                                 <div class="col-md-5 col-sm-5">
                                                     <div class="tour-box-image">
+                                                        
                                                         <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getTour_id()}&tripID=${tour.getId()}"/>">
                                                             <img src="${tour.getThumbnail()}" class="img-responsive tour-box-img" alt="">
                                                         </a>
+                                                        
                                                         <div class="entry-bookmark">                                   
                                                             <a href="#"><i class="ti-bookmark"></i></a>
                                                         </div>
+                                                        
+                                                        <button class="book-btn" type="submit" value="" style="color: white">Đặt ngay</button>
+
                                                     </div>
+                                                        
                                                 </div>
 
                                                 <div class="col-md-7 col-sm-7">	
@@ -252,19 +266,35 @@
             var dateInput = document.getElementById("dateInput");
             var sort_option = document.getElementById("sort_option");
             var date = document.getElementById("date");
+            var items = document.getElementsByClassName('tour-box-image');
             const handleSelect = (text,code) => {
-                console.log("FUNCTION")
+                console.log("FUNCTION");
                 console.log(text);
-                button.innerHTML = text;
+                button.innerHTML = "Sort By " + text;
                 sort_option.value = code;
-            }
+            };
             const handleSelectDateTime = () => {
                 button2.innerHTML = dateInput.value;
                 date.value = dateInput.value;
-            }
+            };
             const handleSelectDate = (text) => {
                 button2.innerHTML = text;
                 date.value = "";
+            };
+            for (var i = 5; i < items.length; i++) {
+                var item = items[i];
+                var thumbnail = item.querySelector('.tour-box-img');
+                var button3 = item.querySelector('.book-btn');
+
+                item.addEventListener('mouseenter', function() {
+                    thumbnail.style.filter = 'blur(5px)';
+                    button3.style.display = 'block';
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    thumbnail.style.filter = 'none';
+                    button3.style.display = 'none';
+                });
             }
         </script>
         <!--Import JS Slider -->

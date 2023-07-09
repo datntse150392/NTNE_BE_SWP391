@@ -10,6 +10,18 @@ import com.google.gson.JsonObject;
 import dal.AccountDAO;
 import dal.Admin_Account;
 import java.io.IOException;
+import java.util.Properties;
+import java.util.Random;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -73,6 +85,25 @@ public class AccountController extends HttpServlet {
             case "registerHandler":
                 registerHandler(request, response);
                 break;
+            case "forgotPassword":
+                forgotPassword(request, response);
+                break;
+            case "forgotPasswordHandler":
+                forgotPasswordHandler(request, response);
+                break;
+            case "enterOtp":
+                validateOtp(request, response);
+                break;
+            case "validateOtpHandler":
+                validateOtpHandler(request, response);
+                break;
+            case "resetPassword":
+                newPassword(request, response);
+                break;
+            case "resetPasswordHandler":
+                newPasswordHandler(request, response);
+                break;
+            
         }
 
     }
@@ -81,10 +112,10 @@ public class AccountController extends HttpServlet {
         //Lấy username password từ trog login.jsp
         String email = request.getParameter("email");
         String password = SecurityUtils.hashMd5(request.getParameter("password"));
-        
+
         //Gọi session để lưu user vào session       
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(60 * 60);
+
         //Gọi đối tượng AccountDAO va Admin_AccountDAO để sài phương thức
         //get_UserName_PassWord để lấy đối tượng user va admin
         AccountDAO userAcc = new AccountDAO();
@@ -101,7 +132,7 @@ public class AccountController extends HttpServlet {
                 //Gọi cookie để lưu username va password vào cookie 
                 Cookie u = new Cookie("email", email);
                 Cookie p = new Cookie("password", request.getParameter("password"));
-                
+
                 //set thoi gian cua cookie
                 u.setMaxAge(60);
                 p.setMaxAge(60);
@@ -113,10 +144,12 @@ public class AccountController extends HttpServlet {
                 session.setAttribute("person", person);
                 request.setAttribute("controller", "account");
                 request.setAttribute("action", "userprofile");
+
+                request.setAttribute("status", "success");
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
-                //response.sendRedirect(request.getContextPath() + "/Home.jsp");
+                //response.sendRedirect(request.getContextPath() + "/userprofile.jsp");
             } else {
-                request.setAttribute("MSG_ERROR", "This account has been blocked!");
+                request.setAttribute("MSG_ERROR", "Tài khoản đã bị vô hiệu hóa!");
                 request.setAttribute("controller", "account");
                 request.setAttribute("action", "login1");
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
@@ -137,7 +170,7 @@ public class AccountController extends HttpServlet {
             session.setAttribute("admin", admin);
             response.sendRedirect(request.getContextPath() + "/Home.jsp");
         } else {
-            request.setAttribute("message", "Incorrect username or password");
+            request.setAttribute("status", "failed");
 
 //           response.sendRedirect(request.getContextPath() + "/login.jsp");
             request.setAttribute("controller", "account");
@@ -198,7 +231,7 @@ public class AccountController extends HttpServlet {
         }
 
 //        request.getRequestDispatcher("/WEB-INF/view/account/login1.jsp").forward(request, response);
-            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
 
     }
 
@@ -266,18 +299,18 @@ public class AccountController extends HttpServlet {
                     if (newPassword.equals(newPasswordRetype) && !newPassword.equals(oldPassword)) {
                         boolean checkNewPsw = accDAO.updateAccountPassword(user.getId(), newPassword);
                         if (checkNewPsw) {
-                            request.setAttribute("MSG_SUCCESS", "Change password successfully!");
+                            request.setAttribute("MSG_SUCCESS", "Đổi mật khẩu thành công!");
                             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                         } else {
-                            request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                            request.setAttribute("MSG_ERROR", "Oops! Có lỗi xảy ra! Xin thử lại!");
                             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                         }
                     } else {
-                        request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                        request.setAttribute("MSG_ERROR", "Oops! Có lỗi xảy ra! Xin thử lại!");
                         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                     }
                 } else {
-                    request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+                    request.setAttribute("MSG_ERROR", "Oops! Có lỗi xảy ra! Xin thử lại!");
                     request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             }
@@ -349,14 +382,15 @@ public class AccountController extends HttpServlet {
                     boolean check = dao.insertAccount(name, email, password, phone, address, "US", 0, true, "https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2F%C4%90%C4%83ng%20nh%E1%BA%ADp%2Fuserimage.jpg?alt=media&token=6144393d-547a-4827-8356-e04867f1139e");
                     if (check) {
                         request.setAttribute("controller", "account");
-                        request.setAttribute("action", "login1");
-                        request.setAttribute("MSG_SUCCESS", "You have successfully registered an account!");
+                        request.setAttribute("action", "register");
+                        request.setAttribute("status", "success");
                         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                     }
                 } else {
+                    request.setAttribute("MSG_ERROR", "Oops! Có lỗi xảy ra! Xin thử lại!");
                     request.setAttribute("controller", "account");
                     request.setAttribute("action", "register");
-                    request.setAttribute("MSG_ERROR", "Oops! Something went wrong! Try again!");
+
                     request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
                 }
             }
@@ -364,6 +398,134 @@ public class AccountController extends HttpServlet {
 
         }
     }
+
+    protected void forgotPassword(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        } catch (IOException | ServletException e) {
+
+        }
+    }
+
+    protected void forgotPasswordHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        int otpValue = 0;
+        HttpSession mySession = request.getSession();
+        AccountDAO dao = new AccountDAO();
+        if (!dao.checkEmail(email)) {
+            if (email != null || !email.equals("")) {
+                // sending otp
+                Random rand = new Random();
+                otpValue = rand.nextInt(1255650);
+
+                String to = email;// change accordingly
+                // Get the session object
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", "465");
+                Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("nhatrangnatureelite@gmail.com", "krgqhcpqhfpaspzr");
+                    }
+                });
+                //compose message
+                try {
+                    MimeMessage message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(email));//change accordingly
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                    message.setSubject("Hello");
+                    message.setText("Your OTP is: " + otpValue);
+                    //send message
+                    Transport.send(message);
+                    System.out.println("Message sent successfully");
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "enterOtp");
+                request.setAttribute("message", "OTP is sent to your email");
+                mySession.setAttribute("otp", otpValue);
+                mySession.setAttribute("email", email);
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            } else {
+                request.setAttribute("controller", "account");
+                request.setAttribute("action", "login1");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            }
+        } else {
+            request.setAttribute("MSG_ERROR", "Email không hợp lệ!");
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "forgotPassword");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        }
+
+    }
+
+    protected void validateOtp(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        } catch (IOException | ServletException e) {
+
+        }
+    }
+
+    protected void validateOtpHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int value = Integer.parseInt(request.getParameter("otp"));
+        HttpSession session = request.getSession();
+        int otp = (int) session.getAttribute("otp");
+        if (value == otp) {
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "resetPassword");
+            request.setAttribute("email", request.getParameter("email"));
+            request.setAttribute("status", "success");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        } else {
+            request.setAttribute("controller", "account");
+            request.setAttribute("action", "enterOtp");
+            request.setAttribute("message", "wrong otp");
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        }
+    }
+
+    protected void newPassword(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+        } catch (IOException | ServletException e) {
+
+        }
+    }
+
+    protected void newPasswordHandler(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        String newPassword = SecurityUtils.hashMd5(request.getParameter("newPassword"));
+
+        String confPassword = SecurityUtils.hashMd5(request.getParameter("confPassword"));
+        AccountDAO dao = new AccountDAO();
+        if (newPassword != null && confPassword != null && newPassword.equals(confPassword)) {
+            try {
+                boolean check = dao.updateAccountPassword((String) session.getAttribute("email"), newPassword);
+                if (check) {
+                    request.setAttribute("MSG_SUCCESS", "Cập nhật mật khẩu thành công!");
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "resetPassword");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                } else {
+                    request.setAttribute("MSG_ERROR", "Cập nhật mật khẩu thất bại. Vui lòng thử lại!");
+                    request.setAttribute("controller", "account");
+                    request.setAttribute("action", "resetPassword");
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                }
+            } catch (IOException | ServletException e) {
+
+            }
+        }
+    }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

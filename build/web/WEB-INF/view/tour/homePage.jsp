@@ -49,7 +49,7 @@
                     <h3 class="content-welcome-heading">Chào mừng đến với Nha Trang Nature Elite!</h3>
                     <p class="content_description">
                         Nếu bạn chỉ có 1 ngày để đi du lịch Nha Trang nhưng muốn khám phá được nhiều nơi? Đừng lo, đã có Nha Trang Nature Elite ở đây!<br>
-                        <a href="/SWP391_NTNE/account/login1.do" class="content-welcome-link">Đăng nhập</a> hoặc <a href="" class="content-welcome-link">Đăng ký</a> để trải nghiệm!
+                        <a href="/SWP391_NTNE/account/login1.do" class="content-welcome-link">Đăng nhập</a> hoặc <a href="<c:url value="/account/register.do"/>" class="content-welcome-link">Đăng ký</a> để trải nghiệm!
                     </p>
                 </div>
                 <!--End: Welcome  -->

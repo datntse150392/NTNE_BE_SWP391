@@ -3,47 +3,29 @@
     Created on : Jun 5, 2023, 7:27:08 AM
     Author     : thuyk
 --%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">
         <link href="<c:url value="/assets/css/Contact/styles.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="/assets/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
+        
 
         <title>Nha Trang Nature Elite</title>
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous"
-            />
-        <link
-            as="style"
-            onload='this.onload = null;this.rel = "stylesheet"'
-            href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Roboto+Slab:400,700&amp;subset=vietnamese&amp;display=swap"
-            rel="stylesheet"
-            type="text/css"
-            />
-        <noscript>
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700|Roboto+Slab:400,700&amp;subset=vietnamese&display=swap"
-            />
-        </noscript>
+        
+        
         <!-- Link FontAwesome CDN -->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            />
-        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
-        <meta property="og:locale" content="vi_VN" />
+        
+        
     </head>
     <body>
+        <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
         <!-- Headline Image -->
         <div class="category-header"><h1 class="category-title">Liên hệ</h1></div>
         <section class="main" style="margin-top: 2%;">
@@ -58,108 +40,92 @@
                                 ngay cho bạn.
                             </p>
 
-                            <form method="post" action="/lien-he" novalidate="novalidate">
-                                <div
-                                    class="text-danger validation-summary-valid"
-                                    data-valmsg-summary="true">
-                                    <ul>
-                                        <li style="display: none"></li>
-                                    </ul>
-                                </div>
+                            <form method="post" action="sendEmailHandler.do" id="contact">
                                 <div class="form-group">
-                                    <label for="Name">Tên đầy đủ<span class="pink-color">*</span></label>
+                                    <label for="Name">Họ và tên<span class="pink-color">*</span></label>
                                     <input
+                                        required=""
                                         class="form-control"
+                                        placeholder="Vui lòng nhập tên của bạn."
                                         type="text"
-                                        data-val="true"
-                                        data-val-length="Tối đa 50 ký tự."
-                                        data-val-length-max="50"
-                                        data-val-required="Vui lòng nhập tên của bạn."
                                         id="Name"
                                         maxlength="50"
-                                        name="Name"
-                                        value=""/>
-                                    <span
-                                        class="text-danger field-validation-valid"
-                                        data-valmsg-for="Name"
-                                        data-valmsg-replace="true">
-                                    </span>
+                                        name="name"
+                                        value=""
+                                        lang="vi"/>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="Email">Email</label>
+                                    <label for="Email">Email<span class="pink-color">*</span></label>
                                     <input
+                                        required=""
                                         class="form-control"
+                                        placeholder="example@gmail.com"
                                         type="email"
-                                        data-val="true"
-                                        data-val-email="Vui lòng nhập đúng định dạng Email."
                                         id="Email"
-                                        name="Email"
+                                        name="email"
                                         value=""/>
-                                    <span
-                                        class="text-danger field-validation-valid"
-                                        data-valmsg-for="Email"
-                                        data-valmsg-replace="true">
-                                    </span>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="PhoneNumber">Số điện thoại<span class="pink-color">*</span></label>
                                     <input
+                                        required=""
                                         class="form-control"
-                                        type="text"
-                                        data-val="true"
-                                        data-val-length="Tối đa 12 ký tự"
-                                        data-val-length-max="12"
-                                        data-val-required="Vui lòng nhập số điện thoại."
+                                        placeholder="0xx.xxx.xxxx"
+                                        type="tel"
                                         id="PhoneNumber"
-                                        maxlength="12"
+                                        
                                         name="PhoneNumber"
+                                        pattern="[0-9]{10}"
+                                        maxlength="10"
+                                        required="true"
                                         value=""/>
-                                    <span
-                                        class="text-danger field-validation-valid"
-                                        data-valmsg-for="PhoneNumber"
-                                        data-valmsg-replace="true">
-                                    </span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="Subject">Subject<span class="pink-color">*</span></label>
+                                    <input
+                                        required=""
+                                        class="form-control"
+                                        placeholder=""
+                                        type="text"
+                                        id="Subject"
+                                        maxlength="50"
+                                        name="subject"
+                                        value=""
+                                        lang="vi"/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="Content">Nội dung<span class="pink-color">*</span></label>
                                     <textarea
                                         class="form-control"
+                                        placeholder="Vui lòng nhập nội dung."
                                         rows="6"
-                                        data-val="true"
-                                        data-val-length="Tối đa 500 ký tự"
-                                        data-val-length-max="500"
-                                        data-val-regex="Không được sử dụng các thẻ HTML"
-                                        data-val-regex-pattern="[^<>&amp;]*"
-                                        data-val-required="Vui lòng nhập nội dung."
+                                        cols="100"
                                         id="Content"
                                         maxlength="500"
-                                        name="Content">
-                                        
+                                        name="Content"
+                                        lang="vi"
+                                        >
                                     </textarea>
-                                    <span
-                                        class="text-danger field-validation-valid"
-                                        data-valmsg-for="Content"
-                                        data-valmsg-replace="true">
-                                    </span>
                                 </div>
-                                <div class="form-group"></div>
                                 <button type="submit" class="btn btn-pink btn-submit">
                                     Gửi đi</button>
-                                <input
-                                    name="__RequestVerificationToken"
-                                    type="hidden"
-                                    value="CfDJ8I43ARlGmuROunLuYPjCfFZHDaFs3HKg26IzbzMWjQcHS70ttEoUV6S5ARf8151AmK76Eynqgj2Mp4BgB7E6OAsX0iFmJIQ6BTxu3BD0AGAiJDEJXX7NqHb1631Kf8b8nT1dAbuTv1DVTCbX5KhLKyI"/>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="alert/dist/sweetalert.css">
+        <script type="text/javascript">
+            var status = document.getElementById("status").value;
+                if(status === "success"){
+                    swal("Thông báo", "Gửi thành công. Vui lòng chờ đợi quá trình xử lý của chúng tôi. Xin cảm ơn!", "success");
+                }
+        </script>
     </body>
 </html>

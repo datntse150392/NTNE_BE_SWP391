@@ -88,13 +88,13 @@
                             <p class="footer-content-heading">FOLLOW US</p>
                             <div class="social-network">
                                 <div class="social-item">
-                                    <a href=""><i class="fab fa-instagram social-icon"></i></a>
+                                    <a href="https://www.instagram.com/nature/"><i class="fab fa-instagram social-icon"></i></a>
                                 </div>
                                 <div class="social-item">
-                                    <a href=""><i class="fab fa-youtube social-icon"></i></a>
+                                    <a href="https://www.youtube.com/@NTNVlogsNguyenThanhNam"><i class="fab fa-youtube social-icon"></i></a>
                                 </div>
                                 <div class="social-item">
-                                    <a href=""><i class="fab fa-facebook-f social-icon"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100094417777643"><i class="fab fa-facebook-f social-icon"></i></a>
                                 </div>
                             </div>
                         </div>
