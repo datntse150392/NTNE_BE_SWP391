@@ -18,19 +18,15 @@
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">         
-        <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootsrap1.css"/>" rel="stylesheet" type="text/css">
+        
+        <link href="<c:url value="/assets/css/header_footer.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/styles.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/ListTour/header_footer.css"/>" rel="stylesheet" type="text/css">
+        
         
         
         <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
+        
         
         <title>Nha Trang Nature Elite</title>
     </head>
@@ -38,8 +34,9 @@
         <!-- Start: Footer -->
         <div id="footer">
             <div class="container">
-                <div class="row">
+                <div class="row__special">
                     <div class="col-lg-3 col-md-6">
+                        
                         <div class="contact-item">
                             <i class="fas fa-comments-alt contact-icon"></i>
                             <div class="contact-content">
@@ -86,7 +83,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4">
+                    <div class="col-lg-2 col-md-4">
                         <div class="social-item">
                             <p class="footer-content-heading">FOLLOW US</p>
                             <div class="social-network">
@@ -113,10 +110,14 @@
 
             <div class="move-on-top">
                 <div class="move-on-top-container">
-                    <a href="#"><i class="fas fa-arrow-up move-on-top-btn"></i></a>
+                    <a href="#" class="text-decoration-none" ><i class="fas fa-arrow-up move-on-top-btn"></i></a>
                 </div>
             </div>
         </div>
         <!-- End: Footer -->
+        <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
     </body>
 </html>

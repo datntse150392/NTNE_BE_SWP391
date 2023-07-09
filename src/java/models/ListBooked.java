@@ -23,11 +23,13 @@ public class ListBooked {
     private int quantityChild;
     private boolean status;
     private Date departtime;
+    private int BookingID;
+    private String code;
 
     public ListBooked() {
     }
 
-    public ListBooked(String name, double totalPrice, String thumbnail, int trip_id, int tour_id, int quantityAdult, int quantityChild, boolean status, Date departtime) {
+    public ListBooked(String name, double totalPrice, String thumbnail, int trip_id, int tour_id, int quantityAdult, int quantityChild, boolean status, Date departtime, int BookingID, String code) {
         this.name = name;
         this.totalPrice = totalPrice;
         this.thumbnail = thumbnail;
@@ -37,22 +39,17 @@ public class ListBooked {
         this.quantityChild = quantityChild;
         this.status = status;
         this.departtime = departtime;
+        this.BookingID = BookingID;
+        this.code = code;
     }
 
-    
-    
-  
+    @Override
+    public String toString() {
+        return "ListBooked{" + "name=" + name + ", totalPrice=" + totalPrice + ", thumbnail=" + thumbnail + ", trip_id=" + trip_id + ", tour_id=" + tour_id + ", quantityAdult=" + quantityAdult + ", quantityChild=" + quantityChild + ", status=" + status + ", departtime=" + departtime + ", BookingID=" + BookingID + ", code=" + code + '}';
+    }
 
     public String getName() {
         return name;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public void setName(String name) {
@@ -107,6 +104,14 @@ public class ListBooked {
         this.quantityChild = quantityChild;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public Date getDeparttime() {
         return departtime;
     }
@@ -115,11 +120,22 @@ public class ListBooked {
         this.departtime = departtime;
     }
 
-    @Override
-    public String toString() {
-        return "Tour{" + "name=" + name + ", totalPrice=" + totalPrice + ", thumbnail=" + thumbnail + ", trip_id=" + trip_id + ", tour_id=" + tour_id + ", quantityAdult=" + quantityAdult + ", quantityChild=" + quantityChild + ", status=" + status + ", departtime=" + departtime + '}';
+    public int getBookingID() {
+        return BookingID;
     }
-    
+
+    public void setBookingID(int BookingID) {
+        this.BookingID = BookingID;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     
 
 

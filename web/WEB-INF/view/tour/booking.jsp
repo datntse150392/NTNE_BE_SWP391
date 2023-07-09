@@ -18,22 +18,21 @@
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/header_footer.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/Booking/styles.css"/>" rel="stylesheet" type="text/css">
-
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
 
         <title>Nha Trang Nature Elite</title>
     </head>
 
     <body>
-
         <section class="mainBooking">
             <div class="checkout">
                 <div class="booking">
                     <h2><a href="#" class="chekoutName pink-color"> ${tripInfo.getName()} </a></h2>
-                    <form method="get" action="<c:url value="/tour/book.do"/>">
+                    <form method="post" action="<c:url value="/tour/book.do"/>">
                         <input type="hidden" id="PriceId" name="PriceId" value="15" />
                         <div class="wrapper">
                             <div class="boxLeft">
@@ -56,6 +55,7 @@
                                             type="text"
                                             name="Name"
                                             value="${sessionScope.person.name}"
+                                            required="true"
                                             />
                                         <span class="text-danger field-validation-valid"></span>
                                     </div>
@@ -65,10 +65,11 @@
                                     <div class="itemRow2">
                                         <label for="Email">Email</label>
                                         <input
-                                            type="text"
+                                            type="email"
                                             class="formControl"
                                             name="Email"
                                             value="${sessionScope.person.email}"
+                                            required="true"
                                             />
                                         <span class="text-danger field-validation-valid"></span>
                                     </div>
@@ -82,6 +83,7 @@
                                             placeholder="0903.xxx.xxx"
                                             pattern="[0-9]{10}"
                                             maxlength="10"
+                                            required="true"
                                             />
                                         <span class="text-danger field-validation-valid"></span>
                                     </div>
@@ -94,35 +96,20 @@
                                                 Số người lớn
                                                 <span class="pink-color">*</span>
                                             </label>
-                                            <div
-                                                class="input-group"
-                                                >
-                                                <span class="input-group-btn input-group-prepend">
-                                                    <button
-                                                        id="btnMinus1"
-                                                        class="btnMinus"
-                                                        type="button"
-                                                        >
-                                                        -
-                                                    </button>
-                                                </span>
-                                                <input
-                                                    class="formControl peopleCount1"
-                                                    id="adults"
-                                                    value="1"
-                                                    type="number"
-                                                    name="AdultAmount"
-                                                    />
-                                                <span class="input-group-btn input-group-append">
-                                                    <button
-                                                        id="btnPlus1"
-                                                        class="btnPlus"
-                                                        type="button"
-                                                        >
-                                                        +
-                                                    </button>
-                                                </span>
-                                            </div>
+                                            <ul class="list-group list-group-horizontal">
+                                                <button id="btnMinus1" class="btn mt-0 btnMinus list-group-item" type="button" >
+                                                    -
+                                                </button>
+                                                <input class="list-group-item formControl people-count"
+                                                       id="adults"
+                                                       value="1"
+                                                       type="number"
+                                                       name="AdultAmount"
+                                                       />
+                                                <button id="btnPlus1" class="btn mt-0 btnPlus list-group-item" type="button" >
+                                                    +
+                                                </button>
+                                            </ul>
                                         </div>
 
                                         <div class="formGroup3Right">
@@ -130,36 +117,21 @@
                                                    >Số Trẻ em
                                                 <span class="pink-color">*</span>
                                             </label>
-                                            <div
-                                                class="input-group bootrap-touchspin boot strap-touchspin-injected"
-                                                >
-                                                <span class="input-group-btn input-group-prepend">
-                                                    <button
-                                                        id="btnMinus2"
-                                                        class="btnMinus"
-                                                        type="button"
-                                                        >
-                                                        -
-                                                    </button>
-                                                </span>
-                                                <input
-                                                    class="formControl people-count"
-                                                    id="childs"
-                                                    value="0"
-                                                    type="number"
-                                                    span="0"
-                                                    name="ChildAmount"
-                                                    />
-                                                <span class="input-group-btn input-group-append">
-                                                    <button
-                                                        id="btnPlus2"
-                                                        class="btnPlus"
-                                                        type="button"
-                                                        >
-                                                        +
-                                                    </button>
-                                                </span>
-                                            </div>
+                                            <ul class="list-group list-group-horizontal">
+                                                <button id="btnMinus2" class="btn mt-0 btnMinus list-group-item" type="button">
+                                                    -
+                                                </button>
+                                                <input class="list-group-item formControl people-count"
+                                                       id="childs"
+                                                       value="0"
+                                                       type="number"
+                                                       span="0"
+                                                       name="ChildAmount"
+                                                       />
+                                                <button id="btnPlus2" class="btn mt-0 btnPlus list-group-item" type="button">
+                                                    +
+                                                </button>
+                                            </ul>
                                         </div>
                                     </div>
 
@@ -168,21 +140,20 @@
                                                >Tour theo ngày hiện có
                                             <span class="pink-color">*</span>
                                         </label>
-                                        <select name="tripID" class="formControl" id="dateID">
+                                        <select name="tripDate" id="tripDate" class="formControl">
                                             <c:forEach var="trip" items="${tripDate}" varStatus= "loop">
-
                                                 <c:if test="${tripDate.get(loop.index).isAvailability()== true}">
-                                                    <option value="${trip.getId()}"><fmt:formatDate value="${trip.getDepart_time()}" pattern="dd/MM/yyyy"/></option>
+                                                    <option value="${trip.getDepart_time()}">
+                                                        <fmt:formatDate value="${trip.getDepart_time()}" pattern="dd/MM/yyyy"/>                                                   
+                                                    </option>
                                                 </c:if>                 
                                             </c:forEach>
                                         </select>
-                                        <!--<input
-                                                     class="formControl"
-                                                     id="date-go"
-                                                     type="text"
-                                                     name="StartDate"
-                                                     value="24/06/2023"
-                                                  />-->
+                                        <c:forEach var="trip" items="${tripDate}" varStatus= "loop">
+                                            <c:if test="${tripDate.get(loop.index).isAvailability()== true}">
+                                                <input type="hidden" id="${trip.getDepart_time()}" value="${trip}"/>                                             
+                                            </c:if>                 
+                                        </c:forEach>
                                     </div>
                                 </div>
 
@@ -200,10 +171,11 @@
                                             <option value="2">
                                                 Chuyển khoản ngân hàng
                                             </option>
+                                            <option value="3">VNPay</option> 
                                             <!-- <option value="InternationalCard">
                                                                             Visa/Master Card
                                                                           </option> -->
-                                            <!-- <option value="VTCPay">VTC Pay</option> -->
+
                                             <!-- <option value="MoMo">
                                                                             MoMo (Cần liên kết ví với ngân hàng)
                                                                           </option> -->
@@ -249,38 +221,57 @@
                                         </p>
                                         <p class="price-value" id="childs-price"></p>
                                     </div>
-                                    <div class="price-group">
+                                    
+                                            <div class="price-group">
+                                                <p class="price-name">
+                                                    <i class="fas fa-users"></i> Số ghế:
+                                                </p>
+                                                <p class="price-value" id="amount">
+                                                    <span id="adults-count" style="font-size: medium" class="adults-count">
+                                                        <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() > 0}">${quantity.getQuantity() - currentQuantity.getCurrent_quantity()} chỗ trống</c:if> 
+                                                        <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() <= 0}">Hết chỗ trống</c:if>
+                                                        
+                                                    </span>                                           
+                                                </p>    
+                                            </div>
+                                    
+                                        <!--SỐ LƯỢNG TRẺ EM && NGƯỜI LỚN-->
+<!--                                    <div class="price-group">
                                         <p class="price-name">
-                                            <i class="fas fa-users"></i> Số ghế:
+                                            <i class="fas fa-users"></i> Số lượng:
                                         </p>
                                         <p class="price-value" id="amount">
                                             <span id="adults-count" style="font-size: medium" class="adults-count"
-                                                  ><c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() > 0}">${quantity.getQuantity() - currentQuantity.getCurrent_quantity()} chỗ trống</c:if> 
-                                                <c:if test="${quantity.getQuantity() - currentQuantity.getCurrent_quantity() <= 0}">Hết chỗ trống</c:if>
-                                                </span>                                           
-                                            </p>    
-                                        </div>
-                                        <div class="price-group">
-                                            <p class="price-name">
-                                                <i class="fas fa-hand-holding-usd"></i> Phí giao dịch:
-                                            </p>
-                                            <p class="price-value" id="transaction-price">0 đ</p>
-                                        </div>
-                                        <div class="price-group">
-                                            <p class="price-name">
-                                                <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
-                                            </p>
-                                            <p class="price-value" id="total-price">
-                                                <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
+                                                  >1 người lớn</span
+                                            >
+                                            <span id="childs-count" style="font-size: medium" class="childs-count"
+                                                  >0 trẻ em</span
+                                            >
+                                        </p>
+                                    </div>-->
+                                    <!--SỐ LƯỢNG TRẺ EM && NGƯỜI LỚN-->
+                                    
+                                    <div class="price-group">
+                                        <p class="price-name">
+                                            <i class="fas fa-hand-holding-usd"></i> Phí giao dịch:
+                                        </p>
+                                        <p class="price-value" id="transaction-price">0 đ</p>
+                                    </div>
+                                    <div class="price-group">
+                                        <p class="price-name">
+                                            <i class="fas fa-dollar-sign"></i> Tổng thanh toán:
+                                        </p>
+                                        <p class="price-value" id="total-price">
+                                            <span id="totalPrice"><fmt:formatNumber value="${tripInfo.getPriceAdult()}" pattern="###,###" /></span> VNĐ</p>
                                     </div>
 
                                     <c:if test="${alert != null}">  <input type="hidden" value="${alert}" id="alertID"/></c:if>  
                                     <input type="hidden" value="${tripInfo.getPriceChild()}" id="priceChild" name="priceChild"/>
                                     <input type="hidden" value="${tripInfo.getPriceAdult()}" id="priceAdult" name="priceAdult"/>
                                     <input type="hidden" value="${tourID}" name="tourID"/>
-                                    <input type="hidden" value="${tripDate}" id="trips"/>
-                                        
-                                    <button class="btnPink btnCheckout" type="submit"  >
+                                    <input type="hidden" id="tripQuantity" value="${quantity.getQuantity() - currentQuantity.getCurrent_quantity()}"/>
+                                    <input type="hidden" value="${tripInfo.getId()}" id="tripID" name="tripID"/>
+                                    <button class="btnPink btnCheckout" type="submit">
                                         Đặt Tour
                                     </button>
 
@@ -316,7 +307,7 @@
             const btnMinus1 = document.getElementById("btnMinus1");
             const numberAdult = document.getElementById("adults");
             const displayPriceAdult = document.getElementById("displayPriceAdult");
-            const priceAdult = document.getElementById("priceAdult");
+            let priceAdult = document.getElementById("priceAdult");
             var tempAdult = 1;
 
             let totalAdult = 0;
@@ -325,44 +316,19 @@
             const btnMinus2 = document.getElementById("btnMinus2");
             const numberChild = document.getElementById("childs");
             const displayPriceChild = document.getElementById("displayPriceChild");
-            const priceChild = document.getElementById("priceChild");
+            let priceChild = document.getElementById("priceChild");
             var tempChild = 0;
 
-            const tripQuantity = ${quantity.getQuantity() - currentQuantity.getCurrent_quantity()};
+            var tripQuantity = document.getElementById("tripQuantity").value;
             const totalPrice = document.getElementById("totalPrice");
             const caution = document.getElementById("alertID");
-            const trips = document.getElementById("trips").value;
-//            const trips = tripDateID.value;
-            
-//            const triplength
-//            // Convert trips to an array
-//            var tripArray = [];
-//            const dateID = document.getElementById("dateID");
-//            const tripsString = tripDateID;
-//            // Extract the individual trip objects from the string
-//            const tripObjects = tripsString.match(/Trip\{[^}]+\}/g);
-//
-//            // Parse each trip object into a JavaScript object
-//            const tripArray = tripObjects.map(tripString => {
-//                const tripProperties = tripString.match(/\w+=\S+/g);
-//                const trip = {};
-//
-//                tripProperties.forEach(property => {
-//                    const [key, value] = property.split('=');
-//                    trip[key] = isNaN(value) ? value : parseFloat(value);
-//                });
-//
-//                return trip;
-//            });
-//
-//            console.log(tripArray);
-
-
+            const tripID = document.getElementById("tripID");
+                
             btnPlus1.addEventListener("click", function () {
                 if (parseInt(tempAdult + tempChild) < tripQuantity) {
                     increaseNumber();
                 } else {
-                    alert(`Số lượng hành khách không vượt quá ${quantity.getQuantity() - currentQuantity.getCurrent_quantity()}`);
+                    alert("Số lượng hành khách không vượt quá " + tripQuantity);
                 }
             });
 
@@ -374,9 +340,7 @@
             function increaseNumber() {
                 let currentValue = parseInt(numberAdult.value);
 
-//                console.log(tempAdult);
                 numberAdult.value = currentValue + 1;
-                console.log(currentValue);
                 tempAdult = parseInt(numberAdult.value);
                 //Hiển thị số lượng người lớn
                 //Tính toán số tiền người lớn
@@ -408,7 +372,7 @@
                 if (parseInt(tempAdult + tempChild) < tripQuantity) {
                     increaseNumber2();
                 } else {
-                    alert(`Số lượng hành khách không vượt quá ${quantity.getQuantity() - currentQuantity.getCurrent_quantity()}`);
+                    alert("Số lượng hành khách không vượt quá " + tripQuantity);
 
                 }
             });
@@ -443,7 +407,12 @@
                     const number = priceChild.value;
                     totalChild = parseInt((currentValue - 1) * number);
                     //Hiển thị tổng giá
-                    displayPriceChild.textContent = totalChild;
+                    if (totalChild == 0) {
+                        temp = parseInt(currentValue * number);
+                        displayPriceChild.textContent = temp;
+                    } else {
+                        displayPriceChild.textContent = totalChild;
+                    }
                     tolalPriceTour(totalChild, totalAdult);
                 }
             }
@@ -452,12 +421,75 @@
                 totalPrice.textContent = priceChild + priceAdult;
             }
 
+            //FUNCTION XỬ LÝ ĐỔI SỐ SLOT VÀ GIÁ THEO SELECT NGÀY CỦA TRIP
+            const tripDate = document.getElementById("tripDate");
+            tripDate.onchange = (e) => {
+                console.log("Xử lý đổi số slot tour và giá");
+                const adultsCount = document.getElementById("adults-count");
+                const priceTripChange = document.getElementById(e.target.value).value;
+                console.log("Trip From DOM: " + priceTripChange);
+                const keyValuePairs = priceTripChange.match(/\w+=(?:[^,}]+)/g);
+                console.log(tripID);
+                const tripObject = {};
+
+                keyValuePairs.forEach(pair => {
+                    const [key, value] = pair.split('=');
+                    tripObject[key.trim()] = value.trim();
+                });
+                priceAdult.value = tripObject.priceAdult;
+                priceChild.value = tripObject.priceChild;
+                tripID.value = tripObject.id;
+                console.log("1. Trip Object : ", tripObject);
+                console.log("1. Trip current_quantity : ", tripObject.current_quantity);
+                
+                console.log("1. Số lượng ghế: ", tripQuantity);
+                console.log("1. Value của trip ID: ", tripID.value);
+                tripQuantity = tripObject.quantity - tripObject.current_quantity;
+                console.log("2. Số lượng ghế: ", tripQuantity);
+                let numberAdultChange = parseInt(numberAdult.value);
+                let numberChildChange = parseInt(numberChild.value);
+
+                //Xử lý nếu numberChild = 0 ? numberChild = 1*PriceChild sẽ bằng Price mặc định
+                if (numberChildChange == 0) {
+                    numberChildChange = 1;
+                }
+
+                //Xử lý nếu tổng số lượng slot cusBook > slot hiện có của Trip thì gán lại mặc định
+                if (numberAdultChange + numberChildChange > tripQuantity) {
+                    numberChildChange = 1;
+                    numberAdultChange = 1;
+                    tempAdult = 1;
+                    tempChild = 0;
+                    numberChild.value = 0;
+                    numberAdult.value = 1;
+                }
+                //Hiển thị ra màn hình
+                //Giá trẻ em
+                totalChild = parseInt(numberChildChange * priceChild.value);
+                totalAdult = parseInt(numberAdultChange * priceAdult.value);
+                displayPriceChild.textContent = totalChild;
+                //Giá người lớn
+                displayPriceAdult.textContent = totalAdult;
+                tolalPriceTour(totalChild, totalAdult);
+                //Số chỗ của trip
+                adultsCount.textContent = tripQuantity + " chỗ trống";
+
+                console.log("Số slot hiện có: ", tripQuantity);
+                console.log("Số người lớn hiện tại: ", numberAdultChange);
+                console.log("Giá người lớn: ", priceAdult.value);
+                console.log("Số trẻ em hiện tại: ", numberChildChange);
+                console.log("Giá trẻ em: ", priceChild.value);
+
+
+            }
+
             if (caution !== null) {
                 console.log('im here');
                 alert(caution.value);
             }
-            console.log("caution ", caution);
-
         </script>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

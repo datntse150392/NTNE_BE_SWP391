@@ -19,6 +19,7 @@ h1 {
 
 .warpped {
   padding: 0px 50px;
+  padding-top: 8rem;
 }
 
 .layout-image {
@@ -81,6 +82,7 @@ h1 {
 .destination {
   border: 1px solid #ececec;
   border-radius: 10px;
+  padding: 30px;
 }
 
 .destination li {
@@ -253,7 +255,7 @@ h1 {
   content: " ";
   position: absolute;
   top: 18px;
-  left: -13.5px;
+  left: -12.5px;
   width: 1px;
   height: 100%;
   border-right: 2px dashed #ccc;

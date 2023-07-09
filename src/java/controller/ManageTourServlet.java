@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.util.List;
 
 //Import thư viện DAO và DTO
@@ -24,12 +25,20 @@ import dal.TourDAO;
 import models.TourItem;
 import dal.TourItemDAO;
 import dal.TripDAO;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -103,7 +112,6 @@ public class ManageTourServlet extends HttpServlet {
                 bookedList(request, response);
                 break;
             case "book":
-
                 book(request, response);
                 break;
             default: {
@@ -247,19 +255,11 @@ public class ManageTourServlet extends HttpServlet {
             }
             List<Trip> tripList = tripDAO.getTrip_by_TourID(tourID);
             Map<Integer, Image> Imagelist = imageDAO.getImage_by_TourItemID(tourID);
-            Map<Integer, TourItem> Maplist = itemDAO.getListItem_by_TourItemID(tourID);
+            List<TourItem> itemList = itemDAO.getListItem_by_TourItemID(tourID);
 
-            for (Map.Entry<Integer, TourItem> x : Maplist.entrySet()) {
-                System.out.print("ID: " + x.getValue().getId() + " | ");
-                System.out.print("TOUR_ID: " + x.getValue().getTour_id() + " | ");
-                System.out.print("DES_ID: " + x.getValue().getDestination_id() + " | ");
-                System.out.print("DURATION: " + x.getValue().getDuration() + " | ");
-                System.out.print("SCRIPT: " + x.getValue().getScript() + " | ");
-                System.out.println("");
-            }
             request.setAttribute("tripList", tripList);
             request.setAttribute("imageList", Imagelist);
-            request.setAttribute("itemList", Maplist);
+            request.setAttribute("itemList", itemList);
             request.setAttribute("tourID", tourID);
             request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
         } catch (SQLException ex) {
@@ -304,31 +304,72 @@ public class ManageTourServlet extends HttpServlet {
 
         String sort_option = request.getParameter("sort_option");
         String indexPage = request.getParameter("index");
-
+        String state = request.getParameter("state");
         int index = Integer.parseInt(indexPage);
+        int count = 0;
         //Lấy đối tượng tour
         TourDAO tourDAO = new TourDAO();
         List<ListBooked> list = null;
 
         if (sort_option == null || sort_option.isEmpty()) {
-            list = tourDAO.select(user.getId(), index);
+            if (state.equals("All")) {
+                list = tourDAO.select_All(user.getId(), index);
+            }
+            if (state.equals("Available")) {
+                list = tourDAO.select_Available(user.getId(), index);
+            }
+            if (state.equals("NotAvailable")) {
+                list = tourDAO.select_Not_Available(user.getId(), index);
+            }
         } else if (sort_option.equalsIgnoreCase("month")) {
-            list = tourDAO.sortPriceMonth(user.getId(), index);
+            if (state.equals("All")) {
+                list = tourDAO.sortPriceMonth_All(user.getId(), index);
+            }
+            if (state.equals("Available")) {
+                list = tourDAO.sortPriceMonth_Available(user.getId(), index);
+            }
+            if (state.equals("NotAvailable")) {
+                list = tourDAO.sortPriceMonth_NotAvailable(user.getId(), index);
+            }
         } else if (sort_option.equalsIgnoreCase("day")) {
-            list = tourDAO.sortPriceDay(user.getId(), index);
-        }
-        for (ListBooked listBooked : list) {
-            System.out.println("list = " + listBooked.toString());
-
+            if (state.equals("All")) {
+                list = tourDAO.sortPriceDay_All(user.getId(), index);
+            }
+            if (state.equals("Available")) {
+                list = tourDAO.sortPriceDay_Available(user.getId(), index);
+            }
+            if (state.equals("NotAvailable")) {
+                list = tourDAO.sortPriceDay_NotAvailable(user.getId(), index);
+            }
         }
         //Đếm tổng số trang cần có
-        int count = tourDAO.count(user.getId());
-        count = count / 3;
-        if (count % 2 != 0) {
-            count++;
+        if (state.equals("All")) {
+            count = tourDAO.count_All(user.getId());
+            count = count / 3;
+            if (count % 3 != 0) {
+                count++;
+            }
+        }
+        if (state.equals("Available")) {
+            count = tourDAO.count_Available(user.getId());
+            count = count / 3;
+            if (count % 3 != 0) {
+                count++;
+            }
+        }
+        if (state.equals("NotAvailable")) {
+            count = tourDAO.count_NotAvailable(user.getId());
+            System.out.println("Số đếm của Not Available trước if: " + count);
+            count = count / 3;
+
+            if (count % 3 != 0) {
+                count++;
+            }
+            System.out.println("Số đếm của Not Available sau if: " + count);
         }
 
         if (list != null) {
+            request.setAttribute("state", state);
             request.setAttribute("count", count);
             request.setAttribute("sort_option", sort_option);
             request.setAttribute("index", index);
@@ -358,10 +399,11 @@ public class ManageTourServlet extends HttpServlet {
         Trip tripQuantity = tripDAO.getTripQuantity_by_TripID(tripID);
         Trip tripCurrentQuantity = tripDAO.getTripCurrentQuantity_by_TripID(tripID);
 
-//        for (Trip trip1 : list) {
-//            System.out.println(trip1);
-//
-//        }
+        for (Trip trip1 : list) {
+            Trip setCurrent_quantity = tripDAO.getTripCurrentQuantity_by_TripID(trip1.getId());
+            trip1.setCurrent_quantity(setCurrent_quantity.getCurrent_quantity());
+        }
+
         request.setAttribute("currentQuantity", tripCurrentQuantity);
         request.setAttribute("tourID", tourID);
         request.setAttribute("quantity", tripQuantity);
@@ -371,79 +413,152 @@ public class ManageTourServlet extends HttpServlet {
     }
 
     //3. [CREATE] - TẠO BOOKING
-    protected void book(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void book(HttpServletRequest request, HttpServletResponse response) throws ServletException, UnsupportedEncodingException, IOException {
+        TripDAO tripdao = new TripDAO();
+        //Khởi tạo các giá trị cần có cho việc book
         String name = request.getParameter("Name");
         String email = request.getParameter("Email");
         String phone = request.getParameter("PhoneNumber");
         String adult = request.getParameter("AdultAmount"); //number
         String child = request.getParameter("ChildAmount"); //number
         String payment = request.getParameter("PaymentType");
+        String date = request.getParameter("tripDate");
         String additionfield = request.getParameter("AdditionField");
         String AdultPrice = request.getParameter("priceAdult");
         String ChildPrice = request.getParameter("priceChild");
-        String requirement = request.getParameter("requirement");
-        String trip = request.getParameter("tripID");
         String tour = request.getParameter("tourID");
-        boolean status = true;
+        boolean status = false;
+        String paymentMethod = null;
+        //Chuyển kiểu dữ liệu
         HttpSession session = request.getSession();
-        TripDAO tripdao = new TripDAO();
         User_Account user = (User_Account) session.getAttribute("person");
-        List<Trip> list = null;
-
         int adultAmount = Integer.parseInt(adult);
         int childAmount = Integer.parseInt(child);
         int paymentID = Integer.parseInt(payment);
-        int tripID = Integer.parseInt(trip);
+        int tripID = 0;
         int tourID = Integer.parseInt(tour);
-        double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice);
+        double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice); // tổng giá trẻ em và người lớn
 
+        Book book;
+        List<Trip> list;
+        list = tripdao.getTrip_by_TourID(tourID);
+        //Tìm tripID
+        for (Trip trip1 : list) {
+            if (trip1.getDepart_time().toString().equals(date)) {
+                tripID = trip1.getId();
+            }
+        }
         list = tripdao.getTrip_by_TourID(tourID);
         Trip currentQuantity = tripdao.getTripCurrentQuantity_by_TripID(tripID);
         Trip tripQuantity = tripdao.getTripQuantity_by_TripID(tripID);
-        Book book;
-        //            //Xử lí date
-//            Date temp = new Date();
-//            Date currentDay = new Date(temp.getTime()); // Lấy ra ngày hôm nay           
-//            Date expDate = new Date();
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            System.out.println(date);
-//            expDate = dateFormat.parse(date); //format ngày quá hạn
-//            //Nếu ngày quá hạn đến trước ngày mua thì status = 0
-//            if (expDate.before(currentDay)) {
-//                status = false;
-//            } else {x
-//                status = true;
-//            }
-        System.out.println("Trip current value: " + currentQuantity.getCurrent_quantity());
-        System.out.println("Trip quantity: " + tripQuantity.getQuantity());
-        System.out.println(currentQuantity.getCurrent_quantity() <= tripQuantity.getQuantity());
-        if ((currentQuantity.getCurrent_quantity() + adultAmount + childAmount) <= tripQuantity.getQuantity()) {
-            if (user == null) {
-                book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, adultAmount, childAmount, tripID, requirement);
-                tripdao.book_TripForGuest(book);
-                tripdao.getTripCurrentQuantity_by_TripID(tripID);
 
+        //Tạo booking nhưng chưa trừ số lượng ghế và status = "Chưa thanh toán"
+        if (paymentID == 1) {
+            if ((currentQuantity.getCurrent_quantity() + adultAmount + childAmount) <= tripQuantity.getQuantity()) {
+                if (user == null) {
+                    System.out.println("Im inside the function");
+                    book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, adultAmount, childAmount, tripID, "");
+                    System.out.println(book);
+                    tripdao.book_TripForGuest(book);
+                } else {
+                    book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, user.getId(), adultAmount, childAmount, tripID, user.getAddress(), "");
+                    System.out.println(book);
+                    tripdao.book_Trip(book);
+                }
             } else {
-                book = new Book(totalPrice, additionfield, name, email, phone, status, paymentID, user.getId(), adultAmount, childAmount, tripID, user.getAddress(), requirement);
-                tripdao.book_Trip(book);
-                tripdao.getTripCurrentQuantity_by_TripID(tripID);
+                System.out.println("I'm outside the function");
+                Trip tripInfo = tripdao.getTrip_by_TripID_TourID(tourID, tripID);
 
+                request.setAttribute("currentQuantity", currentQuantity);
+                request.setAttribute("quantity", tripQuantity);
+                request.setAttribute("tripDate", list);
+                request.setAttribute("tripInfo", tripInfo);
+                request.setAttribute("tourID", tourID);
+                request.setAttribute("alert", "Số chỗ vượt quá số lượng");
+                request.setAttribute("action", "booking");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             }
-        } else {
-            Trip tripInfo = tripdao.getTrip_by_TripID_TourID(tourID, tripID);
-
-            request.setAttribute("currentQuantity", currentQuantity);
-            request.setAttribute("quantity", tripQuantity);
-            request.setAttribute("tripDate", list);
-            request.setAttribute("tripInfo", tripInfo);
-            request.setAttribute("tourID", tourID);
-            request.setAttribute("alert", "Số chỗ vượt quá số lượng");
-            request.setAttribute("action", "booking");
-            request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
-
         }
 
-//            System.out.println("Name: " + name + "email: " + email + "phone: " + phone + "adult: " + adult + "child: " + child + "date: " + date + "payment: " + payment + "addtionField: " + additionfield);
+        if (paymentID == 3) {
+            System.out.println("THANH TOÁN VNPAY");
+            book = tripdao.getTopBooked();
+            String vnp_Version = "2.1.0";
+            String vnp_Command = "pay";
+            String vnp_OrderInfo = "Thanh toan Booking so " + book.getBookID();
+            String orderType = "billpayment";
+            String vnp_TxnRef = "BOOKING" + book.getBookID();
+            String vnp_IpAddr = ConfigVnPay.getIpAddress(request);
+            String vnp_TmnCode = ConfigVnPay.vnp_TmnCode;
+
+            long amount = Math.round(totalPrice * 100);
+            Map vnp_Params = new HashMap<>();
+            vnp_Params.put("vnp_Version", vnp_Version);
+            vnp_Params.put("vnp_Command", vnp_Command);
+            vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+            vnp_Params.put("vnp_Amount", String.valueOf(amount));
+            vnp_Params.put("vnp_CurrCode", "VND");
+            String bank_code = "NCB"; //Tài khoản ngân hàng test NCB
+            if (bank_code != null && !bank_code.isEmpty()) {
+                vnp_Params.put("vnp_BankCode", bank_code);
+            }
+            vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
+            vnp_Params.put("vnp_OrderInfo", vnp_OrderInfo);
+            vnp_Params.put("vnp_OrderType", orderType);
+
+            String locate = "vn"; //Thanh toán ở location Việt Nam
+            if (locate != null && !locate.isEmpty()) {
+                vnp_Params.put("vnp_Locale", locate);
+            } else {
+                vnp_Params.put("vnp_Locale", "vn");
+            }
+            vnp_Params.put("vnp_ReturnUrl", ConfigVnPay.vnp_Returnurl);
+            vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+            Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String vnp_CreateDate = formatter.format(cld.getTime());
+
+            vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+            //Build data to hash and querystring
+            List fieldNames = new ArrayList(vnp_Params.keySet());
+            Collections.sort(fieldNames);
+            StringBuilder hashData = new StringBuilder();
+            StringBuilder query = new StringBuilder();
+            Iterator itr = fieldNames.iterator();
+
+            while (itr.hasNext()) {
+                String fieldName = (String) itr.next();
+                String fieldValue = (String) vnp_Params.get(fieldName);
+                if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                    //Build hash data
+                    hashData.append(fieldName);
+                    hashData.append('=');
+                    hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                    //Build query
+                    query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                    query.append('=');
+                    query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                    if (itr.hasNext()) {
+                        query.append('&');
+                        hashData.append('&');
+                    }
+                }
+            }
+            String queryUrl = query.toString();
+
+            //Tạo vnp_SecureHash và tạo URL chuyển hướng phiên bản mới 2.1.0
+            String vnp_SecureHash = ConfigVnPay.hmacSHA512(ConfigVnPay.vnp_HashSecret, hashData.toString());
+            queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+
+            String paymentUrl = ConfigVnPay.vnp_PayUrl + "?" + queryUrl;
+            com.google.gson.JsonObject job = new JsonObject();
+            job.addProperty("code", "00");
+            job.addProperty("message", "success");
+            job.addProperty("data", paymentUrl);
+            response.sendRedirect(paymentUrl);
+        }
     }
 
     @Override

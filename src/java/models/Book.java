@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author baoit
  */
 public class Book {
+    private int bookID;
     private double totalPrice;
     private String requirement;
     private String cusBook;
@@ -29,6 +30,26 @@ public class Book {
 
     public Book() {
     }
+
+    public Book(int bookID, double totalPrice, String requirement, String cusBook, String cusMail, String cusPhone, String expireDate, boolean status, int payment_id, int account_id, int quantityAdult, int quantityChild, int trip_id, String cusAddress, String reason) {
+        this.bookID = bookID;
+        this.totalPrice = totalPrice;
+        this.requirement = requirement;
+        this.cusBook = cusBook;
+        this.cusMail = cusMail;
+        this.cusPhone = cusPhone;
+        this.expireDate = expireDate;
+        this.status = status;
+        this.payment_id = payment_id;
+        this.account_id = account_id;
+        this.quantityAdult = quantityAdult;
+        this.quantityChild = quantityChild;
+        this.trip_id = trip_id;
+        this.cusAddress = cusAddress;
+        this.reason = reason;
+    }
+    
+    
 
     public Book(double totalPrice, String requirement, String cusBook, String cusMail, String cusPhone, boolean status, int payment_id, int account_id, int quantityAdult, int quantityChild, int trip_id, String cusAddress, String reason) {
         this.totalPrice = totalPrice;
@@ -58,6 +79,14 @@ public class Book {
         this.quantityChild = quantityChild;
         this.trip_id = trip_id;
         this.reason = reason;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(int bookID) {
+        this.bookID = bookID;
     }
 
     public double getTotalPrice() {
@@ -174,6 +203,6 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" + "totalPrice=" + totalPrice + ", requirement=" + requirement + ", cusBook=" + cusBook + ", cusMail=" + cusMail + ", cusPhone=" + cusPhone + ", expireDate=" + expireDate + ", status=" + status + ", payment_id=" + payment_id + ", account_id=" + account_id + ", quantityAdult=" + quantityAdult + ", quantityChild=" + quantityChild + ", trip_id=" + trip_id + ", cusAddress=" + cusAddress + ", reason=" + reason + '}';
+        return "Book{" + "bookID=" + bookID + ", totalPrice=" + totalPrice + ", requirement=" + requirement + ", cusBook=" + cusBook + ", cusMail=" + cusMail + ", cusPhone=" + cusPhone + ", expireDate=" + expireDate + ", status=" + status + ", payment_id=" + payment_id + ", account_id=" + account_id + ", quantityAdult=" + quantityAdult + ", quantityChild=" + quantityChild + ", trip_id=" + trip_id + ", cusAddress=" + cusAddress + ", reason=" + reason + '}';
     }
 }

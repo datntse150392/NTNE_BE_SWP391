@@ -10,17 +10,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="./assets/imgs/five-icon.png" type="image/x-icon" sizes="30x30">
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/TourListCSS/style.css"/>" rel="stylesheet" type="text/css">
-        <link href="<c:url value="/assets/css/TourListCSS/plugins.css"/>" rel="stylesheet" type="text/css">
-
-        <!--Import JS Slider -->
-        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/assets/js/main.js"/>" type="text/javascript"></script>
-
+        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
+        <link href="<c:url value="/assets/css/TourListCSS/style.css"/>" type="text/css" rel="stylesheet">
+        
         <title>Tour One-day Nha Trang</title>
     </head>
     <body>
@@ -52,65 +46,6 @@
                                 <span class="pull-right clickables" data-toggle="collapse" data-target="#filter"><i class="ti-align-left"></i></span>
                             </div>
                             <div id="filter" class="collapese in">
-                                <!-- Input Box Search -->
-                                <div class="tr-single-body">
-                                    <div class="sidebar-input">
-                                        <input type="text" class="form-control" placeholder="Nhập tour muốn đi...">
-                                    </div>
-                                </div>
-                                <!-- Tour Type -->
-                                <div class="tr-inner-single-box">
-                                    <div class="tr-single-header">
-                                        <h4>Loại hình tour</h4>
-
-                                    </div>
-                                    <div class="tr-single-body">
-                                        <ul class="side-list-check">
-                                            <li>
-                                                <span class="custom-checkbox">
-                                                    <input type="checkbox" id="a">
-                                                    <label for="a"></label>
-                                                </span>
-                                                Tour ngắm cảnh
-                                            </li>
-                                            <li>
-                                                <span class="custom-checkbox">
-                                                    <input type="checkbox" id="b">
-                                                    <label for="b"></label>
-                                                </span>
-                                                Tour trò chơi mạo hiểm
-                                            </li>
-                                            <li>
-                                                <span class="custom-checkbox">
-                                                    <input type="checkbox" id="c">
-                                                    <label for="c"></label>
-                                                </span>
-                                                Tour lặn biển
-                                            </li>
-                                            <li>
-                                                <span class="custom-checkbox">
-                                                    <input type="checkbox" id="d">
-                                                    <label for="d"></label>
-                                                </span>
-                                                Tour nghỉ dưỡng
-                                            </li>
-                                            <li>
-                                                <span class="custom-checkbox">
-                                                    <input type="checkbox" id="e">
-                                                    <label for="e"></label>
-                                                </span>
-                                                Tour du thuyền
-                                            </li>
-                                            <li>
-                                                <span class="custom-checkbox">
-                                                    <input type="checkbox" id="f">
-                                                    <label for="f"></label>
-                                                </span>
-                                                Tour đảo
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
                                 <!-- Animinities -->
                                 <div class="tr-inner-single-box">
                                     <div class="tr-single-header">
@@ -165,44 +100,42 @@
 
                         <div class="row mrg-0">
                             <div class="tr-single-box short-box">
-                                <div class="col-sm-3 hidden-xs align-self-center">
-                                    <h4>Sort By</h4>
-                                </div>
+                                
 
                                 <div class="col-sm-9 text-right">
 
-                                    <form action="<c:url value="/tour/list.do"/>" method="get">
+                                    <form action="<c:url value="/tour/list.do"/>" method="get" style="margin-top: -16px">
                                         <input type="hidden" name="search" value="${search}"/>
                                         <input type="hidden" name="date" id="date" value="${date}"/>
                                         <input type="hidden" name="sort_option" id="sort_option" value="${sort_option}"/>
                                         
                                         <div class="btn-group mr-lg-2">
                                             <button id="displayDate" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Sort By Date
+                                                Lọc theo ngày
                                             </button>
                                             <div class="dropdown-menu pull-right animated flipInX">
-                                                <a onClick="handleSelectDate('All Date')">All Date</a>
+                                                <a onClick="handleSelectDate('All Date')">Tất cả ngày</a>
                                                 <input type="date" onChange="handleSelectDateTime()" value="${date}" id="dateInput" >
                                             </div>
                                         </div>
                                             
                                         <div class="btn-group mr-lg-2">
                                             <button id="displaySortOption" value="" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Sort By Price
+                                                Lọc theo giá
                                             </button>
                                             <button type="button" class="dropdown-menu pull-right animated flipInX">
                                                 <!--Sort tăng dần-->
-                                                <a onClick="{handleSelect('Ascending','asc')}">Ascending</a>
+                                                <a onClick="{handleSelect('Tăng dần','asc')}">Tăng dần</a>
                                                 <!--Sort giảm dần-->
-                                                <a onClick="{handleSelect('Descending','desc')}">Descending</a>
+                                                <a onClick="{handleSelect('Giảm dần','desc')}">Giảm dần</a>
                                                 <!--Sort mặc định-->
-                                                <a onClick="{handleSelect('Normal','normal')}">Normal</a>
+                                                <a onClick="{handleSelect('Mặc định','normal')}">Mặc định</a>
                                             </button>
                                         </div>
 
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-default tooltips">
-                                                SUBMIT
+                                                LỌC
                                             </button>
                                         </div>
                                     </form>
@@ -246,7 +179,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="entry-meta">
+                                                        <!--<div class="entry-meta">
                                                             <div class="meta-item meta-author">
                                                                 <div class="coauthors">
                                                                     <span class="vcard author">
@@ -266,7 +199,7 @@
                                                                 <i class="fa fa-star"></i>
                                                                 <i class="fa fa-star-half"></i>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </div>
 
@@ -322,7 +255,7 @@
             const handleSelect = (text,code) => {
                 console.log("FUNCTION")
                 console.log(text);
-                button.innerHTML = "Sort By " + text;
+                button.innerHTML = text;
                 sort_option.value = code;
             }
             const handleSelectDateTime = () => {
@@ -334,5 +267,10 @@
                 date.value = "";
             }
         </script>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/main.js"/>" type="text/javascript"></script>
     </body>
 </html>

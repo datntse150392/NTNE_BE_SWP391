@@ -13,21 +13,18 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        
         <!--Import CSS-->
         <link rel="shortcut icon" href="<c:url value="/assets/imgs/five-icon.png"/>" type="image/x-icon" sizes="30x30">
-        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.carousel.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/slider/owl.theme.default.min.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/homepage_new.css"/>" rel="stylesheet" type="text/css">
-
-
-
-
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
+        
         <title>Nha Trang Nature Elite</title>
     </head>
-
+    
     <body>
         <!-- Start Slider -->
         <div id="slider"> 
@@ -52,7 +49,7 @@
                     <h3 class="content-welcome-heading">Chào mừng đến với Nha Trang Nature Elite!</h3>
                     <p class="content_description">
                         Nếu bạn chỉ có 1 ngày để đi du lịch Nha Trang nhưng muốn khám phá được nhiều nơi? Đừng lo, đã có Nha Trang Nature Elite ở đây!<br>
-                        <a href="" class="content-welcome-link">Đăng nhập</a> hoặc <a href="" class="content-welcome-link">Đăng ký</a> để trải nghiệm!
+                        <a href="/SWP391_NTNE/account/login1.do" class="content-welcome-link">Đăng nhập</a> hoặc <a href="" class="content-welcome-link">Đăng ký</a> để trải nghiệm!
                     </p>
                 </div>
                 <!--End: Welcome  -->
@@ -60,20 +57,20 @@
                 <!-- Start: Location -->
                 <div class="content-container">
                     <div class="content-location">
-
-                        <!--                    -----------------------------------------------------------
-                        HIỂN THỊ CÁC TOUR MỚI
-     ------------------------------------------------------------->
-                        <p class="content-title">Các tour mới</p>
+                        
+<!--                    -----------------------------------------------------------
+                                           HIỂN THỊ ĐỊA ĐIỂM NỔI BẬT
+                        ------------------------------------------------------------->
+                        <p class="content-title">Tour mới nhất</p>
                         <p class="content-description">Cùng Nha Trang Nature Elite bắt đầu chuyến hành trình khám phá Nha Trang của bạn</p>
                         <!-- Start: Content Slider -->
                         <div class="content-slider">
                             <div class="owl-carousel" id="content-slider">
-
+                                
                                 <!---------------------------------->
                                 <!--LẤY THÔNG TIN ĐỊA ĐIỂM NỔI BẬT-->
                                 <!---------------------------------->
-
+                                
                                 <c:if test="${listTour != null}">
                                     <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item content-slider-item">
@@ -117,9 +114,9 @@
                 </div> -->
                 <!-- End: Promotion -->
 
-                <!--                    <!---------------------------------->
-                <!--LẤY THÔNG TIN TOUR NỔI BẬT-->
-                <!---------------------------------->
+<!--                    <!---------------------------------->
+                        <!--LẤY THÔNG TIN TOUR NỔI BẬT-->
+                        <!---------------------------------->
                 <!-- Start: Suggest -->
                 <div class="content-container">
                     <div class="content-suggest">
@@ -127,14 +124,14 @@
                         <p class="content-description">Những Tour one-day nổi tiếng mà Nha Trang Nature Elite gợi ý dành cho bạn</p>
                         <div class="content-slider">
                             <div class="owl-carousel" id="suggest-slider">
-
+                                
                                 <c:if test="${listTour != null}">
                                     <c:forEach var="tour" items="${listTour}" varStatus="counter">
                                         <div class="item">
                                             <!--Router to detail Tour-->
                                             <a href="<c:url value="/tour/detailTour.do?tourID=${tour.getValue().getId()}&tripID=0"/>" class="content-suggest-item-link">
                                                 <div class="contentImage">
-                                                    <img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img">
+                                                    <img src="${tour.getValue().getThumbnail()}" alt="" class="content-slider-img-new">
                                                 </div>
                                                 <div class="content-suggest-item">
                                                     <p class="content-suggest-heading">${tour.getValue().getName()}</p>
@@ -212,7 +209,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-smile-beam"></i>
@@ -222,7 +219,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-question-circle"></i>
@@ -232,8 +229,8 @@
                                     </div>
                                 </div>
                             </div>
-
-
+                            
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="fas fa-money-check-alt"></i>
@@ -243,8 +240,8 @@
                                     </div>
                                 </div>
                             </div>
-
-
+                            
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="far fa-thumbs-up"></i>
@@ -254,7 +251,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <div class="target">
                                     <i class="fas fa-trophy"></i>
@@ -264,7 +261,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                         </div>
                     </div>
                 </div>
@@ -320,44 +317,15 @@
                     </div>
                 </div>
             </div>
-            <!-- Messenger Plugin chat Code -->
-            <div id="fb-root"></div>
-
-            <!-- Your Plugin chat code -->
-            <div id="fb-customer-chat" class="fb-customerchat">
-            </div>
-
         </div>
         <!--End: Download App  -->
         <!--Import JS Slider -->
-        <script>
-            var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "102516469574099");
-            chatbox.setAttribute("attribution", "biz_inbox");
-        </script>
-        <!-- Your SDK code -->
-        <script>
-            window.fbAsyncInit = function () {
-                FB.init({
-                    xfbml: true,
-                    version: 'v17.0'
-                });
-            };
-
-            (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id))
-                    return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
-
         <script src="<c:url value="/assets/js/homePageJS/slider/jquery.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/assets/js/homePageJS/slider/owl.carousel.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/assets/js/homePageJS/slider/slider.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/assets/js/homePageJS/main.js"/>" type="text/javascript"></script>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

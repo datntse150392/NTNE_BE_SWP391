@@ -12,80 +12,97 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="<c:url value="/assets/css/UserProfile/styleindex.css"/>" rel="stylesheet" type="text/css">
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
+        
     </head>
     <body>
-        <div class="container-profile">
-            <div class="profile">
-                <div class="row">
-                    <div class="column-left">
-                        <div class="wrapper-left">
-                            <div class="info">
-                                <div class="info-image">
+        <section>
+            <div class="container-lg" style="padding-top: 9rem;">
+                <div class="row gap-4 justify-content-center mx-0" style="margin-top: 20px">
+                    <div class="col-12 col-md-4 pt-2 ps-4" style=" max-height: 374px; border-radius: 20px; border: 1px solid #33333338;">
+                        <div class="container-fluid">
+                            <div class="row pb-4 align-items-center border-bottom">
+                                <div class="col-3">
                                     <a href="#">
-                                        <img src="${sessionScope.person.getLinkImg()}" />
+                                        <img class="img-fluid rounded-circle" src="${sessionScope.person.getLinkImg()}" />
                                     </a>
                                 </div>
-                                <div class="info_details">
-                                    <h5 class="user_name">${sessionScope.person.name}</h5>
-                                    <small>${sessionScope.person.email}</small>
+                                <div class="col-9 align-items-center">
+                                    <p class="fs-3 fw-semibold mb-0">${sessionScope.person.name}</p>
+                                    <p class="fs-4 fw-light mb-0">${sessionScope.person.email}</p>
                                 </div>
                             </div>
-                            <hr>
-                            <nav class="profile-link">
-                                <ul>
-                                    <li class="profile-link-collapse">
-                                        <a href="#" class="profile-acct">
-                                            <h6>Tài khoản</h6>
-                                        </a>
-                                        <div class="collapse-show">
-                                            <ul class="profile-acct-opt">
-                                                <li><a href="#">Thông tin cá nhân</a></li>
-                                                <li><a href="<c:url value="/account/changepassword.do"/>">Đổi mật khẩu</a></li>
-                                                <li><a href="#">Đăng xuất</a></li>
-                                            </ul>
+                            <nav class="row pt-4 align-items-center">
+                                    <div class="row">
+                                        <div class="row ms-0 fw-semibold" style="font-size: 16px; color: #2d4271; font-weight: 700 !important;">Tài khoản</div>
+                                        <div class="row px-5">
+                                            <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#" style="font-size: 14px; color: #000000;">Thông tin cá nhân</a>
+                                            <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<c:url value="/account/changepassword.do"/>" style="font-size: 14px; color: #000000;">Đổi mật khẩu</a>
+                                            <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<c:url value="/account/logOut.do"/>" style="font-size: 14px; color: #000000;">Đăng xuất</a>
                                         </div>
-                                    </li>
-                                    <li class="profile-link-collapse2"><a href="<c:url value="/tour/bookedList.do?index=1"/>">Đơn đặt chỗ</a></li>
-                                    <li class="profile-link-collapse3"><a href="#">Đánh giá của Quý khách</a></li>
-
-                                </ul>
+                                    </div>
+                                    <div class="row py-2"  style="font-size: 16px; color: #2d4271; font-weight: 700 !important;">
+                                        <a class="text-dark fw-semibold text-decoration-none" href="<c:url value="/tour/bookedList.do?index=1&state=All"/>">Đơn đặt chỗ</a>
+                                    </div>
+                                    
                             </nav>
                         </div>
                     </div>
 
-                    <div class="column-right">
-                        <div class="wrapper-right">
-                            <div class="heading-right">
-                                <h5>Thông tin cá nhân</h5>
-                                <p>Cập nhật thông tin của Quý khách và tìm hiểu các thông tin này được sử dụng ra sao. </p>
+                    <div class="col-12 col-md-7 border rounded p-2">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <p class="display-6 fs-2 fw-semibold">Thông tin cá nhân</p>
+                                <p class="lead fs-4">
+                                    Cập nhật thông tin của Quý khách và tìm hiểu các thông tin này được sử dụng ra sao.
+                                </p>
                             </div>
-                            <div class="provide-details">
-                                <div class="section-details">
-                                    <div class="section-item" >
-                                        <div class="section-item-field">Họ và Tên</div>
-                                        <div class="section-item-userinfo">${sessionScope.person.name}</div>
+                            <div class="row">
+                                <div class="container-fluid">
+                                    <div class="row py-2 border-bottom border-top" >
+                                        <div class="col p-3 fw-semibold">
+                                            <i class="fas fa-user"></i>
+                                            <span class="ps-2">Họ và Tên</span>
+                                        </div>
+                                        <div class="col p-3">${sessionScope.person.name}</div>
                                     </div>
-                                    <div class="section-item">
-                                        <div class="section-item-field">Điểm thưởng</div>
-                                        <div class="section-item-userinfo">${sessionScope.person.accumulatedScore}</div>
+                                    <div class="row py-2 border-bottom">
+                                        <div class="col p-3 fw-semibold">
+                                            <i class="fas fa-star"></i>
+                                            <span class="ps-2">Điểm thưởng</span>
+                                        </div>
+                                        <div class="col p-3">${sessionScope.person.accumulatedScore}</div>
                                     </div>
-                                    <div class="section-item">
-                                        <div class="section-item-field">Tổng số tour đã đi</div>
-                                        <div class="section-item-userinfo">${sessionScope.person.totalTour}</div>
+                                    <div class="row py-2 border-bottom">
+                                        <div class="col p-3 fw-semibold">
+                                            <i class="fas fa-suitcase-rolling"></i>
+                                            <span class="ps-2">Tổng số tour đã đi</span>
+                                        </div>
+                                        <div class="col p-3">${sessionScope.person.totalTour}</div>
                                     </div>
-                                    <div class="section-item">
-                                        <div class="section-item-field">Địa chỉ email</div>
-                                        <div class="section-item-userinfo">${sessionScope.person.email}</div>
+                                    <div class="row py-2 border-bottom">
+                                        <div class="col p-3 fw-semibold">
+                                            <i class="fas fa-envelope"></i>
+                                            <span class="ps-2">Địa chỉ email</span>
+                                        </div>
+                                        <div class="col p-3">${sessionScope.person.email}</div>
                                     </div>
-                                    <div class="section-item">
-                                        <div class="section-item-field">Số điện thoại</div>
-                                        <div class="section-item-userinfo">${sessionScope.person.phone}</div>
+                                    <div class="row py-2 border-bottom">
+                                        <div class="col p-3 fw-semibold">
+                                            <i class="fas fa-phone"></i>
+                                            <span class="ps-2">Số điện thoại</span>
+                                        </div>
+                                        <div class="col p-3">${sessionScope.person.phone}</div>
                                     </div>
-                                    <div class="section-item">
-                                        <div class="section-item-field">Địa chỉ</div>
-                                        <div class="section-item-userinfo">${sessionScope.person.address}</div>
+                                    <div class="row">
+                                        <div class="col p-3 fw-semibold">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span class="ps-2">Địa chỉ</span>
+                                        </div>
+                                        <div class="col p-3">${sessionScope.person.address}</div>
                                     </div>
                                 </div>
                             </div>
@@ -93,6 +110,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+        <!--Import JS Slider -->
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

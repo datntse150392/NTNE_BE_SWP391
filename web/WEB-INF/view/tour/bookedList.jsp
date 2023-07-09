@@ -15,131 +15,135 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
         <link href="<c:url value="/assets/css/BookedList/tourlist.css"/>" rel="stylesheet" type="text/css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
+        <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css">
+
         <script src="https://kit.fontawesome.com/ef011c00e2.js" crossorigin="anonymous" type="text/javascript"></script>
         <title>Thông tin cá nhân</title>
     </head>
     <body>
-        <div class="container-profile">
-            <div class="profile">
-                <div class="row">
-                    <div class="column-left">
-                        <div class="wrapper-left">
-                            <div class="info">
-                                <div class="info-image">
+        <section>
+            <div class="container-lg" style="padding-top: 9rem;">
+                <div class="row gap-4 justify-content-center mx-0" style="margin-top: 20px">
+                    <div class="col-12 col-md-4 pt-2 ps-4 left-box" style=" max-height: 374px; border-radius: 20px; border: 1px solid #33333338;">
+                        <div class="container-fluid">
+                            <div class="row pb-4 align-items-center border-bottom">
+                                <div class="col-3 m-0 p-0">
                                     <a href="#">
-                                        <img src="#" />
+                                        <img class="img-fluid rounded-circle" src="${sessionScope.person.getLinkImg()}"/>
                                     </a>
                                 </div>
-                                <div class="info_details">
-                                    <h5 class="user_name">Dinh Gia Bao (K16_HCM)</h5>
-                                    <small>baodgse161753@fpt.edu.vn</small>
+                                <div class="col-9 align-items-center">
+                                    <p class="fs-3 fw-semibold mb-0">${sessionScope.person.name}</p>
+                                    <p class="fs-4 fw-light mb-0">${sessionScope.person.email}</p>
                                 </div>
                             </div>
-                            <hr>
-                            <nav class="profile-link">
-                                <ul>
-                                    <li class="profile-link-collapse">
-                                        <a href="#" class="profile-acct">
-                                            <h6>Tài khoản</h6>
-                                        </a>
-                                        <div class="collapse-show">
-                                            <ul class="profile-acct-opt">
-                                                <li><a href="#">Thông tin cá nhân</a></li>
-                                                <li><a href="#">Đổi mật khẩu</a></li>
-                                                <li><a href="#">Đăng xuất</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="profile-link-collapse2"><a href="#">Đơn đặt chỗ</a></li>
-                                    <li class="profile-link-collapse3"><a href="#">Đánh giá của Quý khách</a></li>
-                                </ul>
+                            <nav class="row pt-4 align-items-center">
+                                <div class="row">
+                                    <div class="row ms-0 fw-semibold" style="font-size: 16px; color: #2d4271; font-weight: 700 !important;">Tài khoản</div>
+                                    <div class="row px-5" style="margin: 0px -15px;">
+                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/userprofile.do"/>" style="font-size: 14px; color: #000000;">Thông tin cá nhân</a>
+                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/changepassword.do"/>" style="font-size: 14px; color: #000000;">Đổi mật khẩu</a>
+                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover user-option" href="<c:url value="/account/logOut.do"/>" style="font-size: 14px; color: #000000;">Đăng xuất</a>
+                                    </div>
+                                </div>
+                                <div class="row py-2" style="font-size: 16px; font-weight: 700 !important;">
+                                    <a style="color: #2d4271;" class="fw-semibold text-decoration-none" href="<c:url value="/tour/bookedList.do?index=1"/>">Đơn đặt chỗ</a>
+                                </div>
+                              
                             </nav>
                         </div>
                     </div>
 
-                    <div class="column-right">
-                        <div class="wrapper-right">
+                    <div class="col-12 col-md-7">
+                        <div class="wrapper-right" style="border: 1px solid #33333338;">
                             <div class="heading-right">
                                 <ul class="provide-info">
-                                    <li class="provide-info-showdown"><a href="#">Tất cả</a></li>
-                                    <li class="provide-info-showdown"><a href="#">Chờ xác nhận</a></li>
-                                    <li class="provide-info-showdown"><a href="#">Đã đặt</a></li>
+                                    <li class="provide-info-showdown"><a href="<c:url value="/tour/bookedList.do?index=1&state=All"/>">Tất cả</a></li>
+                                    <li class="provide-info-showdown"><a href="<c:url value="/tour/bookedList.do?index=1&state=NotAvailable"/>">Chờ xác nhận</a></li>
+                                    <li class="provide-info-showdown"><a href="<c:url value="/tour/bookedList.do?index=1&state=Available"/>">Đã đặt</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <form action="#" class="search-form">
+                        <form action="#" class="row px-4">
                             <input type="text"
                                    class="search-bar"
-                                   placeholder="Tìm kiếm theo tên tour/ tourCode hoặc số booking"
+                                   placeholder="Tìm kiếm theo tên tour"
                                    value=""
+                                   style="padding-left: 30px; border: 1px solid #33333338;"
                                    />
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <div class="dropdown">
-                                <span>SORT</span>
-                                <div class="dropdown-content">
-                                    <a href="<c:url value="/tour/bookedList.do?sort_option=day&index=${index}"/>">Sắp xếp theo ngày</a>
-                                    <a href="<c:url value="/tour/bookedList.do?sort_option=month&index=${index}"/>">Sắp xếp theo tháng</a>
-                                </div>
+                            <i class="fa-solid fa-magnifying-glass form-icon" style="max-width: fit-content; "></i>
+
+                            <div class="dropdown btn-group" id="dropdown-wrapper" style="margin-left: 84%">
+                                <!--<div class="d-flex jusstify-content-end">-->
+                                <button type="button" data-bs-toggle="dropdown" id="dropdown-button-drop-0" aria-expanded="false" class="dropdown-toggle btn btn-secondary btn-sm" style="border-radius: 6px; background-color: white; border: 2px #33333338 solid; font-weight: 500; color: #5a6a85;">  
+                                    Sắp xếp
+                                    <div class="dropdown-menu" id="dropdown-menu">
+                                        <a href="<c:url value="/tour/bookedList.do?sort_option=day&index=${index}&state=${state}"/>" class="dropdown-item" id="dropdown-item_1">Theo ngày</a>
+                                        <a href="<c:url value="/tour/bookedList.do?sort_option=month&index=${index}&state=${state}"/>" class="dropdown-item" id="dropdown-item_2">Theo tháng</a>
+                                    </div>
+                                </button>
                             </div>
+
+                            <!--</div>-->
+
                         </form>
 
                         <c:forEach var="product" items="${list}" varStatus="counter">
                             <div class="tab-content">
                                 <div class="tabPane">                          
                                     <div class="item-Order">                                
-                                        <p class="text-muted date-time">${product.getDeparttime()}</p>
-                                        <div class="tab-content-card">
-                                            <div class="tab-row">
-                                                <div class="tab-left-col">
-                                                    <div class="tab-content-card-image">
-                                                        <a href="#"><img src="${product.getThumbnail()}" alt=""></a>
+                                        <p class="text-muted date-time"><fmt:formatDate value="${product.getDeparttime()}" pattern="dd/MM/yyyy"/></p>
+                                        <div class="tab-content-card" style="border: 1px solid #33333338;">
+                                            <div class="row justify-content-center mx-0 align-items-center">
+                                                <div class="col-3 m-0 p-0">
+                                                    <div style="padding: 10px; width: 110%">
+                                                        <a class="" href="<c:url value="/tour/detailTour.do?tourID=${product.getTour_id()}&tripID=${product.getTrip_id()}"/>">
+                                                            <img class="tab-left-col-img" src="${product.getThumbnail()}" alt="">
+                                                        </a>
                                                     </div>
                                                 </div>
-                                                <div class="tab-right-col">
+                                                <div class="col-9 tab-right-col">
                                                     <h5 class="tab-content-card-image">
-                                                        <a href="#" class="tour-name">
+                                                        <a href="<c:url value="/tour/detailTour.do?tourID=${product.getTour_id()}&tripID=${product.getTrip_id()}"/>" class="text-decoration-none tour-name">
                                                             ${product.name}
                                                         </a>
                                                     </h5>
                                                     <div class="tab-right-col-wrapper">
-                                                        <div class="tab-right-dropdown">
+                                                        <div class="col-7 tab-right-dropdown">
                                                             <div class="tab-right-dropdown-elements">
                                                                 <div class="tab-right-elements">
-                                                                    <div class="s-rate">
-                                                                        <span>9</span>
-                                                                        <div class="s-comment">
-                                                                            <h6>Tuyệt vời</h6>
-                                                                            <p>358 quan tâm</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <p class="content-id">
-                                                                        <span class="text-muted">Số booking: ${product.getTour_id()}</span>
+
+                                                                    <p class="content-id p-0 m-0">
+                                                                        <span class="text-muted">Mã booking: ${product.getBookingID()}</span>
                                                                         <br>
-                                                                        <span class="text-muted">Tour code:
-                                                                            ${product.getTrip_id()}
+                                                                        <span class="text-muted">Mã Tour:
+                                                                            ${product.getCode()}
                                                                         </span>
                                                                     </p>
                                                                     <p class="card-text">
-                                                                        <small class="text-muted">${product.getQuantityChild() + product.getQuantityAdult()} người</small>
+                                                                        <small class="text-muted">Số khách hàng: ${product.getQuantityChild() + product.getQuantityAdult()} người</small>
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="card-text-end">
-                                                            <h6 class="text-primary">
+                                                        <div class="col-5 card-text-end">
+                                                            <h4 class="font-weight-bold">
                                                                 <c:choose>
                                                                     <c:when test = "${product.isStatus() == true}">
-                                                                        Còn thời hạn thanh toán
+                                                                        <span class="text-success">Thanh toán</span>
                                                                     </c:when>
 
                                                                     <c:when test = "${product.isStatus() == false}">
-                                                                        Quá thời hạn thanh toán
+                                                                        <span class="text-danger">Chưa thanh toán</span>
                                                                     </c:when>
                                                                 </c:choose>                                                           
-                                                            </h6>
-                                                            <h5 class="total-price"><fmt:formatNumber value="${product.getTotalPrice()}" type="currency"/></h5>
+                                                            </h4>
+                                                            <p style="color: black;" class="total-price font-weight-normal"><fmt:formatNumber value="${product.getTotalPrice()}" type="currency"/></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -149,17 +153,19 @@
                                 </div>
                             </div>
                         </c:forEach> 
+                        <div class="pagination">
+                            <c:forEach begin="1" end="${count}" var="i"> 
+                                <a href="<c:url value="/tour/bookedList.do?index=${i}&sort_option=${sort_option}&state=${state}"/>" onclick="handleClick(event)" class="link">${i}</a>
+                            </c:forEach>
+                        </div>
                     </div>
 
-                    <div class="pagination">
-                        <c:forEach begin="1" end="${count}" var="i"> 
-                            <a href="<c:url value="/tour/bookedList.do?index=${i}&sort_option=${sort_option}"/>" onclick="handleClick(event)" class="link">${i}</a>
-                        </c:forEach>
-                    </div>
+
 
                 </div>
+
             </div>
-        </div>
+        </section>
         <script>
             var SearchBar = document.querySelector('.search-bar');
 
@@ -192,15 +198,56 @@
                 }
             };
 
+            //Thay đổi màu link a
+            const user_options = document.getElementsByClassName("user-option");
+//            console.log(user_options);
+            for (let i = 0; i < user_options.length; i++) {
+                user_options[i].addEventListener("mouseover", function (e) {
+//                    console.log("targeted event: ", e.target);
+                    e.target.style.color = "#23527c";
+                });
+
+                user_options[i].addEventListener("mouseout", function (e) {
+//                    console.log("targeted event: ", e.target);
+                    e.target.style.color = "#000000";
+                });
+            }
+
             function handleClick(event) {
                 const links = document.querySelectorAll('.link');
 
-// Remove "active" class from all links
+                // Remove "active" class from all links
                 links.forEach(link => link.classList.remove('active'));
 
-// Add "active" class to the clicked link
+                // Add "active" class to the clicked link
                 event.target.classList.add('active');
             }
+
+            //Điều chỉnh bật tắt attribute show cho dropdown
+            var dropdown_wrapper = document.getElementById("dropdown-wrapper");
+            var dropdown_button_drop_0 = document.getElementById("dropdown-button-drop-0");
+            var dropdown_menu = document.getElementById("dropdown-menu");
+            var dropdown_item_1 = document.getElementById("dropdown-item_1");
+            var dropdown_item_2 = document.getElementById("dropdown-item_2");
+            console.log(dropdown_menu);
+            function toggleElement() {
+                if (dropdown_menu.classList.contains("show")) {
+                    dropdown_wrapper.classList.remove("show");
+                    dropdown_button_drop_0.classList.remove("show");
+                    dropdown_menu.classList.remove("show");
+                } else {
+                    dropdown_button_drop_0.classList.add("show");
+                    dropdown_menu.classList.add("show");
+                    dropdown_wrapper.classList.add("show");
+                }
+            }
+
+            dropdown_button_drop_0.addEventListener("click", toggleElement);
+
         </script>
+
+
+        <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/assets/js/bootstrap.min.js"/>" type="text/javascript"></script>
     </body>
 </html>

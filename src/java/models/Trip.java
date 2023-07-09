@@ -145,6 +145,8 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip{" + "id=" + id + ", name=" + name + ", availability=" + availability + ", priceAdult=" + priceAdult + ", priceChild=" + priceChild + ", quantity=" + quantity + ", depart_time=" + depart_time + ", thumbnail=" + thumbnail + ", location=" + location + ", tour_id=" + tour_id + '}';
+        return "Trip{" + "id=" + id + ", name=" + name + ", availability=" + availability + ", priceAdult=" + priceAdult + ", priceChild=" + priceChild + ", quantity=" + quantity + ", depart_time=" + depart_time + ", thumbnail=" + thumbnail + ", location=" + location + ", tour_id=" + tour_id + ", current_quantity=" + current_quantity + '}';
     }
+
+  
 }
