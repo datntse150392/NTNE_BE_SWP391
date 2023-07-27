@@ -31,6 +31,24 @@
     <body>
         <section class="mainBooking">
             <div class="checkout">
+                <div class="" style="padding-top: 15px; ">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="../index.jsp">Trang chủ</a>
+                            </li>
+                            <li class="breadcrumb-item" aria-current="page">
+                                <a href="<c:url value="/tour/list.do"/>">Tour</a>  
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="<c:url value="/tour/detailTour.do?tourID=${tourID}&tripID=${tripIDspec}"/>">${tripInfo.getName()}</a>  
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="<c:url value="/tour/booking.do?tourID=${tourID}&tripID=${tripIDspec}"/>">Đặt tour</a>  
+                            </li>
+                        </ol>
+                    </nav>
+                </div> 
                 <div class="booking">
                     <form method="post" id="handleSubmitForm" action="<c:url value="/tour/book.do"/>">
                         <input type="hidden" id="PriceId" name="PriceId" value="15" />

@@ -114,7 +114,246 @@ public class TripDAO {
             return null;
         }
     }
+    
+    /*
+    --------------------------------------------
+            Filter theo giá tiền
+    --------------------------------------------
+     */
+    public List<Trip> FilterPrice(int index, List<String> SearchPrices) {
+        try {
+            List<Trip> listTrip = null;
+            DBContext db = new DBContext();
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, b.priceAdult, b.priceChild, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
 
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            sql += " ORDER BY b.name ";
+            sql += "OFFSET " + (index - 1) * 6;
+            sql += " ROWS FETCH NEXT 6 ROWS ONLY";
+            System.out.println(sql);
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Trip trip = new Trip();
+                trip.setName(rs.getString("name"));
+                trip.setAvailability(rs.getBoolean("availability"));
+                trip.setPriceAdult(rs.getFloat("priceAdult"));
+                trip.setPriceChild(rs.getFloat("priceChild"));
+                trip.setThumbnail(rs.getString("thumbnail"));
+                trip.setLocation(rs.getString("location"));
+                trip.setTour_id(rs.getInt("tour_id"));
+                listTrip.add(trip);
+            }
+            return listTrip;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public List<Trip> FilterPriceASC(int index, List<String> SearchPrices) {
+        try {
+            List<Trip> listTrip = null;
+            DBContext db = new DBContext();
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, b.priceAdult, b.priceChild, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            sql += " ORDER BY b.priceAdult ASC ";
+            sql += "OFFSET " + (index - 1) * 6;
+            sql += " ROWS FETCH NEXT 6 ROWS ONLY";
+            System.out.println(sql);
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Trip trip = new Trip();
+                trip.setName(rs.getString("name"));
+                trip.setAvailability(rs.getBoolean("availability"));
+                trip.setPriceAdult(rs.getFloat("priceAdult"));
+                trip.setPriceChild(rs.getFloat("priceChild"));
+                trip.setThumbnail(rs.getString("thumbnail"));
+                trip.setLocation(rs.getString("location"));
+                trip.setTour_id(rs.getInt("tour_id"));
+                listTrip.add(trip);
+            }
+            return listTrip;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public List<Trip> FilterPriceDESC(int index, List<String> SearchPrices) {
+        try {
+            List<Trip> listTrip = null;
+            DBContext db = new DBContext();
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, b.priceAdult, b.priceChild, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            sql += " ORDER BY b.priceAdult DESC ";
+            sql += "OFFSET " + (index - 1) * 6;
+            sql += " ROWS FETCH NEXT 6 ROWS ONLY";
+            System.out.println(sql);
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Trip trip = new Trip();
+                trip.setName(rs.getString("name"));
+                trip.setAvailability(rs.getBoolean("availability"));
+                trip.setPriceAdult(rs.getFloat("priceAdult"));
+                trip.setPriceChild(rs.getFloat("priceChild"));
+                trip.setThumbnail(rs.getString("thumbnail"));
+                trip.setLocation(rs.getString("location"));
+                trip.setTour_id(rs.getInt("tour_id"));
+                listTrip.add(trip);
+            }
+            return listTrip;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    /*
+    --------------------------------------------
+            Filter theo giá tiền có điều kiện ngày
+    --------------------------------------------
+     */
+    
+    public List<Trip> FilterPriceWithCondition(int index, List<String> SearchPrices, String depart_time) {
+        try {
+            List<Trip> listTrip = null;
+            DBContext db = new DBContext();
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, b.priceAdult, b.priceChild, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1 ";
+            sql += " AND a.depart_time = '" + depart_time;
+            sql += "'";
+            sql += " ORDER BY b.name ";
+            sql += "OFFSET " + (index - 1) * 6;
+            sql += " ROWS FETCH NEXT 6 ROWS ONLY";
+            System.out.println(sql);
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Trip trip = new Trip();
+                trip.setName(rs.getString("name"));
+                trip.setAvailability(rs.getBoolean("availability"));
+                trip.setPriceAdult(rs.getFloat("priceAdult"));
+                trip.setPriceChild(rs.getFloat("priceChild"));
+                trip.setThumbnail(rs.getString("thumbnail"));
+                trip.setLocation(rs.getString("location"));
+                trip.setTour_id(rs.getInt("tour_id"));
+                listTrip.add(trip);
+            }
+            return listTrip;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public List<Trip> FilterPriceASCWithCondition(int index, List<String> SearchPrices, String depart_time) {
+        try {
+            List<Trip> listTrip = null;
+            DBContext db = new DBContext();
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, b.priceAdult, b.priceChild, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            sql += " AND a.depart_time = '" + depart_time;
+            sql += "'";
+            sql += " ORDER BY b.priceAdult ASC ";
+            sql += "OFFSET " + (index - 1) * 6;
+            sql += " ROWS FETCH NEXT 6 ROWS ONLY";
+            System.out.println(sql);
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Trip trip = new Trip();
+                trip.setName(rs.getString("name"));
+                trip.setAvailability(rs.getBoolean("availability"));
+                trip.setPriceAdult(rs.getFloat("priceAdult"));
+                trip.setPriceChild(rs.getFloat("priceChild"));
+                trip.setThumbnail(rs.getString("thumbnail"));
+                trip.setLocation(rs.getString("location"));
+                trip.setTour_id(rs.getInt("tour_id"));
+                listTrip.add(trip);
+            }
+            return listTrip;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public List<Trip> FilterPriceDESCWithCondition(int index, List<String> SearchPrices, String depart_time) {
+        try {
+            List<Trip> listTrip = null;
+            DBContext db = new DBContext();
+            listTrip = new ArrayList();
+            String sql = "SELECT DISTINCT b.name, a.availability, b.priceAdult, b.priceChild, b.thumbnail, b.location, a.tour_id\n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            sql += " AND a.depart_time = " + depart_time;
+            sql += " ORDER BY b.priceAdult DESC '";
+            sql += "'";
+            sql += "OFFSET " + (index - 1) * 6;
+            sql += " ROWS FETCH NEXT 6 ROWS ONLY";
+            System.out.println(sql);
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Trip trip = new Trip();
+                trip.setName(rs.getString("name"));
+                trip.setAvailability(rs.getBoolean("availability"));
+                trip.setPriceAdult(rs.getFloat("priceAdult"));
+                trip.setPriceChild(rs.getFloat("priceChild"));
+                trip.setThumbnail(rs.getString("thumbnail"));
+                trip.setLocation(rs.getString("location"));
+                trip.setTour_id(rs.getInt("tour_id"));
+                listTrip.add(trip);
+            }
+            return listTrip;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     /*
     --------------------------------------------
             ĐIỀU KIỆN KHÔNG CÓ NGÀY BẮT ĐẦU
@@ -248,6 +487,55 @@ public class TripDAO {
         return 0;
     }
 
+    public int countWithCondition(List<String> SearchPrices) {
+        try {
+            DBContext db = new DBContext();
+            //Tạo đối tượng statement
+            String sql = "SELECT COUNT(*) \n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+                
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int countWithConditionDate(List<String> SearchPrices, String depart_time) {
+        try {
+            DBContext db = new DBContext();
+            //Tạo đối tượng statement
+            String sql = "SELECT COUNT(*) \n"
+                    + "FROM [dbo].[Trip] as a, [dbo].[Tour] as b \n"
+                    + "WHERE (";
+                
+            sql += String.join(" OR ", SearchPrices);
+            sql += ")";
+            sql += " AND a.tour_id = b.id AND a.availability = 1";
+            sql += " AND a.depart_time = '" + depart_time;
+            sql += "'";
+            Connection con = DBContext.getConnectionDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(TripDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
     /*
     --------------------------------------------
             ĐIỀU KIỆN CÓ NGÀY BẮT ĐẦU

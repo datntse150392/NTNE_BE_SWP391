@@ -30,7 +30,19 @@
         <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
         <!-- Headline Image -->
         <div class="category-header mt-5"><h1 class="category-title">Liên hệ</h1></div>
-        <section class="main" style="margin-top: 2%;">
+        <section class="main">
+            <div class="container" style="padding-top: 15px; ">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="../index.jsp">Trang chủ</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="<c:url value="/tour/contact.do"/>">Liên hệ</a>  
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
             <div class="contacts">
                 <div class="container">
                     <div class="row">

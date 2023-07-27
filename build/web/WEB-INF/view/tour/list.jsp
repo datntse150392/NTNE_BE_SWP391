@@ -116,7 +116,11 @@
                                         <input type="hidden" name="search" value="${search}"/>
                                         <input type="hidden" name="date" id="date" value="${date}"/>
                                         <input type="hidden" name="sort_option" id="sort_option" value="${sort_option}"/>
-                                        
+                                        <input type="hidden" name="a1" value="${a1}"/>
+                                        <input type="hidden" name="b2" value="${b2}"/>
+                                        <input type="hidden" name="c3" value="${c3}"/>
+                                        <input type="hidden" name="d4" value="${d4}"/>
+                                        <input type="hidden" name="e5" value="${e5}"/>
                                         <div class="btn-group mr-lg-2">
                                             <button id="displayDate" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Sắp xếp theo ngày
@@ -274,6 +278,123 @@
                     button3.style.display = 'none';
                 });
             }
+            //Inject value of Muc gia to form
+            var a1 = document.getElementById("a1");
+            var b2 = document.getElementById("b2");
+            var c3 = document.getElementById("c3");
+            var d4 = document.getElementById("d4");
+            var e5 = document.getElementById("e5");
+
+            const inputA1 = document.querySelector('input[name="a1"]');
+            const inputB2 = document.querySelector('input[name="b2"]');
+            const inputC3 = document.querySelector('input[name="c3"]');
+            const inputD4 = document.querySelector('input[name="d4"]');
+            const inputE5 = document.querySelector('input[name="e5"]');
+
+            a1.onclick = function () {
+                if (a1.checked) {
+                    inputA1.value = 1;
+                }
+                if (!b2.checked) {
+                    inputB2.value = null;
+                }
+                if (!c3.checked) {
+                    inputC3.value = null;
+                }
+                if (!d4.checked) {
+                    inputD4.value = null;
+                }
+                if (!e5.checked) {
+                    inputE5.value = null;
+                }
+                if (!a1.checked) {
+                    inputA1.value = null;
+                }
+            };
+
+            b2.onclick = function () {
+                if (b2.checked) {
+                    inputB2.value = 2;
+                }
+                if (!c3.checked) {
+                    inputC3.value = null;
+                }
+                if (!d4.checked) {
+                    inputD4.value = null;
+                }
+                if (!e5.checked) {
+                    inputE5.value = null;
+                }
+                if (!a1.checked) {
+                    inputA1.value = null;
+                }
+                if (!b2.checked) {
+                    inputB2.value = null;
+                }
+            };
+
+            c3.onclick = function () {
+                if (c3.checked) {
+                    inputC3.value = 3;
+                }
+                if (!d4.checked) {
+                    inputD4.value = null;
+                }
+                if (!e5.checked) {
+                    inputE5.value = null;
+                }
+                if (!a1.checked) {
+                    inputA1.value = null;
+                }
+                if (!b2.checked) {
+                    inputB2.value = null;
+                }
+                if (!c3.checked) {
+                    inputC3.value = null;
+                }
+            };
+
+            d4.onclick = function () {
+                if (d4.checked) {
+                    inputD4.value = 4;
+                }
+                if (!b2.checked) {
+                    inputB2.value = null;
+                }
+                if (!c3.checked) {
+                    inputC3.value = null;
+                }
+                if (!a1.checked) {
+                    inputA1.value = null;
+                }
+                if (!e5.checked) {
+                    inputE5.value = null;
+                }
+                if (!d4.checked) {
+                    inputD4.value = null;
+                }
+            };
+
+            e5.onclick = function () {
+                if (e5.checked) {
+                    inputE5.value = 5;
+                }
+                if (!a1.checked) {
+                    inputA1.value = null;
+                }
+                if (!b2.checked) {
+                    inputB2.value = null;
+                }
+                if (!c3.checked) {
+                    inputC3.value = null;
+                }
+                if (!d4.checked) {
+                    inputD4.value = null;
+                }
+                if (!e5.checked) {
+                    inputE5.value = null;
+                }
+            };
         </script>
         <!--Import JS Slider -->
         <script src="<c:url value="/assets/js/jquery.min.js"/>" type="text/javascript"></script>

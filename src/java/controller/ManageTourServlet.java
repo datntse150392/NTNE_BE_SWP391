@@ -187,21 +187,104 @@ public class ManageTourServlet extends HttpServlet {
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<Trip> tripList = null;
+        List<String> SelectPrices = new ArrayList<>();
         TripDAO tripDAO = new TripDAO();
         String search = request.getParameter("search");
-        if (search == null) {
-            search = "";
-        }
         String sort = (String) request.getParameter("sort_option");
         String indexPage = request.getParameter("index");
-        if (sort == null) {
-            sort = "normal";
-        }
+        String date = request.getParameter("date");
+
         if (indexPage == null) {
             indexPage = "1";
         }
+        if (sort == null) {
+            sort = "normal";
+        }
         int index = Integer.parseInt(indexPage);
-        String date = request.getParameter("date");
+        try {
+            String a1 = request.getParameter("a1");
+            String b2 = request.getParameter("b2");
+            String c3 = request.getParameter("c3");
+            String d4 = request.getParameter("d4");
+            String e5 = request.getParameter("e5");
+
+            if (!a1.isEmpty()) {
+                SelectPrices.add(" b.priceAdult > 1500000");
+                request.setAttribute("a1", a1);
+            }
+            if (!b2.isEmpty()) {
+                SelectPrices.add(" b.priceAdult between 1000000 and 1500000");
+                request.setAttribute("b2", b2);
+            }
+            if (!c3.isEmpty()) {
+                SelectPrices.add(" b.priceAdult between 700000 and 1000000");
+                request.setAttribute("c3", c3);
+            }
+            if (!d4.isEmpty()) {
+                SelectPrices.add(" b.priceAdult between 500000 and 700000");
+                request.setAttribute("d4", d4);
+            }
+            if (!e5.isEmpty()) {
+                SelectPrices.add(" 500000 < b.priceAdult");
+                request.setAttribute("e5", e5);
+            }
+
+            if (!SelectPrices.isEmpty()) {
+                if (date == null) {
+                    date = "";
+                }
+                if (date.equals("")) {
+                    if (sort.equals("normal")) {
+                        tripList = tripDAO.FilterPrice(index, SelectPrices);
+                    } else if(sort.equals("desc")) {
+                        tripList = tripDAO.FilterPriceDESC(index, SelectPrices);
+                    } else if(sort.equals("asc")) {
+                        tripList = tripDAO.FilterPriceASC(index, SelectPrices);
+                    }
+                    //Đếm tổng số trang cần có
+                    int count = tripDAO.countWithCondition(SelectPrices);
+                    count = count / 6;
+                    if (count % 2 != 0) {
+                        count++;
+                    }
+                    request.setAttribute("date", date);
+                    request.setAttribute("listTrip", tripList);
+                    request.setAttribute("count", count);
+                    request.setAttribute("sort_option", sort);
+                    request.setAttribute("index", indexPage);
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                } else {
+                    if (sort.equals("normal")) {
+                        tripList = tripDAO.FilterPriceWithCondition(index, SelectPrices, date);
+                    } else if(sort.equals("desc")) {
+                        tripList = tripDAO.FilterPriceDESCWithCondition(index, SelectPrices, date);
+                    } else if(sort.equals("asc")) {
+                        tripList = tripDAO.FilterPriceASCWithCondition(index, SelectPrices, date);
+                    }
+                    //Đếm tổng số trang cần có
+                    int count = tripDAO.countWithConditionDate(SelectPrices, date);
+                    count = count / 6;
+                    if (count % 2 != 0) {
+                        count++;
+                    }
+                    request.setAttribute("date", date);
+                    request.setAttribute("listTrip", tripList);
+                    request.setAttribute("count", count);
+                    request.setAttribute("sort_option", sort);
+                    request.setAttribute("index", indexPage);
+                    request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e + "");
+        }
+
+        if (search == null) {
+            search = "";
+        }
+
+        
+
         //ĐIỀU KIỆN NGÀY KHỞI HÀNH VÀ KHÔNG CÓ NGÀY KHỞI HÀNH
         if (date == null) {
             date = "";
@@ -210,6 +293,7 @@ public class ManageTourServlet extends HttpServlet {
             //Sort theo giá tiền
             if (sort.equals("asc")) {
                 tripList = tripDAO.sortPriceAcending(search, index);
+
             } else if (sort.equals("desc")) {
                 tripList = tripDAO.sortPriceDescending(search, index);
             } else if (sort.equals("normal")) {
@@ -279,6 +363,7 @@ public class ManageTourServlet extends HttpServlet {
         request.setAttribute("imageList", Imagelist);
         request.setAttribute("itemList", itemList);
         request.setAttribute("tourID", tourID);
+        request.setAttribute("tripID", tripID);
         request.setAttribute("lat", desDAO.getLat(tourID));
         request.setAttribute("lon", desDAO.getLon(tourID));
         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
@@ -412,6 +497,7 @@ public class ManageTourServlet extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
 //        accountDAO.getAccumlatedScore();
         request.setAttribute("tourID", tourID);
+        request.setAttribute("tripIDspec", tripID);
         request.setAttribute("quantity", tripQuantity);
         request.setAttribute("tripDate", list);
         request.setAttribute("tripInfo", trip);

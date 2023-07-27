@@ -16,12 +16,24 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css"> 
-
+        <link href="<c:url value="/assets/css/UserProfile/styleindex.css"/>" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <section>
             <input type="hidden" id="user" value="${sessionScope.person.name}">
             <div class="container-lg" style="padding-top: 9rem;">
+                <div class="container" style="padding-top: 15px; ">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="../index.jsp">Trang chủ</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="<c:url value="/account/userprofile.do"/>">Thông tin cá nhân</a>  
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
                 <div class="row gap-4 justify-content-center mx-0" style="margin-top: 20px">
                     <div class="col-12 col-md-4 pt-2 ps-4" style=" max-height: 374px; border-radius: 20px; border: 1px solid #33333338;">
                         <div class="container-fluid">
@@ -42,7 +54,7 @@
                                     <div class="row px-5">
                                         <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="#" style="font-size: 14px; color: #000000;">Thông tin cá nhân</a>
                                         <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<c:url value="/account/changePassword.do"/>" style="font-size: 14px; color: #000000;">Đổi mật khẩu</a>
-                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<c:url value="/account/logOut.do"/>" style="font-size: 14px; color: #000000;">Đăng xuất</a>
+                                        <a class="py-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<c:url value="/account/logOut.do"/>" style="font-size: 14px; color: #000000;" id="logout">Đăng xuất</a>
                                     </div>
                                 </div>
                                 <div class="row py-2"  style="font-size: 16px; color: #2d4271; font-weight: 700 !important;">
@@ -117,8 +129,22 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="alert/dist/sweetalert.css">
         <script type="text/javascript">
+            // Check if the message has been shown before
             const user = document.getElementById("user").value;
-            swal("Xin chào!!!", "Chào mừng " + user + " đến với Nha Trang Nature Elite", "success");
+            const messageShown = sessionStorage.getItem("messageShown");
+//            const logout = document.getElementById("logout");
+
+            if (!messageShown) {
+                // If the message has not been shown before in the current session, display it
+                swal("Xin chào!!!", "Chào mừng " + user + " đến với Nha Trang Nature Elite", "success");
+
+                // Set the flag in sessionStorage to indicate that the message has been shown
+                sessionStorage.setItem("messageShown", "true");
+            }
+//
+            document.querySelector("#logout").addEventListener("click", function () {
+                sessionStorage.removeItem("messageShown");
+            });
         </script>
     </body>
 </html>

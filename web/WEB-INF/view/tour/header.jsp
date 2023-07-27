@@ -91,7 +91,7 @@
                                     <img class=" img-thumbnail rounded-circle rounded-sm border-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="${sessionScope.person.getLinkImg()}" />
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="<c:url value="/account/userprofile.do"/>">Tài khoản</a>
-                                        <a class="dropdown-item" href="<c:url value="/account/logOut.do"/>">Đăng xuất</a>
+                                        <a class="dropdown-item" href="<c:url value="/account/logOut.do"/>" id="logout">Đăng xuất</a>
                                     </div>
                                 </div>
                             </c:if>
@@ -101,6 +101,11 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.querySelector("#logout2").addEventListener("click", function () {
+                sessionStorage.removeItem("messageShown");
+            });
+        </script>
         <!-- End: Header -->
         <script>
             //        var exists = false;

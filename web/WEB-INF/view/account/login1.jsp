@@ -47,7 +47,7 @@
                         <span>Hoặc</span>
                         <div class="add-on">
                             <div class="btn-google" readonly="readonly">
-                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=http://localhost:8080/account/login_google.do&response_type=code&scope=email%20profile&access_type=offline">
+                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=http://localhost:8084/account/login_google.do&response_type=code&scope=email%20profile&access_type=offline">
                                     <i class="fa-brands fa-google"></i> 
                                     Tiếp tục với Google
                                 </a>

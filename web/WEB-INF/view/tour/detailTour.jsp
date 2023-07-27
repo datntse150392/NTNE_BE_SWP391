@@ -30,6 +30,21 @@
     <body>
         <div class="warpped">
             <div class="container">
+                <div class="" style="padding-top: 15px; ">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="../index.jsp">Trang chủ</a>
+                            </li>
+                            <li class="breadcrumb-item" aria-current="page">
+                                <a href="<c:url value="/tour/list.do"/>">Tour</a>  
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="<c:url value="/tour/detailTour.do?tourID=${tourID}&tripID=${tripID}"/>">${trip.getName()}</a>  
+                            </li>
+                        </ol>
+                    </nav>
+                </div> 
                 <div class="header"></div>
                 <div class="content">
                     <h1 class="header-title" style="font-size: 30px; margin-top: 60px">${trip.getName()}</h1>

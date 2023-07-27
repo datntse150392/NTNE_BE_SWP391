@@ -17,11 +17,26 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css">
-
+        <link href="<c:url value="/assets/css/UserProfile/styleindex.css"/>" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <section>
             <div div class="container-lg" style="padding-top: 9rem;">
+                <div class="container" style="padding-top: 15px; ">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="../index.jsp">Trang chủ</a>
+                            </li>
+                            <li class="breadcrumb-item" aria-current="page">
+                                <a href="<c:url value="/account/userprofile.do"/>">Thông tin cá nhân</a>  
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="<c:url value="/account/changePassword.do"/>">Đổi mật khẩu</a>  
+                            </li>
+                        </ol>
+                    </nav>
+                </div> 
                 <div class="row gap-4 justify-content-center mx-0" style="margin-top: 20px">
                     <div class="col-12 col-md-4 pt-2 ps-4 left-box" style=" max-height: 374px; border-radius: 20px; border: 1px solid #33333338;">
                         <div class="container-fluid">

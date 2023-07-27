@@ -229,29 +229,18 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="alert/dist/sweetalert.css">
 <script>
+    var message = `${message}`;
     var currentURL = window.location.href;
     var desiredURL = currentURL.match(/^(.*?)(?=\/[^/]*$)/)[0];
     let bookID = document.getElementById("bookID").value;
     let QRcode = document.getElementById("QRcode");
     QRcode.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + desiredURL + "/homePage.do";
-    
-    //XỬ LÝ SET STATUS
-    const displayStatus = document.getElementById("displayStatus");
-    const status = document.getElementById("status");
-    if(status.value === "Đang chờ thanh toán"){
-        displayStatus.classList.add("bg-danger");
-    } else {
-        displayStatus.classList.add("bg-success");
-    }
-
-    var message = `${message}`;
-    console.log(message)
     if (message === 'Giao dịch thành công') {
         swal("Thông báo", "Giao dịch thành công", "success");
     } else if (message === 'Giao dịch chưa hoàn tất') {
-        swal("Giao dịch chưa hoàn tất");
+        swal("Thông báo", "Giao dịch chưa hoàn tất", "fail");
     } else if (message === 'Giao dịch bị lỗi') {
-        swal("Giao dịch bị lỗi");
+        swal("Thông báo", "Giao dịch bị lỗi", "fail");
     }
 </script>
 </body>
