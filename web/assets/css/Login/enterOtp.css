@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.form-gap {
+    padding-top: 70px;
+    border: 1px solid #f7f7f7;
+    -moz-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+    -webkit-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+}
+
+.form-gap .container{
+    padding: inherit;
+}
+

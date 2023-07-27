@@ -1,15 +1,10 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Jun 5, 2023, 1:09:47 AM
-    Author     : thuyk
-*/
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap"); */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300&display=swap');
+
+
 *{
-    font-family: "Manrope", sans-serif;
+    font-family: 'Be Vietnam Pro', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -19,7 +14,7 @@ body{
 }
 /* Start Category header */
 .category-header {
-    background: url(../../assets/image/bg-cate.jpg) no-repeat center;
+    background: url(https://firebasestorage.googleapis.com/v0/b/nha-trang-nature-elite.appspot.com/o/Images%20For%20Logo%20-%20Sliders%20-%20Other%2FTrang%20ch%E1%BB%A7%2Fbg-cate.jpg?alt=media&token=ac753111-cf28-4ec6-beae-da92b0b6c05d) no-repeat center;
     background-size: cover;
     height: 320px;
     position: relative;
@@ -47,7 +42,7 @@ body{
     opacity: .4; 
 }
 .breadcrumb-item a:hover, .breadcrumb-item a:focus {
-    color: #1ec6b6;
+    color: tomato;
     text-decoration: none; 
 }
 .breadcrumb-item.active, .breadcrumb-item a, .breadcrumb-item {
@@ -111,10 +106,10 @@ body{
 .content-element .title-element {
     margin-left: -25px;
     margin-top: 35px;
-    font-family: 'Manrope', sans-serif !important; 
+    font-family: 'Be Vietnam Pro', sans-serif;
 }
 .content-element .title-element * {
-    font-family: 'Manrope', sans-serif !important; 
+    font-family: 'Be Vietnam Pro', sans-serif;
 }
 .content-element img {
     max-width: 100%;
@@ -124,8 +119,12 @@ body{
     margin-left: auto;
     margin-right: auto; 
 }
+.content-element .title-element span{
+    color: tomato;
+    font-weight: 700;
+}
 .content-element h2, .content-element h3, .content-element h4, .content-element h5, .content-element p, .content-element span, .content-element a, .content-element li {
-    font-family: 'Manrope', sans-serif; 
+    font-family: 'Be Vietnam Pro', sans-serif;
 }
 .content-element h2 {
     margin-bottom: 20px; 
@@ -292,8 +291,16 @@ body{
     margin-bottom: 30px;
     text-transform: capitalize; 
 }
-.about-content-1 p, .about-content-2 p, .about-content-3 p, .about-content-4 p, .about-content-5 p {
+.about-content-1 p, .about-content-2 p, .about-content-4 p, .about-content-5 p {
     padding-left: 15%;
+    padding-right: 15%;
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 30px; 
+    text-align: justify;
+}
+.about-content-3 p{
+    padding-left: 21%;
     padding-right: 15%;
     font-size: 18px;
     line-height: 1.7;
@@ -344,7 +351,7 @@ body{
 }
 .target:hover .icon {
     color: white;
-    background-color: #1ec6b6;
+    background-color: tomato;
     box-shadow: 0 0 0 8px rgba(30, 198, 182, 0.15); 
 }
 .target .icon {
@@ -355,7 +362,7 @@ body{
     margin-right: auto;
     border-radius: 50%;
     background-color: #fafafa;
-    color: #1ec6b6;
+    color: #000;
     box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.04);
     margin-bottom: 40px;
     -moz-transition: all 0.15s ease;
@@ -370,4 +377,5 @@ body{
     padding: 0;
     margin: 0;
     font-size: 16px; 
+    
 }

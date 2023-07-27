@@ -1,18 +1,9 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Jun 5, 2023, 7:26:33 AM
-    Author     : thuyk
-*/
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Markazi+Text:wght@500&family=Oswald:wght@200;300;400;500;600;700&family=Rokkitt:wght@100&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300&display=swap');
 
 html {}
 
 * {
-    font-family: "Manrope", sans-serif;
+    font-family: 'Be Vietnam Pro', sans-serif;
     box-sizing: border-box;
     font-size: 15px;
 }
@@ -81,12 +72,12 @@ a, button, .btn {
 }
 
 .btn-pink {
-    background-color: #e12d36;
+    background-color: #ff6347 !important;
     color: white;
 }
 
-.btn {
-    background-color: #db252d;
+.btn{
+    background-color: #ff6347;
     border-color:#000000;
     border-style:solid;
     border-radius: 5rem !important;
@@ -102,6 +93,7 @@ a, button, .btn {
     border: 1px solid transparent;
     font-size: 1rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-left: 230px
 }
 
 .btn:hover {
@@ -121,7 +113,6 @@ a, button, .btn {
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-
 .pink-color {
     color:#e12d36;
     display:inline;
@@ -132,4 +123,5 @@ a, button, .btn {
 .btn-submit {
     min-width: 160px;
     margin-top: 15px;
+    background: #ff6347;
 }

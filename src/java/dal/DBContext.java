@@ -17,24 +17,14 @@ import java.util.logging.Logger;
  */
 public class DBContext {
     protected Connection connection;
-    public DBContext()
-    {
-        //@Students: You are allowed to edit user, pass, url variables to fit 
-        //your system configuration
-        //You can also add more methods for Database Interaction tasks. 
-        //But we recommend you to do it in another class
-        // For example : StudentDBContext extends DBContext , 
-        //where StudentDBContext is located in dal package, 
-        try {
-            String user = "admin";
-            String pass = "Dat123vn";
-            String url = "jdbc:sqlserver://demo-ms.cestdggebmjp.ap-southeast-1.rds.amazonaws.com:1433;databaseName=NTNECompany";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static Connection getConnectionDB()
+            throws ClassNotFoundException, SQLException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        String sql = "jdbc:sqlserver://34.142.152.99;databaseName=NTNECompany";
+        Connection con = DriverManager.getConnection(sql, "sqlserver", "Dat123vn");
+        return con;
     }
+    
     public static void main(String[] args) {
         DBContext b = new DBContext();
         System.out.println(b);

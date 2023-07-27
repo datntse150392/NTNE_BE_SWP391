@@ -1,15 +1,15 @@
 // Show Nav Mobile
-const btnShowMobileNav = document.querySelector(".nav__mobile--show-btn");
-const btnHideMobileNav = document.querySelector(".nav__mobile-close");
-const mobileNav = document.querySelector(".nav__mobile");
+const btnShowMobileNav = document.querySelector(".nav-mobile--show-btn");
+const btnHideMobileNav = document.querySelector(".nav-mobile-close");
+const mobileNav = document.querySelector(".nav-mobile");
 const overlay = document.querySelector(".nav_overlay");
 
 function showMobileNav() {
-  mobileNav.classList.add("show-nav__mobile");
+  mobileNav.classList.add("show-nav-mobile");
   overlay.classList.add("show-overlay");
 }
 function hideMobileNav() {
-  mobileNav.classList.remove("show-nav__mobile");
+  mobileNav.classList.remove("show-nav-mobile");
   overlay.classList.remove("show-overlay");
 }
 btnShowMobileNav.addEventListener("click", showMobileNav);
@@ -17,15 +17,15 @@ btnHideMobileNav.addEventListener("click", hideMobileNav);
 overlay.addEventListener("click", hideMobileNav);
 
 // Show Search Suggest
-$(".header__search-input").focus(function () {
-  $(".header__search-suggest").fadeIn();
+$(".header-search-input").focus(function () {
+  $(".header-search-suggest").fadeIn();
 });
-$(".header__search-input").blur(function () {
-  $(".header__search-suggest").fadeOut();
+$(".header-search-input").blur(function () {
+  $(".header-search-suggest").fadeOut();
 });
 // Show Change Languages
-const btnChangeLanguages = document.querySelector(".header__nav-language");
-const changeLanguagesOptions = document.querySelector(".change__languages");
+const btnChangeLanguages = document.querySelector(".header-nav-language");
+const changeLanguagesOptions = document.querySelector(".change-languages");
 
 function showChangLanguages() {
   changeLanguagesOptions.classList.toggle("show");
@@ -33,8 +33,8 @@ function showChangLanguages() {
 btnChangeLanguages.addEventListener("click", showChangLanguages);
 
 // Show Change Languages
-const btnMobileLanguages = document.querySelector(".nav__mobile-language");
-const MobileLanguagesOptions = document.querySelector(".mobile__language");
+const btnMobileLanguages = document.querySelector(".nav-mobile-language");
+const MobileLanguagesOptions = document.querySelector(".mobile-language");
 
 function showMobileLanguages() {
   MobileLanguagesOptions.classList.toggle("show-language");
