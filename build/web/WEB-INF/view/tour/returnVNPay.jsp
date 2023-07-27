@@ -95,30 +95,6 @@
                                 <div class="col-md-9 col-12 text"><fmt:formatNumber value="${bill.getTotalPrice()}" pattern="###,### VNĐ" /></div>
                             </div>
 
-                            <c:if test="${bill.getPaymentMethod().equals('VNPAY')}">
-                                <div class="row item">
-                                    <div class="col-md-3 col-12 label text-secondary ps-2 text-left">Số tiền đã thanh toán</div>
-                                    <div class="col-md-9 col-12 text"><fmt:formatNumber value="${bill.getTotalPrice()}" pattern="###,### VNĐ" /></div>
-                                </div>
-
-                                <!--                                <div class="row item">
-                                                                    <div class="col-md-3 col-12 label text-secondary ps-2 text-left">Số tiền còn lại</div>
-                                                                    <div class="col-md-9 col-12 text"><fmt:formatNumber value="0" pattern="###,### VNĐ" /></div>
-                                                                </div>-->
-                            </c:if>
-                            <c:if test="${!bill.getPaymentMethod().equals('VNPAY')}">
-                                <div class="row item">
-                                    <div class="col-md-3 col-12 label text-secondary ps-2 text-left">Số tiền đã thanh toán</div>
-                                    <div class="col-md-9 col-12 text"><fmt:formatNumber value="0" pattern="###,### VNĐ" /></div>
-                                </div>
-
-                                <!--                                <div class="row item">
-                                                                    <div class="col-md-3 col-12 label text-secondary ps-2 text-left">Số tiền còn lại</div>
-                                                                    <div class="col-md-9 col-12 text"><fmt:formatNumber value="${bill.getTotalPrice()}" pattern="###,### VNĐ" /></div>
-                                                                </div>-->
-                            </c:if>
-
-
                             <div class="row item">
                                 <div class="col-md-3 col-12 label text-secondary ps-2 text-left">Ngày đăng ký</div>
                                 <div class="col-md-9 col-12 text"><fmt:formatDate value="${bill.getDateBook()}" pattern="dd/MM/yyyy"/></div>
@@ -241,6 +217,14 @@
         swal("Thông báo", "Giao dịch chưa hoàn tất", "fail");
     } else if (message === 'Giao dịch bị lỗi') {
         swal("Thông báo", "Giao dịch bị lỗi", "fail");
+    }
+    //XỬ LÝ SET STATUS
+    const displayStatus = document.getElementById("displayStatus");
+    const status = document.getElementById("status");
+    if (status.value === "Đang chờ thanh toán") {
+        displayStatus.classList.add("bg-danger");
+    } else {
+        displayStatus.classList.add("bg-success");
     }
 </script>
 </body>

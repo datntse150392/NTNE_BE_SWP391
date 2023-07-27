@@ -111,7 +111,7 @@
                             <div class="tab-content">
                                 <div class="tabPane">                          
                                     <div class="item-Order">                                
-                                        <p class="text-muted date-time"><fmt:formatDate value="${product.getDeparttime()}" pattern="dd/MM/yyyy"/></p>
+                                        <p class="text-muted date-time">Ngày khởi hành: <fmt:formatDate value="${product.getDeparttime()}" pattern="dd/MM/yyyy"/></p>
                                         <div class="tab-content-card" style="border: 1px solid #33333338;">
                                             <div class="row justify-content-center mx-0 align-items-center">
                                                 <div class="col-3 m-0 p-0">

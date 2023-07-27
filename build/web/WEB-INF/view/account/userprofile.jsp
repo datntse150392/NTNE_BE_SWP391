@@ -145,6 +145,7 @@
             document.querySelector("#logout").addEventListener("click", function () {
                 sessionStorage.removeItem("messageShown");
             });
+            
         </script>
     </body>
 </html>

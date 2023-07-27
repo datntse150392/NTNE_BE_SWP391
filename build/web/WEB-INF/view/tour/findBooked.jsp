@@ -15,11 +15,23 @@
         <link href="<c:url value="/assets/css/HomePageCSS/bootstrap1.css"/>" type="text/css" rel="stylesheet">
         <link href="<c:url value="/assets/css/HomePageCSS/plugins.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/assets/css/Login/enterOtp.css"/>" type="text/css" rel="stylesheet">
-        
+
     </head>
     <body>
         <div class="form-gap">
-            <div class="container">
+            <div class="container" style="padding-top: 25px; ">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="../index.jsp">Trang chủ</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a href="<c:url value="/tour/findBooked.do"/>">Tìm Booking</a>  
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4">
                         <div class="panel panel-default">
