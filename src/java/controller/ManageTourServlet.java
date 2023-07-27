@@ -236,9 +236,9 @@ public class ManageTourServlet extends HttpServlet {
                 if (date.equals("")) {
                     if (sort.equals("normal")) {
                         tripList = tripDAO.FilterPrice(index, SelectPrices);
-                    } else if(sort.equals("desc")) {
+                    } else if (sort.equals("desc")) {
                         tripList = tripDAO.FilterPriceDESC(index, SelectPrices);
-                    } else if(sort.equals("asc")) {
+                    } else if (sort.equals("asc")) {
                         tripList = tripDAO.FilterPriceASC(index, SelectPrices);
                     }
                     //Đếm tổng số trang cần có
@@ -256,9 +256,9 @@ public class ManageTourServlet extends HttpServlet {
                 } else {
                     if (sort.equals("normal")) {
                         tripList = tripDAO.FilterPriceWithCondition(index, SelectPrices, date);
-                    } else if(sort.equals("desc")) {
+                    } else if (sort.equals("desc")) {
                         tripList = tripDAO.FilterPriceDESCWithCondition(index, SelectPrices, date);
-                    } else if(sort.equals("asc")) {
+                    } else if (sort.equals("asc")) {
                         tripList = tripDAO.FilterPriceASCWithCondition(index, SelectPrices, date);
                     }
                     //Đếm tổng số trang cần có
@@ -282,8 +282,6 @@ public class ManageTourServlet extends HttpServlet {
         if (search == null) {
             search = "";
         }
-
-        
 
         //ĐIỀU KIỆN NGÀY KHỞI HÀNH VÀ KHÔNG CÓ NGÀY KHỞI HÀNH
         if (date == null) {
@@ -342,7 +340,7 @@ public class ManageTourServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         System.out.println("----------------GET DETAIL TOUR----------------");
-        
+
         int tourID = Integer.parseInt(request.getParameter("tourID"));
         int tripID = Integer.parseInt(request.getParameter("tripID"));
         TourItemDAO itemDAO = new TourItemDAO();
@@ -505,7 +503,7 @@ public class ManageTourServlet extends HttpServlet {
     }
 
     //3. [CREATE] - TẠO BOOKING
-    protected void book(HttpServletRequest request, HttpServletResponse response) throws ServletException, UnsupportedEncodingException, IOException {    
+    protected void book(HttpServletRequest request, HttpServletResponse response) throws ServletException, UnsupportedEncodingException, IOException {
         TripDAO dao = new TripDAO();
         BookDAO bookdao = new BookDAO();
         String name = request.getParameter("Name");
@@ -530,24 +528,24 @@ public class ManageTourServlet extends HttpServlet {
         Date date = dao.getDateOfTrip(tripID);
         Book book;
         int numberScore = 0;
-        if(applyScore != "") {
-           numberScore = Integer.parseInt(applyScore);
+        if (applyScore != "") {
+            numberScore = Integer.parseInt(applyScore);
         }
         //XỬ LÝ CẬP NHẬT ĐIỂM TÍCH LŨY CỦA ACCOUNT
-        if (user != null){
+        if (user != null) {
             System.out.println("USER: " + user);
             AccountDAO accountDAO = new AccountDAO();
             int number = user.getAccumulatedScore() - numberScore;
             user.setAccumulatedScore(number);
             boolean checked = accountDAO.updateAccountScore(user.getId(), number);
-            if(checked){
+            if (checked) {
                 System.out.println("Update User AccumulatedScore Successful");
             }
         }
-        
-        double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice) - (numberScore*1000);
+
+        double totalPrice = Double.parseDouble(AdultPrice) * adultAmount + childAmount * Double.parseDouble(ChildPrice) - (numberScore * 1000);
         TripDAO tripdao = new TripDAO();
-        
+
         //Xử lí date
         Date temp = new Date();
         Date currentDay = new Date(temp.getTime()); // Lấy ra ngày hôm nay
@@ -641,8 +639,6 @@ public class ManageTourServlet extends HttpServlet {
             String vnp_SecureHash = ConfigVnPay.hmacSHA512(ConfigVnPay.vnp_HashSecret, hashData.toString());
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
 
-            
-            
             String paymentUrl = ConfigVnPay.vnp_PayUrl + "?" + queryUrl;
             com.google.gson.JsonObject job = new JsonObject();
             job.addProperty("code", "00");
@@ -651,7 +647,7 @@ public class ManageTourServlet extends HttpServlet {
             System.out.println(paymentUrl);
             Gson gson = new Gson();
 //            response.getWriter().write(gson.toJson(job));
-            
+
             response.sendRedirect(paymentUrl);
         } else {
             //Gọi phương thức display ra Bill bình thường
@@ -706,7 +702,7 @@ public class ManageTourServlet extends HttpServlet {
 
             Transport.send(message);
         } catch (MessagingException e) {
-          
+
         }
         request.setAttribute("controller", "tour");
         request.setAttribute("action", "contact");
@@ -714,6 +710,7 @@ public class ManageTourServlet extends HttpServlet {
         request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
 
+    //2.[READ] - Display ra giao diện với các phương thức thanh toán tiền mặt
     //2.[READ] - Display ra giao diện với các phương thức thanh toán tiền mặt
     protected void returnPay(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String bookID = request.getParameter("bookID");
@@ -723,15 +720,50 @@ public class ManageTourServlet extends HttpServlet {
 
         //2 trường hợp: Từ phía Payment đi vào xem Bill || Từ danh sách Booked đi vào xem Bill
         if (bookID != null) { //Trường hợp 1: Từ phía danh sách Booked List nhấn link vào xem
-            bookId = Integer.parseInt(bookID.trim());
+            bookId = Integer.parseInt(bookID);
             Bill bill = bookDAO.getBillByBookId(bookId);
             request.setAttribute("bill", bill);
+
         } else { //Trường hợp 2: Sau khi submit Book thì chuyển đến xem Bill
-            Book book = bookDAO.getTopBook();
+            Book book = dao.getTopBooked();
             Bill bill = bookDAO.getBillByBookId(book.getBookID());
             request.setAttribute("bill", bill);
             request.setAttribute("message", "Giao dịch thành công");
             request.setAttribute("code", "success");
+            String email = "nguyenhuykhaipch94@gmail.com";
+            int bookingCode = book.getBookID();
+            AccountDAO accDAO = new AccountDAO();
+            if (!accDAO.checkEmail(email)) {
+                if (email != null || !email.equals("")) {
+                    String to = email;// change accordingly
+                    // Get the session object
+                    Properties props = new Properties();
+                    props.put("mail.smtp.host", "smtp.gmail.com");
+                    props.put("mail.smtp.socketFactory.port", "465");
+                    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                    props.put("mail.smtp.auth", "true");
+                    props.put("mail.smtp.port", "465");
+                    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                        @Override
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication("nhatrangnatureelite@gmail.com", "krgqhcpqhfpaspzr");
+                        }
+                    });
+                    //compose message
+                    try {
+                        MimeMessage message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress(email));//change accordingly
+                        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                        message.setSubject("Hello");
+                        message.setText("Your booking code is: " + bookingCode);
+                        //send message
+                        Transport.send(message);
+                        System.out.println("Message sent successfully");
+                    } catch (MessagingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
         }
         request.setAttribute("controller", "tour");
         request.setAttribute("action", "returnVNPay");
@@ -749,10 +781,10 @@ public class ManageTourServlet extends HttpServlet {
             //Check trạng thái giao dịch trả về từ VNPAY
             if ("00".equals(vnp_ResponseCode)) {
                 System.out.println("Giao dịch thành công");
-                
-                HttpSession session = request.getSession();
-                User_Account user = (User_Account) session.getAttribute("person");
-                
+
+                HttpSession mysession = request.getSession();
+                User_Account user = (User_Account) mysession.getAttribute("person");
+
                 //Cập nhật lại status trong Database và số lượng slot của Trip
                 TripDAO dao = new TripDAO();
                 BookDAO bookDAO = new BookDAO();
@@ -772,13 +804,47 @@ public class ManageTourServlet extends HttpServlet {
                         System.out.println("Update User AccumulatedScore when payment successfull");
                     }
                 }
-                
+
                 request.setAttribute("bill", bill);
                 request.setAttribute("message", "Giao dịch thành công");
                 request.setAttribute("code", "success");
-                
-                
+
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+
+                String email = "nguyenhuykhaipch94@gmail.com";
+                int bookingCode = vnp_TxnRef;
+                AccountDAO accDAO = new AccountDAO();
+                if (!accDAO.checkEmail(email)) {
+                    if (email != null || !email.equals("")) {
+                        String to = email;// change accordingly
+                        // Get the session object
+                        Properties props = new Properties();
+                        props.put("mail.smtp.host", "smtp.gmail.com");
+                        props.put("mail.smtp.socketFactory.port", "465");
+                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        props.put("mail.smtp.auth", "true");
+                        props.put("mail.smtp.port", "465");
+                        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                            @Override
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication("nhatrangnatureelite@gmail.com", "krgqhcpqhfpaspzr");
+                            }
+                        });
+                        //compose message
+                        try {
+                            MimeMessage message = new MimeMessage(session);
+                            message.setFrom(new InternetAddress(email));//change accordingly
+                            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                            message.setSubject("Hello");
+                            message.setText("Your booking code is: " + bookingCode);
+                            //send message
+                            Transport.send(message);
+                            System.out.println("Message sent successfully");
+                        } catch (MessagingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             } else {
                 System.out.println("Giao dịch không thành công: " + vnp_TransactionStatus);
                 switch (vnp_TransactionStatus) {
