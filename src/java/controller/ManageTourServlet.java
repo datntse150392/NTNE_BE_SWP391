@@ -719,18 +719,23 @@ public class ManageTourServlet extends HttpServlet {
         if (bookID != null) { //Trường hợp 1: Từ phía danh sách Booked List nhấn link vào xem
             bookId = Integer.parseInt(bookID);
             Bill bill = bookDAO.getBillByBookId(bookId);
+            if (bill == null){
+                System.out.println("A");
+                request.setAttribute("controller", "tour");
+                request.setAttribute("action", "findBooked");
+                request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
+            } 
             request.setAttribute("bill", bill);
-
+            
         } else { //Trường hợp 2: Sau khi submit Book thì chuyển đến xem Bill
             Book book = dao.getTopBooked();
             Bill bill = bookDAO.getBillByBookId(book.getBookID());
             request.setAttribute("bill", bill);
             request.setAttribute("message", "Giao dịch thành công");
             request.setAttribute("code", "success");
-            String email = "nguyenhuykhaipch94@gmail.com";
+            String email = bill.getCusMail();
             int bookingCode = book.getBookID();
             AccountDAO accDAO = new AccountDAO();
-            if (!accDAO.checkEmail(email)) {
                 if (email != null || !email.equals("")) {
                     String to = email;// change accordingly
                     // Get the session object
@@ -751,7 +756,7 @@ public class ManageTourServlet extends HttpServlet {
                         MimeMessage message = new MimeMessage(session);
                         message.setFrom(new InternetAddress(email));//change accordingly
                         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                        message.setSubject("Hello");
+                        message.setSubject("NHA TRANG NATURE ELITE");
                         message.setText("Your booking code is: " + bookingCode);
                         //send message
                         Transport.send(message);
@@ -760,7 +765,7 @@ public class ManageTourServlet extends HttpServlet {
                         throw new RuntimeException(e);
                     }
                 }
-            }
+            
         }
         request.setAttribute("controller", "tour");
         request.setAttribute("action", "returnVNPay");
@@ -808,10 +813,9 @@ public class ManageTourServlet extends HttpServlet {
 
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
 
-                String email = "nguyenhuykhaipch94@gmail.com";
+                String email = bill.getCusMail();
                 int bookingCode = vnp_TxnRef;
                 AccountDAO accDAO = new AccountDAO();
-                if (!accDAO.checkEmail(email)) {
                     if (email != null || !email.equals("")) {
                         String to = email;// change accordingly
                         // Get the session object
@@ -832,7 +836,7 @@ public class ManageTourServlet extends HttpServlet {
                             MimeMessage message = new MimeMessage(session);
                             message.setFrom(new InternetAddress(email));//change accordingly
                             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                            message.setSubject("Hello");
+                            message.setSubject("NHA TRANG NATURE ELITE");
                             message.setText("Your booking code is: " + bookingCode);
                             //send message
                             Transport.send(message);
@@ -841,7 +845,7 @@ public class ManageTourServlet extends HttpServlet {
                             throw new RuntimeException(e);
                         }
                     }
-                }
+                
             } else {
                 System.out.println("Giao dịch không thành công: " + vnp_TransactionStatus);
                 switch (vnp_TransactionStatus) {

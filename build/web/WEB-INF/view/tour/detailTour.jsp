@@ -96,21 +96,26 @@
                                 <div class="tourpackage-body-detail">
                                     
                                     <!--HIỂN THỊ GIÁ CƠ BẢN CỦA TRIP-->
-                                    <h3 class="tourpackage-body-detail-title" style="text-transform: none; font-size: 15px">Giá áp dụng cho người lớn: <span style="color: red; font-size: 15px; font-style: normal"><fmt:formatNumber value="${trip.getPriceAdult()}" pattern="###,### VNĐ" /></span> </h3>
+                                    <div>
+                                        <h3 class="tourpackage-body-detail-title" style="text-transform: none; font-size: 15px">Giá áp dụng cho người lớn: <span style="color: red; font-size: 15px; font-style: normal"><fmt:formatNumber value="${trip.getPriceAdult()}" pattern="###,### VNĐ" /></span> </h3>
+                                    </div>
+                                    <div>
+                                        <h3 class="tourpackage-body-detail-title" style="text-transform: none; font-size: 15px">Giá áp dụng cho trẻ em: <span style="color: red; font-size: 15px; font-style: normal"><fmt:formatNumber value="${trip.getPriceChild()}" pattern="###,### VNĐ" /></span> </h3>                                    
+                                    </div>
                                     <form action="<c:url value="/tour/booking.do"/>">
                                         <input type="hidden" name="tourID" value="${tourID}"/>
                                         <input type="hidden" name="tripID" value="${trip.getId()}"/>
                                         <button type="submit" class="btn-booking-tour"">
-                                            <i class="fa-solid fa-o"></i> CHỌN
+                                            <i class="fa-solid fa-o"></i> ĐẶT NGAY
                                         </button>
                                     </form>
                                 </div>
                             </div>
                             
-                            <div class="tourpackage-body">
+<!--                            <div class="tourpackage-body">
                                 <div class="tourpackage-body-detail">
                                     
-                                    <!--HIỂN THỊ GIÁ CƠ BẢN CỦA TRIP-->
+                                    HIỂN THỊ GIÁ CƠ BẢN CỦA TRIP
                                     <h3 class="tourpackage-body-detail-title" style="text-transform: none; font-size: 15px">Giá áp dụng cho trẻ em: <span style="color: red; font-size: 15px; font-style: normal"><fmt:formatNumber value="${trip.getPriceChild()}" pattern="###,### VNĐ" /></span></h3>
                                     <form action="<c:url value="/tour/booking.do"/>">
                                         <input type="hidden" name="tourID" value="${tourID}"/>
@@ -120,7 +125,7 @@
                                         </button>
                                     </form>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <!--End Box Booking-->

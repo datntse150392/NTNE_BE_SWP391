@@ -467,6 +467,7 @@ span {
     font-size: 19px;
     margin-right: 5px;
     text-transform: capitalize;
+    padding: 15px;
 }
 
 .tourpackage-body-detail .booking-tour .container b {

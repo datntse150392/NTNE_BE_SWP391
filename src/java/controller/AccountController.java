@@ -134,8 +134,8 @@ public class AccountController extends HttpServlet {
                 Cookie p = new Cookie("password", request.getParameter("password"));
 
                 //set thoi gian cua cookie
-                u.setMaxAge(60);
-                p.setMaxAge(60);
+                u.setMaxAge(60000);
+                p.setMaxAge(60000);
 
                 //Lưu cookie u và p lên trình duyệt
                 response.addCookie(u);
@@ -160,8 +160,8 @@ public class AccountController extends HttpServlet {
             Cookie p = new Cookie("password", password);
 
             //set thoi gian cua cookie
-            u.setMaxAge(60);
-            p.setMaxAge(60);
+            u.setMaxAge(60000);
+            p.setMaxAge(60000);
 
             //Lưu cookie u và p lên trình duyệt
             response.addCookie(u);
@@ -207,7 +207,7 @@ public class AccountController extends HttpServlet {
                 request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
             }
             Cookie e = new Cookie("email", email);
-            e.setMaxAge(60);
+            e.setMaxAge(60000);
             response.addCookie(e);
         } catch (IOException e) {
             System.out.println(e);
@@ -442,7 +442,7 @@ public class AccountController extends HttpServlet {
                     MimeMessage message = new MimeMessage(session);
                     message.setFrom(new InternetAddress(email));//change accordingly
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                    message.setSubject("Hello");
+                    message.setSubject("NHA TRANG NATURE ELITE");
                     message.setText("Your OTP is: " + otpValue);
                     //send message
                     Transport.send(message);

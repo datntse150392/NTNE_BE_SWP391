@@ -39,7 +39,7 @@
                         <p style="font-weight: bold">
                             <a href="<c:url value="/account/forgotPassword.do"/>">Quên mật khẩu?</a>
                         </p>
-                        <div class="g-recaptcha" data-sitekey="6LdayTwnAAAAAGMhzEUKWRqyxrhyoCYnb82W1Q9f"></div>
+                        <div class="g-recaptcha" data-sitekey="6LfhbV8nAAAAALsGuecbmE1xyiI-wZTY5RcvqMsX"></div>
                         
                         <p style="color: red; font-weight: bold" id="error"></p>
                         <p style="color: red; font-weight: bold" id="error">${MSG_ERROR}</p>
@@ -47,7 +47,7 @@
                         <span>Hoặc</span>
                         <div class="add-on">
                             <div class="btn-google" readonly="readonly">
-                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=http://localhost:8084/account/login_google.do&response_type=code&scope=email%20profile&access_type=offline">
+                                <a href="https://accounts.google.com/o/oauth2/auth?client_id=224681386135-ieoer1kr21a56bnm2mh1pav2ionb4qr3.apps.googleusercontent.com&redirect_uri=https://9b06-118-69-233-167.ngrok-free.app/account/login_google.do&response_type=code&scope=email%20profile&access_type=offline">
                                     <i class="fa-brands fa-google"></i> 
                                     Tiếp tục với Google
                                 </a>

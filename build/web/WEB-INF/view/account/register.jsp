@@ -48,7 +48,7 @@
 
                         <input type="text" id="address" name="address" placeholder="Địa chỉ">
                         <input type="tel" id="phone" required name="phone" minlength="10" maxlength="10" placeholder="Số điện thoại" pattern="[0-9]{10}">
-                        <div class="g-recaptcha" data-sitekey="6LdayTwnAAAAAGMhzEUKWRqyxrhyoCYnb82W1Q9f"></div>
+                        <div class="g-recaptcha" data-sitekey="6LfhbV8nAAAAALsGuecbmE1xyiI-wZTY5RcvqMsX"></div>
                         
                         <p style="color: red; font-weight: bold" id="error"></p>
                         <p style="font-weight: bold">Đã có tài khoản? <a href="<c:url value="/account/login1.do"/>" style="color: tomato; font-weight: bold">Đăng nhập</a> ngay</p>

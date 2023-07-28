@@ -53,7 +53,7 @@
                                               class="form" method="post">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <input id="opt" name="bookID" placeholder="Ví dụ: 123" value="" class="form-control" type="text" required="required">
+                                                    <input id="opt" name="bookID" placeholder="Ví dụ: 123" value="" class="form-control" type="number" min="0" maxlength="6" required="required">
                                                 </div>
                                             </div>
                                             <div class="form-group">
